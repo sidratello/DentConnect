@@ -22,9 +22,13 @@ class StorageService extends GetxService {
     return _box.read<T>(key) ?? defaultValue;
   }
 
-  Future<void> remove(String key) async {
-    await _box.remove(key);
+Future<void> remove(String key) async {
+  await _box.remove(key);
+
+  if (key == 'token') {
+    AppHelper.token = '';
   }
+}
 
   Future<void> clearAll() async {
     await _box.erase();

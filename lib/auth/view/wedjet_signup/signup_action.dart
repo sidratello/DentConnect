@@ -21,7 +21,7 @@ class SignupActionWidget extends StatelessWidget {
         Obx(
           () => AppButton(
             title: controller.isLoading.value
-                ? 'جاري الإنشاء...'
+                ? '  ..جاري الإنشاء'
                 : 'إنشاء حساب',
             width: double.infinity,
             height: 39,

@@ -107,7 +107,9 @@ class ServerFailure extends Failure {
   static String _mapBackendMessageToArabic(String message) {
     final lowerMessage = message.toLowerCase();
 
-
+if (lowerMessage.contains('invalid email or password')) {
+  return 'كلمة المرور او البريد الإلكتروني غير صحيح.';
+}
 
 if (lowerMessage.contains('user not found')) {
   return 'المستخدم غير موجود.';
