@@ -13,7 +13,7 @@ class SignupController extends GetxController {
   final isLoading = false.obs;
 final isPickingFile = false.obs;
  final Rxn<File> verificationDocument = Rxn<File>();
-
+ final hasScanner = false.obs;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -22,8 +22,18 @@ final isPickingFile = false.obs;
   final addressPlaceController = TextEditingController();
   final cityPlaceController = TextEditingController();
   final countryPlaceController = TextEditingController();
+late final String role;
 
-
+bool get isLab => role == 'Lab';
+bool get isDentist => role == 'Dentist';
+@override
+void onInit() {
+  super.onInit();
+  role = Get.arguments ?? 'Dentist';
+}
+  void toggleScanner(bool value) {
+    hasScanner.value = value;
+  }
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
@@ -64,7 +74,13 @@ Future<void> pickVerificationDocument() async {
   }
 }
 
-
+Future<void> signup() async {
+  if (isDentist) {
+    await signupDentist();
+  } else {
+    await signupLab();
+  }
+}
 
    Future<void> signupDentist() async {
 if (verificationDocument.value == null) {
@@ -112,6 +128,49 @@ if (verificationDocument.value == null) {
       );
     }
   }
+
+
+ Future<void> signupLab() async {
+    isLoading.value = true;
+
+    final response = await _repo.signupLab(
+      name: nameController.text.trim(),
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+      phone: phoneController.text.trim(),
+      namePlace: namePlaceController.text.trim(),
+      addressPlace: addressPlaceController.text.trim(),
+      cityPlace: cityPlaceController.text.trim(),
+      countryPlace: countryPlaceController.text.trim(),
+      hasScanVisitService: hasScanner.value,
+    );
+
+    isLoading.value = false;
+
+    if (response.success) {
+      Get.snackbar(
+        'تم بنجاح',
+         'تم إنشاء الحساب وهو بانتظار التحقق',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+      Get.toNamed(
+  AppRouter.OTPpage,
+  arguments: emailController.text.trim(),
+);
+    } else {
+      Get.snackbar(
+        'خطأ',
+        response.message,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+
+
+
+
 
   void goBack() {
     Get.back();

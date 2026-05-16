@@ -54,15 +54,21 @@ class ServerFailure extends Failure {
     // Response مثل:
     // "Verification document must be 5MB or less."
     if (response is String && response.trim().isNotEmpty) {
-      backendMessage = response;
+  backendMessage = _mapBackendMessageToArabic(response);
     }
 
     // Response مثل:
     // { "errors": { "Password": ["..."] } }
     else if (response is Map<String, dynamic>) {
-      if (response["message"] != null) {
-        backendMessage = response["message"].toString();
-      } else if (response["errors"] is Map) {
+
+     if (response["message"] != null) {
+  backendMessage = _mapBackendMessageToArabic(
+    response["message"].toString(),
+  );
+}
+      
+      
+       else if (response["errors"] is Map) {
         final errors = response["errors"] as Map;
         final messages = <String>[];
 
@@ -74,17 +80,19 @@ class ServerFailure extends Failure {
           }
         });
 
-        if (messages.isNotEmpty) {
-          backendMessage = messages.join('\n');
-        }
+  if (messages.isNotEmpty) {
+  backendMessage = messages
+      .map((message) => _mapBackendMessageToArabic(message))
+      .join('\n');
+}
       } else if (response["title"] != null) {
         backendMessage = response["title"].toString();
       }
     }
 
-    if (backendMessage != null && backendMessage.trim().isNotEmpty) {
-      return ServerFailure(_mapBackendMessageToArabic(backendMessage));
-    }
+  if (backendMessage != null && backendMessage.trim().isNotEmpty) {
+  return ServerFailure(backendMessage);
+}
 
     switch (statusCode) {
       case 400:
@@ -106,6 +114,16 @@ class ServerFailure extends Failure {
 
   static String _mapBackendMessageToArabic(String message) {
     final lowerMessage = message.toLowerCase();
+
+if (lowerMessage.contains('the code field is required')) {
+  return 'الرجاء إدخال رمز التحقق.';
+}
+if (lowerMessage.contains('the phone field is required')) {
+  return 'الرجاء إدخال رقم الهاتف.';
+}
+if (lowerMessage.contains('the password field is required')) {
+  return 'الرجاء إدخال كلمة المرور.';
+}
 
 if (lowerMessage.contains('invalid email or password')) {
   return 'كلمة المرور او البريد الإلكتروني غير صحيح.';
@@ -150,7 +168,7 @@ if (lowerMessage.contains('otp is still valid')) {
     }
 
     if (lowerMessage.contains('phone must contain only digits')) {
-      return 'رقم الهاتف يجب أن يحتوي فقط على أرقام أو مسافات أو + أو - وأن يكون بين 7 و 30 رقماً.';
+      return 'رقم الهاتف يجب أن يحتوي فقط على أرقام وأن يكون بين 7 و 30 رقماً.';
     }
 
     if (lowerMessage.contains('password') &&

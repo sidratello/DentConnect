@@ -12,14 +12,19 @@ class LoginController extends GetxController {
   final isPasswordVisible = false.obs;
   final LoginRepo _repo = LoginRepo();
   final isLoading = false.obs;
-
-
+late final String role;
+bool get isLab => role == 'Lab';
+bool get isDentist => role == 'Dentist';
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
 
-
+@override
+void onInit() {
+  super.onInit();
+  role = Get.arguments ?? 'Dentist';
+}
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
@@ -52,7 +57,17 @@ class LoginController extends GetxController {
     }
 
     final user = response.data!;
-
+  /// مهم: تأكد أن نوع الحساب المختار يطابق نوع الحساب الحقيقي من السيرفر
+  if (user.role != role) {
+    Get.snackbar(
+      'تنبيه',
+      role == 'Dentist'
+          ? 'هذا الحساب ليس حساب طبيب، الرجاء الدخول من قسم المخابر.'
+          : 'هذا الحساب ليس حساب مخبر، الرجاء الدخول من قسم الأطباء.',
+      snackPosition: SnackPosition.BOTTOM,
+    );
+    return;
+  }
     /// ================= FULL ACCESS =================
     if (user.status == 'Active' &&
         user.accessMode == 'Full' &&

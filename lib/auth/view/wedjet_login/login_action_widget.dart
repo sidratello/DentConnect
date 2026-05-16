@@ -62,7 +62,10 @@ Align(
           buttonText: ' هنا  ',
           mainAxisAlignment: MainAxisAlignment.center,
           onTap: () {
-            Get.offNamed(AppRouter.signuppage);
+        Get.offNamed(
+  AppRouter.signuppage,
+    arguments: controller.role,
+);
           },
         ),
       ],

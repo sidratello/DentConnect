@@ -13,7 +13,7 @@ class SignupRepo {
     required String password,
     required String phone,
     String? namePlace,
-    String? addressPlace,
+   required String addressPlace,
     String? cityPlace,
     String? countryPlace,
     required File verificationDocument,
@@ -26,7 +26,7 @@ class SignupRepo {
         'Password': password,
         'Phone': phone,
         'NamePlace': namePlace ?? '',
-        'AddressPlace': addressPlace ?? '',
+     'AddressPlace': addressPlace,
         'CityPlace': cityPlace ?? '',
         'CountryPlace': countryPlace ?? '',
       },
@@ -34,4 +34,36 @@ class SignupRepo {
       fileKey: 'VerificationDocument',
     );
   }
+
+
+Future<ApiResponse<Map<String, dynamic>>> signupLab({
+    required String name,
+    required String email,
+    required String password,
+    required String phone,
+     String? namePlace,
+    required String addressPlace,
+     String? cityPlace,
+     String? countryPlace,
+    required bool hasScanVisitService,
+  }) async {
+    return await _apiService.post<Map<String, dynamic>>(
+      'Accounts/lab',
+      data: {
+        'name': name,
+        'email': email,
+        'password': password,
+        'phone': phone,
+        'namePlace': namePlace ?? '',
+        'addressPlace': addressPlace,
+        'cityPlace': cityPlace ?? '',
+        'countryPlace': countryPlace ?? '',
+        'hasScanVisitService': hasScanVisitService,
+      },
+    );
+  }
+
+
+
+
 }

@@ -22,10 +22,10 @@ class SignupHeaderWidget extends StatelessWidget {
       children: [
         const SizedBox(height: 34),
 
-        AuthHeader(
-          title: 'اطباء',
-          onBack: controller.goBack,
-        ),
+AuthHeader(
+  title: controller.isLab ? 'مخابر' : 'أطباء',
+  onBack: controller.goBack,
+),
 
         Image.asset(
           'assets/images/Doctor doing teeth treatment to patient.png',

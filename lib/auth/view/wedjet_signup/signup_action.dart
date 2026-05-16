@@ -29,7 +29,7 @@ class SignupActionWidget extends StatelessWidget {
             onTap: () {
               if (!controller.isLoading.value &&
                   controller.formKey.currentState!.validate()) {
-                controller.signupDentist();
+        controller.signup();
               }
             },
           ),
@@ -43,6 +43,7 @@ class SignupActionWidget extends StatelessWidget {
           height: 39,
           type: AppButtonType.outlined,
           onTap: () {},
+          backgroundColor: Colors.transparent,
         ),
 
         const SizedBox(height: 3),
@@ -52,7 +53,9 @@ class SignupActionWidget extends StatelessWidget {
           buttonText: ' هنا  ',
           mainAxisAlignment: MainAxisAlignment.center,
           onTap: () {
-         Get.offNamed(AppRouter.loginpage);
+         Get.offNamed(AppRouter.loginpage,
+             arguments: controller.role,
+         );
           },
         ),
       ],

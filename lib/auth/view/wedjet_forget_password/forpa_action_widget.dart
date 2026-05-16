@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:template/auth/controller/forpa_controller.dart';
-
-
 import 'package:template/core/widgets/app_button.dart';
 
 class fpActionWidget extends StatelessWidget {
@@ -15,14 +12,16 @@ class fpActionWidget extends StatelessWidget {
 
     return Column(
       children: [
-   Obx(
+        Obx(
           () => AppButton(
             title: controller.isLoading.value
-                ? ' .. جاري الإرسال'
+                ? ' ..جاري الإرسال'
                 : 'إرسال رمز التحقق',
             width: double.infinity,
-            height: 45,
+            height: 52,
+            borderRadius: 16,
             type: AppButtonType.filled,
+            isLoading: controller.isLoading.value,
             onTap: () {
               if (!controller.isLoading.value) {
                 controller.forgotPassword();
@@ -30,12 +29,6 @@ class fpActionWidget extends StatelessWidget {
             },
           ),
         ),
-
-        
-
-        const SizedBox(height: 3),
-
-
       ],
     );
   }

@@ -17,7 +17,7 @@ class LoginHeaderWidget extends StatelessWidget {
         const SizedBox(height: 34),
 
         AuthHeader(
-          title: 'اطباء',
+         title: controller.isLab ? 'مخابر' : 'أطباء',
           onBack: controller.goBack,
         ),
 

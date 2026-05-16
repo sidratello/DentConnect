@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:template/auth/controller/forpa_controller.dart';
 
-import 'package:template/core/app_colors.dart';
-import 'package:template/core/app_text_styles.dart';
 import 'package:template/core/app_validators.dart';
+import 'package:template/core/widgets/auth_card.dart';
 import 'package:template/core/widgets/input_textfield.dart';
 
 class fpBodyWidget extends StatelessWidget {
@@ -13,33 +11,25 @@ class fpBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-final controller = Get.find<ForgetPasswordController>();
+    final controller = Get.find<ForgetPasswordController>();
 
-    return Column(
-      children: [
-        const SizedBox(height: 160),
-
-        Text(
- ':أدخل بريدك الإلكتروني لاستعادة كلمة المرور',
-          style: AppTextStyles.ibmMedium18NeutralStyle.copyWith(
-            color: AppColors.primaryBlue,
-          ),
-        ),
-
-        const SizedBox(height: 20),
-
+   return AuthCard(
+  icon: Icons.lock_reset_rounded,
+  title: 'استعادة كلمة المرور',
+  subtitle:
+      'أدخل بريدك الإلكتروني وسنرسل لك رمز تحقق لإعادة تعيين كلمة المرور.',
+  children: [
+    AuthInputField(
+      hintText: 'البريد الإلكتروني',
+      prefixIcon: const Icon(Icons.email_outlined),
+      controller: controller.emailController,
+      validator: (value) => AppValidators.validateEmail(value),
+    ),
+      const SizedBox(height: 24),
+  ],
   
+);
 
-          AuthInputField(
-          hintText: 'الايميل',
-          prefixIcon: const Icon(Icons.email),
-         controller: controller.emailController,
-            validator: (value) =>
-                AppValidators.validateEmail(value),
-        ),
 
-        const SizedBox(height: 20),
-      ],
-    );
   }
 }

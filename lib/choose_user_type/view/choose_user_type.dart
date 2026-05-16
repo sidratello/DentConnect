@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 
 import 'package:template/core/app_colors.dart';
-import 'package:template/core/app_helper.dart';
+
 import 'package:template/core/app_router.dart';
 
 import 'package:template/core/app_text_styles.dart';
@@ -45,23 +45,37 @@ class ChooseUserTypeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 28),
               child: Column(
                 children: [
-                  const SizedBox(height: 70),
+                   SizedBox(height: MediaQuery.of(context).size.height * 0.08),
 
                   Image.asset(
                     'assets/images/5f32c4cd4261ca921e09f8d99da60f9ebbc6a63b.png',
-                    width: 400,
-                    height: 200,
+                    width: 230,
+                    height: 230,
+                     fit: BoxFit.contain,
                   ),
-
+ 
+                 
                   Text(
-                    ' DentConnect مرحباً بك في تطبيق    ',
-                    style: AppTextStyles.ibmBold22NeutralStyle.copyWith(
-                      fontSize: 18,
+                    'مرحباً بك في تطبيق',
+                    style: AppTextStyles.ibmRegular14NeutralStyle.copyWith(
+                      color: AppColors.textDark.withOpacity(0.75),
                     ),
                     textAlign: TextAlign.center,
                   ),
 
-                  const SizedBox(height: 45),
+                  const SizedBox(height: 4),
+
+                  Text(
+                    'DentConnect',
+                    style: AppTextStyles.ibmBold22NeutralStyle.copyWith(
+                      fontSize: 26,
+                      color: AppColors.neutral1000,
+                   ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  const SizedBox(height: 42),
+
 
                   Text(
                     ' :  سجل دخولك ك  ',
@@ -73,24 +87,39 @@ class ChooseUserTypeScreen extends StatelessWidget {
 
                   const SizedBox(height: 10),
 
+                 AppButton(
+  title: 'أطباء',
+  type: AppButtonType.gradient,
+  icon: const Icon(
+    Icons.medical_services_outlined,
+
+  ),
+  onTap: () {
+    Get.toNamed(AppRouter.signuppage,
+     arguments: 'Dentist',
+    );
+    
+  },
+),
+                 SizedBox(height: 14),
+
                   AppButton(
-                    title: 'أطباء',
-                    type: AppButtonType.customDecoration,
-                    decoration: AppHelper.primaryButtonDecoration(),
-                    textStyle: AppTextStyles.ibmRegular12DarkStyle,
+                    title: 'مخابر',
+                    type: AppButtonType.gradient,
+                    height: 56,
+                    borderRadius: 18,
+                    icon: const Icon(
+       Icons.biotech_outlined,
+                  
+                      size: 23,
+                    ),
                     onTap: () {
-                      Get.toNamed(AppRouter.signuppage);
+                          Get.toNamed(AppRouter.signuppage,
+                          arguments: 'Lab',
+                          );
+   
+                      // Get.toNamed(AppRouter.labSignupPage);
                     },
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  AppButton(
-                    title: 'مخبر',
-                    type: AppButtonType.customDecoration,
-                    decoration: AppHelper.primaryButtonDecoration(),
-                    textStyle: AppTextStyles.ibmRegular12DarkStyle,
-                    onTap: () {},
                   ),
                 ],
               ),

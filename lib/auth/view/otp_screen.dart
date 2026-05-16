@@ -17,9 +17,9 @@ class OtpScreen extends StatelessWidget {
 
     return AuthLayout(
   padding: EdgeInsets.only(
-    left: 28,
-    right: 28,
-    bottom: MediaQuery.of(context).size.height * 0.60,
+    left: 20,
+    right: 20,
+       bottom: MediaQuery.of(context).viewInsets.bottom + 24,
   ),
   children: [
           OtpHeaderWidget(),

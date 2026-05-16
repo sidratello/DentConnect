@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
         padding: EdgeInsets.only(
       left: 28,
       right: 28,
-      bottom: MediaQuery.of(context).size.height * 0.18,
+ bottom: MediaQuery.of(context).viewInsets.bottom + 24,
         ),
         children: [
          LoginHeaderWidget(),

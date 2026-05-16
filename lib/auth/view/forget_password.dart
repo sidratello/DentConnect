@@ -22,7 +22,7 @@ class fpScreen extends StatelessWidget {
   padding: EdgeInsets.only(
     left: 28,
     right: 28,
-    bottom: MediaQuery.of(context).size.height * 0.47,
+   bottom: MediaQuery.of(context).viewInsets.bottom + 24,
   ),
   children: [
     Form(
