@@ -15,11 +15,12 @@ class OrderConnectionCard extends StatelessWidget {
   final OrderConnectionModel item;
 
 final VoidCallback onAccept;
-
+final VoidCallback onReject;
 const OrderConnectionCard({
   super.key,
   required this.item,
   required this.onAccept,
+  required this.onReject,
 });
 
   @override
@@ -94,7 +95,7 @@ const OrderConnectionCard({
                   children: [
                    AppButton(
   title: 'رفض ',
-  onTap: () {},
+ onTap: onReject,
   width: 95.w,
   height: 38.h,
   borderRadius: 16.r,

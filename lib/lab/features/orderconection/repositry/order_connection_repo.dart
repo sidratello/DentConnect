@@ -40,4 +40,10 @@ class OrderConnectionRepo {
     'ConnectionForLab/requests/$requestId/accept',
   );
 }
+
+Future<ApiResponse<dynamic>> rejectRequest(int requestId) async {
+  return await _apiService.post<dynamic>(
+    'ConnectionForLab/requests/$requestId/reject',
+  );
+}
 }

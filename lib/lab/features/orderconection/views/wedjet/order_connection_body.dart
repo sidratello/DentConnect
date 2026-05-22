@@ -45,6 +45,11 @@ class OrderConnectionBodyWidget extends StatelessWidget {
   onAccept: () {
     controller.acceptRequest(controller.requests[index].id);
   },
+    onReject: () {
+    controller.rejectRequest(
+      controller.requests[index].id,
+    );
+  },
 )
           );
         },

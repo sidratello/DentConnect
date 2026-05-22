@@ -10,7 +10,8 @@ class OrderConnectionController extends GetxController {
   final OrderConnectionRepo _repo = OrderConnectionRepo();
 
   final isLoading = false.obs;
-final acceptingId = RxnInt();
+
+
   final requests = <OrderConnectionModel>[].obs;
   final allRequests = <OrderConnectionModel>[].obs;
 
@@ -55,23 +56,55 @@ final acceptingId = RxnInt();
     requests.assignAll(result);
   }
 
-
-  Future<void> acceptRequest(int requestId) async {
-  acceptingId.value = requestId;
+Future<void> acceptRequest(int requestId) async {
 
   final response = await _repo.acceptRequest(requestId);
 
-  acceptingId.value = null;
-
   if (response.success) {
-    allRequests.removeWhere((item) => item.id == requestId);
-    requests.removeWhere((item) => item.id == requestId);
+
+    allRequests.removeWhere(
+      (item) => item.id == requestId,
+    );
+
+    requests.removeWhere(
+      (item) => item.id == requestId,
+    );
 
     Get.snackbar(
       'تم',
       response.message ?? 'تمت الموافقة على الطلب',
     );
+
   } else {
+
+    Get.snackbar(
+      'خطأ',
+      response.message,
+    );
+  }
+}
+
+Future<void> rejectRequest(int requestId) async {
+
+  final response = await _repo.rejectRequest(requestId);
+
+  if (response.success) {
+
+    allRequests.removeWhere(
+      (item) => item.id == requestId,
+    );
+
+    requests.removeWhere(
+      (item) => item.id == requestId,
+    );
+
+    Get.snackbar(
+      'تم',
+      response.message ?? 'تم رفض الطلب',
+    );
+
+  } else {
+
     Get.snackbar(
       'خطأ',
       response.message,
