@@ -42,7 +42,11 @@ class SignupActionWidget extends StatelessWidget {
           width: double.infinity,
           height: 39,
           type: AppButtonType.outlined,
-          onTap: () {},
+          onTap: () {
+                     Get.offNamed(AppRouter.orderconection,
+             arguments: controller.role,
+         );
+          },
           backgroundColor: Colors.transparent,
         ),
 

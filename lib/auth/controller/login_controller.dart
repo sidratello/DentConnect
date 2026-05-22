@@ -79,7 +79,10 @@ void onInit() {
         'تم تسجيل الدخول بنجاح',
         snackPosition: SnackPosition.BOTTOM,
       );
-
+     Get.toNamed(
+            AppRouter.orderconection,
+        
+          );
       _goToHomeByRole(user.role);
 
       return;

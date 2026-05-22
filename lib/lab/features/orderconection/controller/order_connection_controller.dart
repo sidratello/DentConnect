@@ -1,0 +1,85 @@
+
+
+import 'package:get/get.dart';
+import 'package:template/lab/features/orderconection/model/order_conection_model.dart';
+import 'package:template/lab/features/orderconection/repositry/order_connection_repo.dart';
+
+
+
+class OrderConnectionController extends GetxController {
+  final OrderConnectionRepo _repo = OrderConnectionRepo();
+
+  final isLoading = false.obs;
+final acceptingId = RxnInt();
+  final requests = <OrderConnectionModel>[].obs;
+  final allRequests = <OrderConnectionModel>[].obs;
+
+
+
+
+  @override
+  void onInit() {
+    super.onInit();
+    getRequests();
+  }
+
+  Future<void> getRequests() async {
+    isLoading.value = true;
+
+    final response = await _repo.getRequests();
+
+    isLoading.value = false;
+
+    if (response.success && response.data != null) {
+      allRequests.assignAll(response.data!);
+      requests.assignAll(response.data!);
+    }
+  }
+
+  void searchRequests(String value) {
+    final query = value.trim().toLowerCase();
+
+    if (query.isEmpty) {
+      requests.assignAll(allRequests);
+      return;
+    }
+
+    final result = allRequests.where((item) {
+      final doctorName = item.dentist.name.toLowerCase();
+      final addressPlace = item.dentist.addressPlace.toLowerCase();
+
+      return doctorName.contains(query) ||
+          addressPlace.contains(query);
+    }).toList();
+
+    requests.assignAll(result);
+  }
+
+
+  Future<void> acceptRequest(int requestId) async {
+  acceptingId.value = requestId;
+
+  final response = await _repo.acceptRequest(requestId);
+
+  acceptingId.value = null;
+
+  if (response.success) {
+    allRequests.removeWhere((item) => item.id == requestId);
+    requests.removeWhere((item) => item.id == requestId);
+
+    Get.snackbar(
+      'تم',
+      response.message ?? 'تمت الموافقة على الطلب',
+    );
+  } else {
+    Get.snackbar(
+      'خطأ',
+      response.message,
+    );
+  }
+}
+
+  void goBack() {
+    Get.back();
+  }
+}

@@ -14,6 +14,8 @@ import 'package:template/auth/view/reset_password_screen.dart';
 import 'package:template/auth/view/signup_screen.dart';
 
 import 'package:template/choose_user_type/view/choose_user_type.dart';
+import 'package:template/lab/features/orderconection/binding/orderconection_binding.dart';
+import 'package:template/lab/features/orderconection/views/orderconection.dart';
 
 
 
@@ -25,6 +27,7 @@ abstract class AppRouter {
   static const OTPpage = '/OTPpage';
   static const forgetpasswordpage = '/forgetpasswordpage';
   static const resetpasswordpage = '/resetpasswordpage';
+   static const orderconection = '/orderconection';
   static final List<GetPage<dynamic>> pages = [
     GetPage(
       name: choseuserpage,
@@ -56,6 +59,13 @@ GetPage(
   name: resetpasswordpage,
   page: () => const ResetPasswordScreen(),
   binding: ResetPasswordBinding(),
+),
+GetPage(
+  name: orderconection,
+
+  page: () => const OrderConnectionScreen(),
+
+  binding: OrderConnectionBinding(),
 ),
   ];
 

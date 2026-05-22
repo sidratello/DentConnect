@@ -73,6 +73,14 @@ static BoxDecoration primaryButtonDecoration() {
       ),
     );
   }
+static String getDoctorInitial(String name) {
+  final cleaned = name
+      .replaceAll('Dr.', '')
+      .replaceAll('د.', '')
+      .trim();
+
+  return cleaned.isNotEmpty ? cleaned[0].toUpperCase() : '?';
+}
 
   static void showBirthdayDatePicker(
     BuildContext context,
