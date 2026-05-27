@@ -1,6 +1,5 @@
-
-
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:template/Dentist/HomePage/view/view_only.dart';
 import 'package:template/auth/binding/forpa_binding.dart';
 import 'package:template/auth/binding/login_binding.dart';
 import 'package:template/auth/binding/otp_binding.dart';
@@ -17,56 +16,56 @@ import 'package:template/choose_user_type/view/choose_user_type.dart';
 import 'package:template/lab/features/orderconection/binding/orderconection_binding.dart';
 import 'package:template/lab/features/orderconection/views/orderconection.dart';
 
-
-
-
 abstract class AppRouter {
-  static const choseuserpage = '/';
+  // static const choseuserpage = '/';
+  static const homepage = '/';
+
   static const loginpage = '/loginpage';
   static const signuppage = '/signuppage';
   static const OTPpage = '/OTPpage';
   static const forgetpasswordpage = '/forgetpasswordpage';
   static const resetpasswordpage = '/resetpasswordpage';
-   static const orderconection = '/orderconection';
+  static const orderconection = '/orderconection';
   static final List<GetPage<dynamic>> pages = [
-    GetPage(
-      name: choseuserpage,
-      page: () => const ChooseUserTypeScreen(),
-    ),
+    // GetPage(
+    //   name: choseuserpage,
+    //   page: () => const ChooseUserTypeScreen(),
+    // ),
     GetPage(
       name: signuppage,
       page: () => const SignupScreen(),
       binding: SignupBinding(),
     ),
-       GetPage(
+    GetPage(
       name: loginpage,
       page: () => const LoginScreen(),
-       binding: LoginBinding(),
+      binding: LoginBinding(),
     ),
 
-           GetPage(
+    GetPage(
       name: OTPpage,
       page: () => const OtpScreen(),
-        binding: OtpBinding(),
+      binding: OtpBinding(),
     ),
 
-GetPage(
-  name: forgetpasswordpage,
-  page: () => const fpScreen(),
-  binding: ForgetPasswordBinding(),
-),
-GetPage(
-  name: resetpasswordpage,
-  page: () => const ResetPasswordScreen(),
-  binding: ResetPasswordBinding(),
-),
-GetPage(
-  name: orderconection,
-
-  page: () => const OrderConnectionScreen(),
-
-  binding: OrderConnectionBinding(),
-),
+    GetPage(
+      name: forgetpasswordpage,
+      page: () => const fpScreen(),
+      binding: ForgetPasswordBinding(),
+    ),
+    GetPage(
+      name: resetpasswordpage,
+      page: () => const ResetPasswordScreen(),
+      binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: orderconection,
+      page: () => const OrderConnectionScreen(),
+      binding: OrderConnectionBinding(),
+    ),
+    GetPage(
+      name: homepage,
+      page: () => const ModeScreen(),
+    ),
   ];
-
 }
