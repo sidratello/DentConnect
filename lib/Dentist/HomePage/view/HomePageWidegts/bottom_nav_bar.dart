@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/core/utils/static.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
-  final bool isPreviewMode;
 
   const BottomNavBar({
     super.key,
     required this.currentIndex,
     required this.onTap,
-    required this.isPreviewMode,
   });
 
   @override
@@ -115,6 +115,8 @@ class BottomNavBar extends StatelessWidget {
   }
 
   Widget _buildProfileItem(BuildContext context) {
+    final appModeController = Get.find<HomeController>();
+
     final bool isSelected = currentIndex == 4;
 
     return GestureDetector(
@@ -135,7 +137,7 @@ class BottomNavBar extends StatelessWidget {
           children: [
             ClipOval(
               child: Image.asset(
-                isPreviewMode
+                appModeController.isPreviewMode
                     ? 'assets/images/profile.png'
                     : 'assets/images/doctor_profile.png',
                 width: Static.getwidth(context, 33),

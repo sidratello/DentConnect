@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 
 import 'package:template/core/app_router.dart';
 import 'package:template/core/storage_services.dart';
@@ -11,6 +12,7 @@ void main() async {
   await Get.putAsync<StorageService>(
     () async => await StorageService().init(),
   );
+  Get.put(HomeController());
 
   runApp(const MyApp());
 }
@@ -26,7 +28,13 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return GetMaterialApp(
-            //  locale: const Locale('ar'),
+            locale: const Locale('ar'),
+            builder: (context, child) {
+              return Directionality(
+                textDirection: TextDirection.rtl,
+                child: child!,
+              );
+            },
             getPages: AppRouter.pages,
             debugShowCheckedModeBanner: false,
           );

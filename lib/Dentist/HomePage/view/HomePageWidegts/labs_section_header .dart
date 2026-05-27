@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/core/utils/static.dart';
 
 class LabsSectionHeader extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onTap;
-  final bool isPreviewMode;
 
   const LabsSectionHeader({
     super.key,
     required this.selectedIndex,
     required this.onTap,
-    required this.isPreviewMode,
   });
 
   @override
   Widget build(BuildContext context) {
+    final appModeController = Get.find<HomeController>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Opacity(
-            opacity: isPreviewMode ? 0.5 : 1,
+            opacity: appModeController.isPreviewMode ? 0.5 : 1,
             child: IgnorePointer(
-              ignoring: isPreviewMode,
+              ignoring: appModeController.isPreviewMode,
               child: Container(
                 width: Static.getwidth(context, 240),
                 decoration: BoxDecoration(
-                  color: isPreviewMode
+                  color: appModeController.isPreviewMode
                       ? Colors.grey.shade300
                       : const Color.fromRGBO(239, 242, 249, 1),
                   borderRadius: BorderRadius.circular(12),
@@ -87,6 +89,8 @@ class LabsSectionHeader extends StatelessWidget {
     required String title,
     required int index,
   }) {
+    final appModeController = Get.find<HomeController>();
+
     final bool isSelected = selectedIndex == index;
 
     return GestureDetector(
@@ -98,7 +102,7 @@ class LabsSectionHeader extends StatelessWidget {
           vertical: Static.getheight(context, 12),
         ),
         decoration: BoxDecoration(
-          color: isPreviewMode
+          color: appModeController.isPreviewMode
               ? index == 0
                   ? Colors.grey.shade500
                   : Colors.transparent
@@ -115,7 +119,7 @@ class LabsSectionHeader extends StatelessWidget {
               fontFamily: 'IBM Plex Sans Arabic',
               fontWeight: FontWeight.w500,
               fontSize: Static.getwidth(context, 14),
-              color: isPreviewMode
+              color: appModeController.isPreviewMode
                   ? index == 0
                       ? Colors.white
                       : const Color.fromRGBO(94, 94, 94, 1)

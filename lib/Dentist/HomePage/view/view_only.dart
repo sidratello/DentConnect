@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/HomePage/view/home_page.dart';
 
 class ModeScreen extends StatelessWidget {
@@ -6,6 +8,7 @@ class ModeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appModeController = Get.find<HomeController>();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -14,28 +17,16 @@ class ModeScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const HomePage(
-                      isPreviewMode: true,
-                    ),
-                  ),
-                );
+                Get.find<HomeController>().setPreviewMode(true);
+                Get.to(() => const HomePage());
               },
               child: const Text("وضع الاطلاع"),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const HomePage(
-                      isPreviewMode: false,
-                    ),
-                  ),
-                );
+                Get.find<HomeController>().setPreviewMode(false);
+                Get.to(() => const HomePage());
               },
               child: const Text("الوضع العادي"),
             ),

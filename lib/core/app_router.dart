@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:template/Dentist/HomePage/view/view_only.dart';
+import 'package:template/Dentist/LabDetailsPage/view/lab_details_page.dart';
 import 'package:template/auth/binding/forpa_binding.dart';
 import 'package:template/auth/binding/login_binding.dart';
 import 'package:template/auth/binding/otp_binding.dart';
@@ -9,17 +10,14 @@ import 'package:template/auth/view/forget_password.dart';
 import 'package:template/auth/view/login_screen.dart';
 import 'package:template/auth/view/otp_screen.dart';
 import 'package:template/auth/view/reset_password_screen.dart';
-
 import 'package:template/auth/view/signup_screen.dart';
-
-import 'package:template/choose_user_type/view/choose_user_type.dart';
 import 'package:template/lab/features/orderconection/binding/orderconection_binding.dart';
 import 'package:template/lab/features/orderconection/views/orderconection.dart';
 
 abstract class AppRouter {
   // static const choseuserpage = '/';
-  static const homepage = '/';
-
+  static const homePage = '/';
+  static const labDetailsPage = '/labDetailsPage';
   static const loginpage = '/loginpage';
   static const signuppage = '/signuppage';
   static const OTPpage = '/OTPpage';
@@ -64,8 +62,12 @@ abstract class AppRouter {
       binding: OrderConnectionBinding(),
     ),
     GetPage(
-      name: homepage,
+      name: homePage,
       page: () => const ModeScreen(),
+    ),
+    GetPage(
+      name: labDetailsPage,
+      page: () => const LabDetailsPage(),
     ),
   ];
 }
