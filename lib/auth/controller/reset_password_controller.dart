@@ -11,15 +11,20 @@ class ResetPasswordController extends GetxController {
   final isPasswordVisible = false.obs;
   final passwordController = TextEditingController();
 
-  late final String email;
+late final String email;
+late final String role;
 
   final ResetPasswordRepo _repo = ResetPasswordRepo();
 
-  @override
-  void onInit() {
-    super.onInit();
-    email = Get.arguments as String;
-  }
+@override
+void onInit() {
+  super.onInit();
+
+  final args = Get.arguments as Map<String, dynamic>;
+
+  email = args['email'];
+  role = args['role'];
+}
 
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
@@ -47,7 +52,10 @@ class ResetPasswordController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
 
-      Get.offAllNamed(AppRouter.loginpage);
+    Get.offAllNamed(
+  AppRouter.loginpage,
+  arguments: role,
+);
     } else {
       Get.snackbar(
         'خطأ',

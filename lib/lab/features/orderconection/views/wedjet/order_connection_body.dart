@@ -21,7 +21,7 @@ class OrderConnectionBodyWidget extends StatelessWidget {
       }
 
       if (controller.requests.isEmpty) {
-        return const Center(child: Text('لا توجد نتائج'));
+        return const Center(child: Text('لا يوجد طلبات اتصال'));
       }
 
       return ListView.builder(

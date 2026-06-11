@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:template/core/app_colors.dart';
 import 'package:template/core/widgets/bottom-nav-Item.dart';
 
 
@@ -60,11 +61,11 @@ class CustomBottomNavBar extends StatelessWidget {
             width: 56.w,
             height: 56.h,
             decoration: BoxDecoration(
-              color: const Color(0xff001BFF),
+              color: AppColors.primaryBlue,
               borderRadius: BorderRadius.circular(18.r),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xff001BFF).withOpacity(0.35),
+                  color: AppColors.primaryBlue.withOpacity(0.35),
                   blurRadius: 12.r,
                   offset: Offset(0, 4.h),
                 ),

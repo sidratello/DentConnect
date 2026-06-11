@@ -37,18 +37,22 @@ class SignupActionWidget extends StatelessWidget {
 
         const SizedBox(height: 10),
 
-        AppButton(
-          title: 'المتابعة بوضع الاطلاع',
-          width: double.infinity,
-          height: 39,
-          type: AppButtonType.outlined,
-          onTap: () {
-                     Get.offNamed(AppRouter.orderconection,
-             arguments: controller.role,
-         );
-          },
-          backgroundColor: Colors.transparent,
-        ),
+       if (controller.isDentist) ...[
+      const SizedBox(height: 10),
+      AppButton(
+        title: 'المتابعة بوضع الاطلاع',
+        width: double.infinity,
+        height: 39,
+        type: AppButtonType.outlined,
+        onTap: () {
+          // Get.offAllNamed(
+          //   AppRouter.homepage,
+          //   arguments: controller.role,
+          // );
+        },
+        backgroundColor: Colors.transparent,
+      ),
+    ],
 
         const SizedBox(height: 3),
 

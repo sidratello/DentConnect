@@ -80,7 +80,7 @@ void onInit() {
         snackPosition: SnackPosition.BOTTOM,
       );
      Get.toNamed(
-            AppRouter.orderconection,
+            AppRouter.homepage,
         
           );
       _goToHomeByRole(user.role);
@@ -103,10 +103,13 @@ void onInit() {
         onConfirm: () {
           Get.back();
 
-          Get.toNamed(
-            AppRouter.OTPpage,
-            arguments: emailController.text.trim(),
-          );
+      Get.toNamed(
+  AppRouter.OTPpage,
+  arguments: {
+    'email': emailController.text.trim(),
+    'role': role,
+  },
+);
         },
 
         onCancel: () async {
@@ -197,7 +200,7 @@ void onInit() {
   /// ================= READ ONLY MESSAGE =================
   String _getReadOnlyMessage(String status) {
     if (status == 'PendingAdminApproval') {
-      return 'حسابك بانتظار موافقة الإدارة، تم الدخول بوضع الاطلاع فقط.';
+      return 'حسابك بانتظار موافقة الإدارة';
     }
 
     if (status == 'Suspended') {

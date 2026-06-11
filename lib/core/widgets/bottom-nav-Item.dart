@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:template/core/app_colors.dart';
 
 class BottomNavItem extends StatelessWidget {
   final IconData icon;
@@ -23,7 +24,7 @@ class BottomNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color color =
-        isSelected ? const Color(0xff0057FF) : const Color(0xff8E8E93);
+        isSelected ? AppColors.primaryBlue : const Color(0xff8E8E93);
 
     return InkWell(
       onTap: onTap,

@@ -6,12 +6,17 @@ import 'package:template/core/app_router.dart';
 
 class ForgetPasswordController extends GetxController {
   final formKey = GlobalKey<FormState>();
+  late final String role;
   final emailController = TextEditingController();
 
   final ForgetPasswordRepo _repo = ForgetPasswordRepo();
 
   final isLoading = false.obs;
-
+@override
+void onInit() {
+  super.onInit();
+  role = Get.arguments ?? 'Dentist';
+}
   Future<void> forgotPassword() async {
     if (!formKey.currentState!.validate()) return;
 
@@ -30,10 +35,13 @@ class ForgetPasswordController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
 
-      Get.toNamed(
-        AppRouter.resetpasswordpage,
-        arguments: emailController.text.trim(),
-      );
+   Get.toNamed(
+  AppRouter.resetpasswordpage,
+  arguments: {
+    'email': emailController.text.trim(),
+    'role': role,
+  },
+);
     } else {
       Get.snackbar(
         'خطأ',

@@ -153,15 +153,15 @@ class AppButton extends StatelessWidget {
     return BoxDecoration(
       gradient: const LinearGradient(
         colors: [
-          Color(0xFF8DB6FF),
-          Color(0xFF075AFF),
+     Color(0xFF075AFF),
+        Color(0xFF075AFF),
         ],
       ),
        image: const DecorationImage(
       image: AssetImage('assets/images/Frame 2608747 (1)_cleanup.png'),
       alignment: Alignment.centerLeft,
       fit: BoxFit.cover,
-      opacity: 0.35,
+      opacity: 0.45,
     ),
       borderRadius: BorderRadius.circular(borderRadius),
       boxShadow: [

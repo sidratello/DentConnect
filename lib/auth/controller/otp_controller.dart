@@ -14,6 +14,7 @@ class OtpController extends GetxController {
  final code = ''.obs;
   late final String email;
 
+late final String role;
 
 
 
@@ -23,7 +24,10 @@ class OtpController extends GetxController {
 @override
   void onInit() {
     super.onInit();
-    email = Get.arguments as String;
+    final args = Get.arguments as Map<String, dynamic>;
+
+  email = args['email'];
+  role = args['role'];
   }
 
 
@@ -49,7 +53,10 @@ class OtpController extends GetxController {
         'تم تأكيد البريد الإلكتروني بنجاح، بانتظار موافقة الإدارة لتفعيل الحساب.',
         snackPosition: SnackPosition.BOTTOM,
       );
-  Get.offAllNamed(AppRouter.loginpage);
+Get.offAllNamed(
+  AppRouter.loginpage,
+  arguments: role,
+);
       print(response.data);
     } else {
       Get.snackbar(

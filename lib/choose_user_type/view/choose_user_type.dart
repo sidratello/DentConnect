@@ -78,7 +78,7 @@ class ChooseUserTypeScreen extends StatelessWidget {
 
 
                   Text(
-                    ' :  سجل دخولك ك  ',
+                    ' سجل دخولك ك : ',
                     style: AppTextStyles.ibmRegular16WhiteStyle.copyWith(
                       color: AppColors.textDark,
                     ),
@@ -88,12 +88,13 @@ class ChooseUserTypeScreen extends StatelessWidget {
                   const SizedBox(height: 10),
 
                  AppButton(
-  title: 'أطباء',
-  type: AppButtonType.gradient,
-  icon: const Icon(
+                  icon: const Icon(
     Icons.medical_services_outlined,
 
   ),
+  title: 'أطباء',
+  type: AppButtonType.gradient,
+  
   onTap: () {
     Get.toNamed(AppRouter.signuppage,
      arguments: 'Dentist',

@@ -8,6 +8,7 @@ import 'package:template/core/widgets/app_button.dart';
 import 'package:template/lab/features/orderconection/model/order_conection_model.dart';
 
 import 'package:template/lab/features/orderconection/views/wedjet/doctoricon.dart';
+import 'package:template/lab/features/orderconection/views/wedjet/order_connection_details_dialog.dart';
 
 
 
@@ -76,9 +77,18 @@ const OrderConnectionCard({
   color: AppColors.darkBlue,
 )
                       ),
+                       Text(
+                        item.dentist.namePlace,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.ibmMedium18NeutralStyle.copyWith(
+  color: AppColors.darkBlue,
+  fontSize: 14.sp,
+)
+                      ),
                       SizedBox(height: 6.h),
                       Text(
-                        item.dentist.addressPlace,
+                       '${item.dentist.countryPlace} - ${item.dentist.cityPlace} - ${item.dentist.addressPlace}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.ibmRegular14NeutralStyle.copyWith(
@@ -99,7 +109,7 @@ const OrderConnectionCard({
   width: 95.w,
   height: 38.h,
   borderRadius: 16.r,
-  backgroundColor: AppColors.lightRed,
+  backgroundColor:  Color(0xFF6B7280),
   textStyle: AppTextStyles.ibmRegular12DarkStyle.copyWith(
     color: AppColors.white,
     fontWeight: FontWeight.w700,
@@ -113,7 +123,7 @@ const OrderConnectionCard({
   width: 95.w,
   height: 38.h,
   borderRadius: 16.r,
-  backgroundColor: AppColors.green,
+  backgroundColor: const Color.fromARGB(255, 4, 0, 84),
   textStyle: AppTextStyles.ibmRegular12DarkStyle.copyWith(
     color: AppColors.white,
     fontWeight: FontWeight.w700,
@@ -132,7 +142,14 @@ const OrderConnectionCard({
               width: double.infinity,
               child:AppButton(
   title: 'رؤية التفاصيل',
-  onTap: () {},
+   onTap: () {
+    showOrderConnectionDetailsDialog(
+      context,
+      item,
+      onAccept,
+      onReject,
+    );
+  },
   height: 44.h,
   borderRadius: 16.r,
   backgroundColor: const Color(0xff2454B8),

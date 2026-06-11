@@ -14,8 +14,15 @@ import 'package:template/auth/view/reset_password_screen.dart';
 import 'package:template/auth/view/signup_screen.dart';
 
 import 'package:template/choose_user_type/view/choose_user_type.dart';
+import 'package:template/lab/features/homepage/binding/homebinding.dart';
+import 'package:template/lab/features/homepage/lab_home_page.dart';
+
 import 'package:template/lab/features/orderconection/binding/orderconection_binding.dart';
 import 'package:template/lab/features/orderconection/views/orderconection.dart';
+import 'package:template/lab/features/profile/binding/edit_profile_binding.dart';
+import 'package:template/lab/features/profile/binding/profile_binding.dart';
+import 'package:template/lab/features/profile/views/edit_profile_screen.dart';
+import 'package:template/lab/features/profile/views/profile.dart';
 
 
 
@@ -27,6 +34,9 @@ abstract class AppRouter {
   static const OTPpage = '/OTPpage';
   static const forgetpasswordpage = '/forgetpasswordpage';
   static const resetpasswordpage = '/resetpasswordpage';
+   static const homepage = '/homepage';
+   static const profile = '/profile';
+   static const editProfile = '/editProfile';
    static const orderconection = '/orderconection';
   static final List<GetPage<dynamic>> pages = [
     GetPage(
@@ -60,6 +70,7 @@ GetPage(
   page: () => const ResetPasswordScreen(),
   binding: ResetPasswordBinding(),
 ),
+
 GetPage(
   name: orderconection,
 
@@ -67,6 +78,30 @@ GetPage(
 
   binding: OrderConnectionBinding(),
 ),
+
+GetPage(
+  name: homepage,
+  page: () => const LabHomePage(),
+  binding: LabHomeBinding(),
+),
+GetPage(
+  name: profile,
+  page: () => const LabProfileViewScreen(),
+   binding: LabProfileBinding(),
+),
+GetPage(
+  name: editProfile,
+  page: () => const EditProfileScreen(),
+  binding: EditProfileBinding(),
+),
+GetPage(
+  name: orderconection,
+
+  page: () => const OrderConnectionScreen(),
+
+  binding: OrderConnectionBinding(),
+),
+
   ];
 
 }

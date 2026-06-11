@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:template/auth/repository/signup_repo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/core/app_router.dart';
@@ -116,9 +117,12 @@ if (verificationDocument.value == null) {
       );
 
       print(response.data);
-      Get.toNamed(
+Get.toNamed(
   AppRouter.OTPpage,
-  arguments: emailController.text.trim(),
+  arguments: {
+    'email': emailController.text.trim(),
+    'role': role,
+  },
 );
     } else {
       Get.snackbar(
@@ -148,15 +152,27 @@ if (verificationDocument.value == null) {
     isLoading.value = false;
 
     if (response.success) {
+
+
+
+  final box = GetStorage();
+
+  box.write(
+    'labName',
+    namePlaceController.text.trim(),
+  );
+      
       Get.snackbar(
         'تم بنجاح',
          'تم إنشاء الحساب وهو بانتظار التحقق',
         snackPosition: SnackPosition.BOTTOM,
       );
-
-      Get.toNamed(
+Get.toNamed(
   AppRouter.OTPpage,
-  arguments: emailController.text.trim(),
+  arguments: {
+    'email': emailController.text.trim(),
+    'role': role,
+  },
 );
     } else {
       Get.snackbar(

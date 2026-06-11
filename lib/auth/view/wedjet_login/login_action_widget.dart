@@ -21,7 +21,10 @@ Align(
     onTap: () {
       print('Forget Password Clicked');
 
-      Get.toNamed(AppRouter.forgetpasswordpage);
+   Get.toNamed(
+  AppRouter.forgetpasswordpage,
+  arguments: controller.role,
+);
     },
     child: const Text(
       'نسيت كلمة المرور؟',

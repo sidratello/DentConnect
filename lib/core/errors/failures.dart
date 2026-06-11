@@ -184,5 +184,5 @@ if (lowerMessage.contains('otp is still valid')) {
       return 'الاسم غير صالح.';
     }
 
-    return 'حدث خطأ، يرجى التحقق من البيانات المدخلة.';
+    return message;
   }}
