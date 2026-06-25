@@ -138,9 +138,93 @@ static String getDoctorInitial(String name) {
   // }
 
 
+static Widget shadowWrapper({
+  required Widget child,
+  double radius = 20,
+}) {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(radius),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(.16),
+          blurRadius: 14,
+          offset: const Offset(0, 6),
+        ),
+      ],
+    ),
+    child: child,
+  );
+}
 
+static BoxDecoration acceptButtonDecoration(double radius) {
+  return BoxDecoration(
+    gradient: const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
 
-
+        // Color(0xFF14B8A6), // Teal lighter
+        // Color(0xFF0F766E), 
+              Color(0xFF0F766E), // Dark Teal
+        Color(0xFF0F766E),
+      ],
+    ),
+    borderRadius: BorderRadius.circular(radius),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black26,
+        blurRadius: 10,
+        offset: Offset(0, 4),
+      ),
+    ],
+  );
+}
+static BoxDecoration requestButtonDecoration(double radius) {
+  return BoxDecoration(
+    gradient: const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+// كحلي حيوي في الأعلى
+      //  Color(0xFF3B82F6), // Light royal blue
+      //   Color(0xFF2563EB), 
+        Color(0xFF2563EB), // Royal Blue
+        Color(0xFF2563EB),
+      ],
+    ),
+    borderRadius: BorderRadius.circular(radius),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black26,
+        blurRadius: 10,
+        offset: Offset(0, 4),
+      ),
+    ],
+  );
+}
+static BoxDecoration rejectButtonDecoration(double radius) {
+  return BoxDecoration(
+    gradient: const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+    // Color(0xFF9CA3AF), // Light gray
+    //     Color(0xFF6B7280), 
+           Color(0xFF4B5563), // Charcoal Gray
+        Color(0xFF4B5563),
+      ],
+    ),
+    borderRadius: BorderRadius.circular(radius),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black26,
+        blurRadius: 10,
+        offset: Offset(0, 4),
+      ),
+    ],
+  );
+}
   static bool validatePhoneNumber(String phone) {
     final regex = RegExp(r'^09\d{8}$');
     return regex.hasMatch(phone);

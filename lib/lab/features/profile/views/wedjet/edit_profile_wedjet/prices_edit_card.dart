@@ -112,16 +112,17 @@ final prices = profile.prices;
         ),
       ),
 
-      confirmText: 'حفظ',
+      confirmButton: TextButton(
+    onPressed: () {
+      controller.updatePrice(
+        priceId: item.id,
+        unitPrice: priceController.text.trim(),
+      );
 
-      onConfirm: () {
-        controller.updatePrice(
-          priceId: item.id,
-          unitPrice: priceController.text.trim(),
-        );
-
-        Get.back();
-      },
+      Get.back();
+    },
+    child: const Text('حفظ'),
+  ),
     );
   
                           },
@@ -141,12 +142,14 @@ final prices = profile.prices;
       content: const Text(
         'هل أنت متأكد من حذف هذا السعر؟',
       ),
-      confirmText: 'حذف',
-      onConfirm: () {
-        controller.deletePrice(item.id);
+      confirmButton: TextButton(
+    onPressed: () {
+      controller.deletePrice(item.id);
 
-        Get.back();
-      },
+      Get.back();
+    },
+    child: const Text('حذف'),
+  ),
     );
   },
                           

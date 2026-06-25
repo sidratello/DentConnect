@@ -3,10 +3,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:template/core/widgets/InfoText.dart';
 import 'package:template/lab/features/profile/model/profile_modil.dart';
 import 'package:template/lab/features/profile/views/wedjet/profile_wedjet.dart/chip.dart';
 
-import 'package:template/lab/features/profile/views/wedjet/profile_wedjet.dart/info_text.dart';
 import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/section_card.dart';
 
 

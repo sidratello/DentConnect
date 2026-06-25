@@ -14,6 +14,7 @@ class PasswordVisibilityIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(
+        
         visible ? Icons.visibility : Icons.visibility_off_rounded,
         color: const Color.fromARGB(255, 13, 12, 12),
       ),

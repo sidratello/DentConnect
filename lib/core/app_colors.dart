@@ -30,4 +30,34 @@ class AppColors {
   static const Color grey200 = Color(0xFFEEEEEE);
 static const Color grey400 = Color(0xFFBDBDBD);
 static const Color grey600 = Color(0xFF757575);
+
+
+
+  static const Color actionGrey = Color(0xFF6B7280);
+  static const Color lightActionGrey = Color(0xFFB2B7C2);
+  static const Color mediumActionGrey = Color(0xFFA0A5AE);
+
+
+  static const Color normalBackground = Color(0xFFE9EEF7);
+static const Color normalText = Color(0xFF5D6B82);
+
+
+static const Color urgentBackground = Color(0xFFFFE7C2);
+static const Color urgentText = Color(0xFFB26A00);
+
+
+
+static const Color acceptBlueDark = Color(0xFF0D5C74);
+static const Color acceptBlueLight = Color(0xFF2EA6C8);
+
+static const Color requestGoldDark = Color(0xFFD4B23F);
+static const Color requestGoldLight = Color(0xFFF0D56D);
+
+static const Color rejectGreyDark = Color(0xFF7C7C7C);
+static const Color rejectGreyLight = Color(0xFFC7C7C7);
+
+
+static const Color softCardGrey = Color(0xFFF3F4F8);
+static const Color softCream = Color(0xFFFFFAEF);
+static const Color softCreamBorder = Color(0xFFE5D6B8);
 }

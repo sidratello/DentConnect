@@ -40,13 +40,21 @@ class LabHomeView extends StatelessWidget {
       count: controller.connectionRequestsCount.value,
 onTap: () {
   Get.toNamed(AppRouter.orderconection);
+    controller.getConnectionRequestsCount();
 },
     );
   }),
-                  HomeActionCard(
-                    title: 'الطلبات الجديدة',
-                    icon: Icons.calendar_month_outlined,
-                  ),
+Obx(() {
+  return HomeActionCard(
+    title: 'الطلبات الجديدة',
+    icon: Icons.calendar_month_outlined,
+    count: controller.pendingOrdersCount.value,
+    onTap: () {
+      Get.toNamed(AppRouter.orders);
+      controller.getPendingOrdersCount();
+    },
+  );
+}),
                   HomeActionCard(
                     title: 'تقويم الطلبات',
                     icon: Icons.calendar_today_outlined,

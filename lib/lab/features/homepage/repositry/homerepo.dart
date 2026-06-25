@@ -22,4 +22,26 @@ class LabHomeRepo {
       statusCode: response.statusCode,
     );
   }
+
+
+ Future<ApiResponse<int>> getPendingOrdersCount() async {
+    final response = await _apiService.get<Map<String, dynamic>>(
+      'LabOrders/pending/count',
+    );
+
+    if (response.success && response.data != null) {
+      return ApiResponse.success(
+        data: response.data!['pendingCount'] ?? 0,
+        message: response.message,
+        statusCode: response.statusCode,
+      );
+    }
+
+    return ApiResponse.error(
+      response.message,
+      statusCode: response.statusCode,
+    );
+  }
+
+
 }

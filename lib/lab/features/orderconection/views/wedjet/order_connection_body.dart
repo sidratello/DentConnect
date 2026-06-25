@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:template/lab/features/homepage/controller/homecontroller.dart';
 import 'package:template/lab/features/orderconection/controller/order_connection_controller.dart';
 
 
@@ -42,13 +43,19 @@ class OrderConnectionBodyWidget extends StatelessWidget {
             },
             child:OrderConnectionCard(
   item: controller.requests[index],
-  onAccept: () {
-    controller.acceptRequest(controller.requests[index].id);
+  onAccept: ()  async{
+      await controller.acceptRequest(controller.requests[index].id);
+    if (Get.isRegistered<LabHomeController>()) {
+      Get.find<LabHomeController>().getConnectionRequestsCount();
+    }
   },
-    onReject: () {
-    controller.rejectRequest(
+    onReject: ()  async{
+    await controller.rejectRequest(
       controller.requests[index].id,
     );
+      if (Get.isRegistered<LabHomeController>()) {
+      Get.find<LabHomeController>().getConnectionRequestsCount();
+    }
   },
 )
           );

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 class CustomActionDialog {
   static void show({
     required BuildContext context,
     required String title,
     required Widget content,
-    required String confirmText,
-    required VoidCallback onConfirm,
+
+    /// الزر الذي تريد عرضه (AppButton أو أي Widget آخر)
+    required Widget confirmButton,
+
+    String cancelText = 'إلغاء',
   }) {
-    showDialog(
-      context: context,
-      builder: (_) {
-        return AlertDialog(
+    Get.dialog(
+      Directionality(
+        textDirection: TextDirection.rtl,
+        child: AlertDialog(
           title: Text(title),
 
           content: content,
@@ -19,16 +23,13 @@ class CustomActionDialog {
           actions: [
             TextButton(
               onPressed: () => Get.back(),
-              child: const Text('إلغاء'),
+              child: Text(cancelText),
             ),
 
-            TextButton(
-              onPressed: onConfirm,
-              child: Text(confirmText),
-            ),
+            confirmButton,
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }

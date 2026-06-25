@@ -79,47 +79,98 @@ class RadioItem extends StatelessWidget {
       ],
     );
   }
-}
+ }
+// class SwitchRow extends StatelessWidget {
+//   final String title;
+//   final bool value;
+//   final bool readOnly;
+//   final ValueChanged<bool>? onChanged;
+
+//   const SwitchRow({
+//     super.key,
+//     required this.title,
+//     required this.value,
+//     this.readOnly = false,
+//     this.onChanged,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Text(
+//           title,
+//           style: AppTextStyles.ibmMedium18NeutralStyle.copyWith(
+//             fontWeight: FontWeight.w700,
+//           ),
+//         ),
+
+//         SizedBox(width: 70.w),
+
+//         AbsorbPointer(
+//           absorbing: readOnly,
+//           child: Switch(
+//             value: value,
+//             onChanged: onChanged ?? (_) {},
+//             trackColor: WidgetStateProperty.resolveWith(
+//   (states) {
+//     if (states.contains(WidgetState.selected)) {
+//       return AppColors.primaryBlue;
+//     }
+//     return const Color.fromARGB(255, 231, 223, 223);
+//   },
+// ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 class SwitchRow extends StatelessWidget {
   final String title;
   final bool value;
   final bool readOnly;
   final ValueChanged<bool>? onChanged;
-
+  final Color? activeTrackColor;
+  final Color? inactiveTrackColor;
   const SwitchRow({
     super.key,
     required this.title,
     required this.value,
     this.readOnly = false,
     this.onChanged,
+        this.activeTrackColor,
+    this.inactiveTrackColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          title,
-          style: AppTextStyles.ibmMedium18NeutralStyle.copyWith(
-            fontWeight: FontWeight.w700,
+        Expanded(
+          child: Text(
+            title,
+            style: AppTextStyles.ibmMedium18NeutralStyle.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
-
-        SizedBox(width: 70.w),
 
         AbsorbPointer(
           absorbing: readOnly,
           child: Switch(
             value: value,
             onChanged: onChanged ?? (_) {},
-            trackColor: WidgetStateProperty.resolveWith(
-  (states) {
-    if (states.contains(WidgetState.selected)) {
-      return AppColors.primaryBlue;
-    }
-    return const Color.fromARGB(255, 231, 223, 223);
-  },
-),
+               activeColor: AppColors.white,
+
+            // default color
+            activeTrackColor:
+                activeTrackColor ?? AppColors.primaryBlue,
+
+            inactiveThumbColor: AppColors.white,
+
+            inactiveTrackColor:
+                inactiveTrackColor ?? AppColors.grey400,
           ),
         ),
       ],
