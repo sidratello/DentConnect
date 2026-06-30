@@ -5,8 +5,9 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+
 import 'package:template/core/app_colors.dart';
+import 'package:template/core/app_helper.dart';
 import 'package:template/core/app_text_styles.dart';
 
 import 'package:template/lab/features/order/controller/order_details_controller.dart';
@@ -16,7 +17,6 @@ import 'package:template/lab/features/order/views/order_detals_wedjet/ImagesSect
 import 'package:template/lab/features/order/views/order_detals_wedjet/OrderInfoBox.dart';
 import 'package:template/lab/features/order/views/order_detals_wedjet/OrderSwitchesBox.dart';
 import 'package:template/lab/features/order/views/order_detals_wedjet/orderinfocard.dart';
-import 'package:template/lab/features/order/views/order_wedjet/order_arabic_text_healper.dart';
 
 
 class OrderDetailsBodyWidget extends StatelessWidget {
@@ -27,7 +27,7 @@ class OrderDetailsBodyWidget extends StatelessWidget {
 
     final controller = Get.find<OrderDetailsController>();
     final order = controller.order;
-        final date = DateFormat('yyyy-MM-dd').format(order.deliveryDate);
+final date = order.formattedDeliveryDate;
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Directionality(
@@ -65,13 +65,13 @@ class OrderDetailsBodyWidget extends StatelessWidget {
     const SizedBox(width: 10),
     OrderDetailInfoCard(
       title: 'نوع الطبعة',
-      value: OrderTextHelper.arabicImpressionType(order.impressionType),
+      value: AppHelper.arabicImpressionType(order.impressionType),
       imagePath: 'assets/images/teeth (1).png',
     ),
     const SizedBox(width: 10),
     OrderDetailInfoCard(
       title: 'مرحلة الطبعة',
-      value: OrderTextHelper.arabicImpressionStage(order.impressionStage),
+      value: AppHelper.arabicImpressionStage(order.impressionStage),
       imagePath: 'assets/images/dentist.png',
     ),
   ],

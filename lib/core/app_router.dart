@@ -14,6 +14,10 @@ import 'package:template/auth/view/reset_password_screen.dart';
 import 'package:template/auth/view/signup_screen.dart';
 
 import 'package:template/choose_user_type/view/choose_user_type.dart';
+import 'package:template/lab/features/case_orders/binding/case_orders_binding.dart';
+import 'package:template/lab/features/case_orders/views/case_orders_screen.dart';
+import 'package:template/lab/features/case_status/binding/case_status_binding.dart';
+import 'package:template/lab/features/case_status/views/case_status_screen.dart';
 import 'package:template/lab/features/homepage/binding/homebinding.dart';
 import 'package:template/lab/features/homepage/lab_home_page.dart';
 import 'package:template/lab/features/order/binding/order_binding.dart';
@@ -44,6 +48,8 @@ abstract class AppRouter {
    static const orderconection = '/orderconection';
    static const orders = '/orders';
 static const orderDetails = '/orderDetails';
+static const caseStatus = '/caseStatus';
+static const caseOrders = '/caseOrders';
 
   static final List<GetPage<dynamic>> pages = [
     GetPage(
@@ -114,6 +120,18 @@ GetPage(
   binding: OrderDetailsBinding(),
 ),
 
+
+GetPage(
+  name: caseStatus,
+  page: () => const CaseStatusScreen(),
+  binding: CaseStatusBinding(),
+),
+
+GetPage(
+  name: caseOrders,
+  page: () => const CaseOrdersScreen(),
+  binding: CaseOrdersBinding(),
+),
   ];
 
 }

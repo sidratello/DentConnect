@@ -6,7 +6,7 @@
 
 import 'package:template/core/api.dart';
 import 'package:template/core/api_response.dart';
-import 'package:template/lab/features/order/model/order_model.dart';
+import 'package:template/lab/shared/models/lab_order_model.dart';
 
 class LabOrderRepo {
   final ApiService _apiService = ApiService();

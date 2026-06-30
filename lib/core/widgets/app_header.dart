@@ -12,34 +12,53 @@ class AuthHeader extends StatelessWidget {
 
   final bool showBackButton;
 
+  final String? subtitle;
+
   const AuthHeader({
     super.key,
     this.title,
     this.onBack,
     this.rightWidget,
     this.showBackButton = true,
+    this.subtitle,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 37,
+      height: 47,
       child: Stack(
         alignment: Alignment.center,
 
         children: [
 
           /// title
-          if (title != null)
-            Center(
-              child: Text(
-                title!,
-                style: AppTextStyles.ibmBold22NeutralStyle.copyWith(
-                  color: AppColors.darkBlue,
-                ),
-              ),
-            ),
+    Center(
+  child: Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      if (title != null)
+        Text(
+          title!,
+          style: AppTextStyles.ibmBold22NeutralStyle.copyWith(
+            color: AppColors.darkBlue,
+          ),
+        ),
 
+      if (subtitle != null) ...[
+        const SizedBox(height: 2),
+        Text(
+          subtitle!,
+          style: AppTextStyles.ibmRegular14NeutralStyle.copyWith(
+            color: AppColors.normalText,
+          ),
+        ),
+      ],
+    ],
+  ),
+),
+          /// subtitle
+        
           /// back button
           if (showBackButton)
             Positioned(

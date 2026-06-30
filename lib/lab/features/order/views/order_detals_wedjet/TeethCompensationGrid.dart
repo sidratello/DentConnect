@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:template/core/app_text_styles.dart';
-import 'package:template/lab/features/order/model/order_model.dart';
+import 'package:template/lab/shared/models/lab_order_model.dart';
 import 'package:template/lab/features/order/views/order_detals_wedjet/ToothInfo.dart';
 import 'package:template/lab/features/order/views/order_detals_wedjet/tooth_card.dart';
 

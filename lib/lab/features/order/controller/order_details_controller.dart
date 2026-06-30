@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:template/lab/features/order/repositry/order_repo.dart';
-import '../../order/model/order_model.dart';
+import 'package:template/lab/shared/models/lab_order_model.dart';
 
 class OrderDetailsController extends GetxController {
   late final LabOrderModel order;

@@ -67,10 +67,13 @@ Obx(() {
                     title: 'المدونة',
                     icon: Icons.edit_note_outlined,
                   ),
-                  HomeActionCard(
-                    title: 'إدارة الحالات',
-                    icon: Icons.folder_copy_outlined,
-                  ),
+                 HomeActionCard(
+  title: 'إدارة الحالات',
+  icon: Icons.folder_copy_outlined,
+  onTap: () {
+    Get.toNamed(AppRouter.caseStatus);
+  },
+),
                 ],
               ),
             ),

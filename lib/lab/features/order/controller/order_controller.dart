@@ -1,6 +1,6 @@
 
 import 'package:get/get.dart';
-import '../model/order_model.dart';
+import 'package:template/lab/shared/models/lab_order_model.dart';
 import '../repositry/order_repo.dart';
 
 enum OrderFilter { all, urgent, notUrgent }

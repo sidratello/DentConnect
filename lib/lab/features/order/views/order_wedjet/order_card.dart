@@ -1,12 +1,12 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:template/core/app_colors.dart';
-import 'package:template/core/app_text_styles.dart';
-import 'package:template/lab/features/order/views/order_wedjet/order_arabic_text_healper.dart';
 
-import '../../model/order_model.dart';
+import 'package:template/core/app_colors.dart';
+import 'package:template/core/app_helper.dart';
+import 'package:template/core/app_text_styles.dart';
+
+import 'package:template/lab/shared/models/lab_order_model.dart';
 
 class LabOrderCardWidget extends StatelessWidget {
   final LabOrderModel order;
@@ -19,7 +19,7 @@ class LabOrderCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = DateFormat('yyyy-MM-dd').format(order.deliveryDate);
+final date = order.formattedDeliveryDate;
 
     return Directionality(
       textDirection: ui.TextDirection.rtl,
@@ -126,7 +126,7 @@ class LabOrderCardWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _InfoChip(
-                                title: OrderTextHelper.arabicImpressionType(order.impressionType),
+                                title: AppHelper.arabicImpressionType(order.impressionType),
                                 icon: Icons.medical_services_outlined,
                                 backgroundColor: AppColors.lightCyan,
                                 textColor: AppColors.darkBlue,
@@ -135,7 +135,7 @@ class LabOrderCardWidget extends StatelessWidget {
                               const SizedBox(height: 12),
 
                               _InfoChip(
-                                title: OrderTextHelper.arabicImpressionStage(order.impressionStage),
+                                title: AppHelper.arabicImpressionStage(order.impressionStage),
                                 icon: Icons.workspace_premium_outlined,
                                 backgroundColor: AppColors.darkBlue,
                                 textColor: AppColors.white,
