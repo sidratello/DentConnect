@@ -4,18 +4,22 @@ import 'package:get/get.dart';
 import 'package:template/lab/features/orderconection/model/order_conection_model.dart';
 import 'package:template/lab/features/orderconection/repositry/order_connection_repo.dart';
 
-
+enum OrderConnectionTab {
+  connectedDoctors,
+  connectionRequests,
+}
 
 class OrderConnectionController extends GetxController {
   final OrderConnectionRepo _repo = OrderConnectionRepo();
 
   final isLoading = false.obs;
 
-
   final requests = <OrderConnectionModel>[].obs;
   final allRequests = <OrderConnectionModel>[].obs;
+ // تبويب طلبات الاتصال هو المختار عند فتح الشاشة
+  final selectedTab = OrderConnectionTab.connectionRequests.obs;
 
-
+final searchQuery = ''.obs;
 
 
   @override
@@ -24,6 +28,17 @@ class OrderConnectionController extends GetxController {
     getRequests();
   }
 
+
+  void changeTab(OrderConnectionTab tab) {
+    selectedTab.value = tab;
+
+    // مسح البحث عند الانتقال بين التبويبات
+    searchQuery.value = '';
+
+    if (tab == OrderConnectionTab.connectionRequests) {
+      requests.assignAll(allRequests);
+    }
+  }
   Future<void> getRequests() async {
     isLoading.value = true;
 
@@ -38,7 +53,9 @@ class OrderConnectionController extends GetxController {
   }
 
   void searchRequests(String value) {
-    final query = value.trim().toLowerCase();
+    searchQuery.value = value.trim();
+
+    final query = searchQuery.value.toLowerCase();
 
     if (query.isEmpty) {
       requests.assignAll(allRequests);
@@ -55,6 +72,7 @@ class OrderConnectionController extends GetxController {
 
     requests.assignAll(result);
   }
+
 
 Future<void> acceptRequest(int requestId) async {
 

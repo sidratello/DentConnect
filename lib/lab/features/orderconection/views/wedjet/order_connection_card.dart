@@ -33,11 +33,11 @@ const OrderConnectionCard({
       padding: EdgeInsets.all(14.w),
   decoration: BoxDecoration(
   borderRadius: BorderRadius.circular(22.r),
-
+                    // color: const Color.fromARGB(255, 224, 230, 243),
   image: const DecorationImage(
     image: AssetImage('assets/images/photo_2026-05-21_10-26-13.jpg'),
     fit: BoxFit.cover,
-    opacity: 0.75,
+    opacity: 0.4,
   ),
 
 
@@ -103,15 +103,16 @@ const OrderConnectionCard({
 
                 Column(
                   children: [
-                   AppButton(
-  title: 'رفض ',
- onTap: onReject,
+AppButton(
+  title: 'رفض',
+  onTap: onReject,
   width: 95.w,
   height: 38.h,
   borderRadius: 16.r,
-  backgroundColor:  Color(0xFF6B7280),
+  backgroundColor: const Color.fromARGB(203, 243, 245, 250),
+  textColor: const Color(0xFF6B7280),
   textStyle: AppTextStyles.ibmRegular12DarkStyle.copyWith(
-    color: AppColors.white,
+    color: const Color(0xFF6B7280),
     fontWeight: FontWeight.w700,
     fontSize: 13.sp,
   ),
@@ -123,7 +124,7 @@ const OrderConnectionCard({
   width: 95.w,
   height: 38.h,
   borderRadius: 16.r,
-  backgroundColor: const Color.fromARGB(255, 4, 0, 84),
+  backgroundColor: Color(0xff0A2F8F),
   textStyle: AppTextStyles.ibmRegular12DarkStyle.copyWith(
     color: AppColors.white,
     fontWeight: FontWeight.w700,
@@ -140,9 +141,20 @@ const OrderConnectionCard({
             SizedBox(
               height: 44.h,
               width: double.infinity,
-              child:AppButton(
-  title: 'رؤية التفاصيل',
-   onTap: () {
+              child:
+              
+  AppButton(
+  title: 'عرض التفاصيل',
+  type: AppButtonType.outlined,
+  backgroundColor: const Color.fromARGB(255, 214, 227, 250),
+  borderColor: const Color(0xFFC3D5FF),
+  textColor: AppColors.darkBlue,
+  icon: Icon(
+    Icons.remove_red_eye_outlined,
+    color: AppColors.darkBlue,
+    size: 20.sp,
+  ),
+  onTap: () {
     showOrderConnectionDetailsDialog(
       context,
       item,
@@ -150,18 +162,6 @@ const OrderConnectionCard({
       onReject,
     );
   },
-  height: 44.h,
-  borderRadius: 16.r,
-  backgroundColor: const Color(0xff2454B8),
-  icon: Icon(
-    Icons.remove_red_eye_outlined,
-    color: AppColors.white,
-    size: 18.sp,
-  ),
-  textStyle: AppTextStyles.ibmRegular12DarkStyle.copyWith(
-    color: AppColors.white,
-    fontWeight: FontWeight.w700,
-  ),
 )
             ),
           ],

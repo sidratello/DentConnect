@@ -3,9 +3,12 @@
 /// ======================================
 
 import 'package:flutter/material.dart';
+import 'package:template/lab/features/orderconection/controller/connected_doctors_controller.dart';
 import 'package:template/lab/features/orderconection/controller/order_connection_controller.dart';
+import 'package:template/lab/features/orderconection/views/DoctorConnectionwedjet/connected_doctors_body.dart';
 import 'package:template/lab/features/orderconection/views/wedjet/lab_background_layout.dart';
 import 'package:template/lab/features/orderconection/views/wedjet/order_conection_seacrch.dart';
+import 'package:template/lab/features/orderconection/views/wedjet/order_connec_tabs.dart';
 
 import 'package:template/lab/features/orderconection/views/wedjet/order_connection_body.dart';
 
@@ -17,6 +20,7 @@ import 'package:get/get.dart';
 
 
 
+
 class OrderConnectionScreen extends StatelessWidget {
   const OrderConnectionScreen({super.key});
 
@@ -24,21 +28,42 @@ class OrderConnectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<OrderConnectionController>();
 
-    return  LabBackgroundLayout(
-  child: Column(
-    children: [
+    final connectedDoctorsController =
+        Get.find<ConnectedDoctorsController>();
 
-      const OrderConnectionHeaderWidget(),
+    return LabBackgroundLayout(
+      child: Column(
+        children: [
+          const OrderConnectionHeaderWidget(),
 
-      OrderConnectionSearchWidget(
-        onChanged: controller.searchRequests,
+          OrderConnectionSearchWidget(
+
+
+            onChanged: (value) {
+              if (controller.selectedTab.value ==
+                  OrderConnectionTab.connectedDoctors) {
+                connectedDoctorsController.searchDoctors(value);
+              } else {
+                controller.searchRequests(value);
+              }
+            },
+          ),
+
+          const OrderConnectionTabs(),
+
+          Expanded(
+            child: Obx(() {
+              switch (controller.selectedTab.value) {
+                case OrderConnectionTab.connectionRequests:
+                  return const OrderConnectionBodyWidget();
+
+                case OrderConnectionTab.connectedDoctors:
+                  return const ConnectedDoctorsBody();
+              }
+            }),
+          ),
+        ],
       ),
-
-      Expanded(
-        child: OrderConnectionBodyWidget(),
-      ),
-    ],
-  ),
-);
+    );
   }
 }

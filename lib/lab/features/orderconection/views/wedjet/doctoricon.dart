@@ -4,10 +4,11 @@ import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
 class DoctorInitialIcon extends StatelessWidget {
   final String initial;
-
+  final bool showSmallInitial;
   const DoctorInitialIcon({
     super.key,
     required this.initial,
+     this.showSmallInitial = true,
   });
 
   @override
@@ -61,7 +62,7 @@ class DoctorInitialIcon extends StatelessWidget {
             ),
           ),
 
-          /// SMALL CIRCLE
+   if (showSmallInitial)
         Positioned(
   bottom: 6.h,
   right: 4.w,

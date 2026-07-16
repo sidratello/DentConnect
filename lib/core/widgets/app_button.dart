@@ -138,6 +138,7 @@ class AppButton extends StatelessWidget {
     if (icon == null) return text;
 
     return Row(
+        textDirection: TextDirection.ltr,
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [

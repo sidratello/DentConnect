@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:template/core/widgets/CustomEmptyState.dart';
 import 'package:template/lab/features/homepage/controller/homecontroller.dart';
 import 'package:template/lab/features/orderconection/controller/order_connection_controller.dart';
 
@@ -21,9 +22,19 @@ class OrderConnectionBodyWidget extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       }
 
-      if (controller.requests.isEmpty) {
-        return const Center(child: Text('لا يوجد طلبات اتصال'));
-      }
+if (controller.requests.isEmpty) {
+  final isSearching = controller.searchQuery.value.isNotEmpty;
+
+  return CustomEmptyState(
+    title: isSearching
+        ? 'لا توجد نتائج بحث'
+        : 'لا توجد طلبات اتصال',
+    subtitle: isSearching
+        ? 'لم يتم العثور على طبيب أو عنوان مطابق للبحث.'
+        : 'عند وصول طلبات اتصال جديدة من الأطباء ستظهر هنا.',
+    mainAxisAlignment: MainAxisAlignment.start,
+  );
+}
 
       return ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),

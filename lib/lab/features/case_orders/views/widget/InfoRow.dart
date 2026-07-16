@@ -28,12 +28,17 @@ class CaseOrderIconText extends StatelessWidget {
     final textWidget = Text(
       text,
       textAlign: TextAlign.right,
-      maxLines: expandText ? 1 : null,
-      overflow: expandText ? TextOverflow.ellipsis : TextOverflow.visible,
+      // maxLines: expandText ? 1 : null,
+      // overflow: expandText ? TextOverflow.ellipsis : TextOverflow.visible,
+      maxLines: isChip ? 2 : 1,
+overflow: TextOverflow.ellipsis,
       style: isChip
           ? AppTextStyles.ibmRegular12DarkStyle.copyWith(
               color: textColor,
-              fontWeight: FontWeight.w700,
+              // fontWeight: FontWeight.normal,
+              fontSize: 14,
+height: 1.15,
+fontWeight: FontWeight.w600,
             )
           : AppTextStyles.ibmRegular14NeutralStyle.copyWith(
               color: textColor,
@@ -62,18 +67,28 @@ class CaseOrderIconText extends StatelessWidget {
           ),
 
         const SizedBox(width: 6),
-
-        if (expandText && !isChip)
-          Expanded(child: textWidget)
-        else
-          textWidget,
+Flexible(
+  child: textWidget,
+),
+        // if (expandText && !isChip)
+        //   Expanded(child: textWidget)
+        // else
+        //   textWidget,
       ],
     );
 
     if (!isChip) return row;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+      // padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+      constraints: const BoxConstraints(
+  maxWidth: 130,
+),
+
+padding: const EdgeInsets.symmetric(
+  horizontal: 8,
+  vertical: 5,
+),
       decoration: BoxDecoration(
         color: background,
         borderRadius: BorderRadius.circular(11),

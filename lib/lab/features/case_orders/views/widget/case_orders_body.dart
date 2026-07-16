@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/core/app_router.dart';
 import 'package:template/core/widgets/CustomEmptyState.dart';
 
 import 'package:template/lab/features/case_orders/views/widget/SmallActionButton.dart';
@@ -84,6 +85,12 @@ class CaseOrdersBody extends StatelessWidget {
             return CaseOrdersCard(
               order: order,
               showPaidStatus: controller.showPaidStatus,
+                onTap: () {
+   Get.toNamed(
+  AppRouter.caseOrderDetails,
+  arguments: order,
+);
+  },
             );
           },
         ),

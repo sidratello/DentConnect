@@ -66,6 +66,106 @@ static String arabicImpressionType(String value) {
   }
 }
 
+ static  String getArabicTitle(String status) {
+    switch (status) {
+
+      case 'Accepted':
+        return 'مقبول';
+      case 'RequestInfo':
+        return ' طلب معلومات اضافية';
+      case 'InDesign':
+        return 'قيد التصميم';
+      case 'InProduction':
+        return 'قيد الإنتاج';
+        case 'InColoring':
+  return 'قيد التلوين';
+      case 'WaitingForClarification':
+        return 'بانتظار توضيح  ';
+      case 'Ready':
+        return 'جاهز';
+      case 'Delivered':
+        return 'تم التسليم';
+      case 'Cancelled':
+        return 'ملغي';
+          case 'Pennding':
+        return 'معلقة';
+      default:
+        return status;
+    }
+  }
+   static IconData getIcon(String status) {
+    switch (status) {
+
+      case 'Accepted':
+        return Icons.check_circle_outline_rounded;
+      case 'RequestInfo':
+        return Icons.info_outline_rounded;
+      case 'InDesign':
+        return Icons.draw_outlined;
+        case 'InColoring':
+  return Icons.palette_outlined;
+      case 'InProduction':
+        return Icons.factory_outlined;
+      case 'WaitingForClarification':
+        return Icons.hourglass_empty_rounded;
+      case 'Ready':
+        return Icons.local_shipping_outlined;
+      case 'Delivered':
+        return Icons.done_all_rounded;
+      case 'Cancelled':
+        return Icons.cancel_outlined;
+      case 'Pending':
+        return Icons.hourglass_empty_rounded;
+      default:
+        return Icons.info_outlined;
+    }
+  }
+   static  Color getColor(String status) {
+    switch (status) {
+
+      case 'Accepted':
+        return AppColors.green;
+      case 'RequestInfo':
+        return const Color(0xFFE69500);
+      case 'InDesign':
+        return const Color(0xFF7C3AED);
+        case 'InColoring':
+  return const Color.fromARGB(255, 243, 128, 241);
+      case 'InProduction':
+        return const Color(0xFF0891B2);
+      case 'WaitingForClarification':
+        return AppColors.normalText;
+      case 'Ready':
+        return AppColors.primaryBlue;
+      case 'Delivered':
+        return AppColors.green;
+      case 'Cancelled':
+        return AppColors.red;
+      default:
+        return AppColors.darkBlue;
+    }
+  }
+
+   static String toothImage(int toothNumber) {
+    final digit = toothNumber % 10;
+
+    if (digit == 1 || digit == 2) {
+      return 'assets/images/incisor.png';
+    }
+
+    if (digit == 3) {
+      return 'assets/images/canine.png';
+    }
+
+    if (digit == 4 || digit == 5) {
+      return 'assets/images/premolar__1_-removebg-preview.png';
+    }
+
+    return 'assets/images/ChatGPT_Image_Jun_20__2026__02_22_49_PM-removebg-preview.png';
+  }
+  static Color getLightColor(String status) {
+  return getColor(status).withOpacity(0.10);
+}
 static String arabicImpressionStage(String value) {
   switch (value) {
     case 'FinalImpression':
@@ -221,6 +321,26 @@ static BoxDecoration requestButtonDecoration(double radius) {
         offset: Offset(0, 4),
       ),
     ],
+  );
+}
+static BoxDecoration whiteCardDecoration({
+  double radius = 18,
+  bool hasBorder = true,
+  Color? backgroundColor,
+  Color? borderColor,
+  double borderOpacity = .6,
+  double borderWidth = 1,
+}) {
+  return BoxDecoration(
+    color: backgroundColor ?? AppColors.white,
+    borderRadius: BorderRadius.circular(radius),
+    border: hasBorder
+        ? Border.all(
+            color: borderColor ??
+                AppColors.littleBlue.withOpacity(borderOpacity),
+            width: borderWidth,
+          )
+        : null,
   );
 }
 static BoxDecoration rejectButtonDecoration(double radius) {

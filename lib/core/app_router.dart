@@ -14,6 +14,8 @@ import 'package:template/auth/view/reset_password_screen.dart';
 import 'package:template/auth/view/signup_screen.dart';
 
 import 'package:template/choose_user_type/view/choose_user_type.dart';
+import 'package:template/lab/features/case_order_details/binding/case_order_details_binding.dart';
+import 'package:template/lab/features/case_order_details/views/case_order_details_screen.dart';
 import 'package:template/lab/features/case_orders/binding/case_orders_binding.dart';
 import 'package:template/lab/features/case_orders/views/case_orders_screen.dart';
 import 'package:template/lab/features/case_status/binding/case_status_binding.dart';
@@ -24,13 +26,17 @@ import 'package:template/lab/features/order/binding/order_binding.dart';
 import 'package:template/lab/features/order/binding/order_details_binding.dart';
 import 'package:template/lab/features/order/views/order_details_screen.dart';
 import 'package:template/lab/features/order/views/order_screen.dart';
+import 'package:template/lab/features/orderconection/binding/doctor_orders_binding.dart';
 
 import 'package:template/lab/features/orderconection/binding/orderconection_binding.dart';
+import 'package:template/lab/features/orderconection/views/doctor_orders_screen.dart';
 import 'package:template/lab/features/orderconection/views/orderconection.dart';
 import 'package:template/lab/features/profile/binding/edit_profile_binding.dart';
 import 'package:template/lab/features/profile/binding/profile_binding.dart';
 import 'package:template/lab/features/profile/views/edit_profile_screen.dart';
 import 'package:template/lab/features/profile/views/profile.dart';
+import 'package:template/lab/features/update_order_satatus/binding/update_order_status_binding.dart';
+import 'package:template/lab/features/update_order_satatus/views/update_order_status_screen.dart';
 
 
 
@@ -50,7 +56,9 @@ abstract class AppRouter {
 static const orderDetails = '/orderDetails';
 static const caseStatus = '/caseStatus';
 static const caseOrders = '/caseOrders';
-
+static const caseOrderDetails = '/caseOrderDetails';
+static const updateOrderStatus = '/updateOrderStatus';
+static const doctorOrders = '/doctorOrders';
   static final List<GetPage<dynamic>> pages = [
     GetPage(
       name: choseuserpage,
@@ -131,6 +139,24 @@ GetPage(
   name: caseOrders,
   page: () => const CaseOrdersScreen(),
   binding: CaseOrdersBinding(),
+),
+
+GetPage(
+  name: caseOrderDetails,
+  page: () => const CaseOrderDetailsScreen(),
+  binding: CaseOrderDetailsBinding(),
+),
+
+GetPage(
+  name: updateOrderStatus,
+  page: () => const UpdateOrderStatusScreen(),
+  binding: UpdateOrderStatusBinding(),
+),
+
+GetPage(
+  name: doctorOrders,
+  page: () => const DoctorOrdersScreen(),
+  binding: DoctorOrdersBinding(),
 ),
   ];
 
