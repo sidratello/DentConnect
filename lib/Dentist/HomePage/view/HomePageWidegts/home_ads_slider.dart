@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:template/core/utils/static.dart';
 
+import '../../../../core/theme/app_colors.dart';
+
 class HomeAdsSlider extends StatelessWidget {
   const HomeAdsSlider({super.key});
 
@@ -15,7 +17,7 @@ class HomeAdsSlider extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.12),
+                color: AppColors.black.withValues(alpha: 0.12),
                 blurRadius: 18,
                 offset: const Offset(0, 6),
               ),
@@ -52,7 +54,7 @@ class HomeAdsSlider extends StatelessWidget {
           ? Static.getheight(context, 10)
           : Static.getheight(context, 8),
       decoration: BoxDecoration(
-        color: isActive ? const Color.fromARGB(255, 0, 0, 253) : Colors.white,
+        color: isActive ? AppColors.primary : AppColors.white,
         shape: BoxShape.circle,
       ),
     );

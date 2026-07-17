@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/core/utils/static.dart';
 
+import '../../../../core/theme/app_colors.dart';
+
 class LabsSectionHeader extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onTap;
@@ -22,16 +24,25 @@ class LabsSectionHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Text(
+            'المخابر',
+            style: TextStyle(
+              fontFamily: 'IBM Plex Sans Arabic',
+              fontWeight: FontWeight.w700,
+              fontSize: Static.getwidth(context, 24),
+              color: AppColors.black,
+            ),
+          ),
           Opacity(
-            opacity: appModeController.isPreviewMode ? 0.5 : 1,
+            opacity: appModeController.isPreviewMode.value ? 0.5 : 1,
             child: IgnorePointer(
-              ignoring: appModeController.isPreviewMode,
+              ignoring: appModeController.isPreviewMode.value,
               child: Container(
                 width: Static.getwidth(context, 240),
                 decoration: BoxDecoration(
-                  color: appModeController.isPreviewMode
-                      ? Colors.grey.shade300
-                      : const Color.fromRGBO(239, 242, 249, 1),
+                  color: appModeController.isPreviewMode.value
+                      ? Theme.of(context).shadowColor
+                      : AppColors.boxGrey,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Directionality(
@@ -55,7 +66,7 @@ class LabsSectionHeader extends StatelessWidget {
                       Container(
                         width: 1,
                         height: Static.getheight(context, 24),
-                        color: const Color.fromRGBO(210, 210, 210, 1),
+                        color: AppColors.greyColor,
                       ),
                       Expanded(
                         child: _buildTab(
@@ -68,15 +79,6 @@ class LabsSectionHeader extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ),
-          Text(
-            'المخابر',
-            style: TextStyle(
-              fontFamily: 'IBM Plex Sans Arabic',
-              fontWeight: FontWeight.w700,
-              fontSize: Static.getwidth(context, 24),
-              color: Colors.black,
             ),
           ),
         ],
@@ -102,13 +104,13 @@ class LabsSectionHeader extends StatelessWidget {
           vertical: Static.getheight(context, 12),
         ),
         decoration: BoxDecoration(
-          color: appModeController.isPreviewMode
+          color: appModeController.isPreviewMode.value
               ? index == 0
-                  ? Colors.grey.shade500
-                  : Colors.transparent
+                  ? AppColors.greyColor
+                  : AppColors.surfaceTintColor
               : isSelected
-                  ? const Color.fromRGBO(61, 114, 255, 1)
-                  : Colors.transparent,
+                  ? AppColors.primary
+                  : AppColors.surfaceTintColor,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
@@ -116,17 +118,16 @@ class LabsSectionHeader extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'IBM Plex Sans Arabic',
-              fontWeight: FontWeight.w500,
-              fontSize: Static.getwidth(context, 14),
-              color: appModeController.isPreviewMode
-                  ? index == 0
-                      ? Colors.white
-                      : const Color.fromRGBO(94, 94, 94, 1)
-                  : isSelected
-                      ? Colors.white
-                      : const Color.fromRGBO(94, 94, 94, 1),
-            ),
+                fontFamily: 'IBM Plex Sans Arabic',
+                fontWeight: FontWeight.w500,
+                fontSize: Static.getwidth(context, 14),
+                color: appModeController.isPreviewMode.value
+                    ? index == 0
+                        ? AppColors.white
+                        : AppColors.greyColor
+                    : isSelected
+                        ? AppColors.white
+                        : AppColors.greyColor),
           ),
         ),
       ),

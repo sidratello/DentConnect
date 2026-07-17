@@ -7,14 +7,12 @@ class ResetPasswordHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         SizedBox(height: 34),
         AuthHeader(
           title: 'إعادة تعيين كلمة المرور',
-        onBack: (){
-          Get.back();
-        },
+          onBack: () {},
         ),
       ],
     );

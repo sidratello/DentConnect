@@ -11,21 +11,18 @@ class AppbarProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: Static.getwidth(context, 16)),
-      child: IconButton(
-        onPressed: () {},
-        padding: EdgeInsets.zero,
-        constraints: const BoxConstraints(),
-        icon: ClipOval(
-          child: Image.asset(
-            isPreviewMode
-                ? 'assets/images/profile.png'
-                : 'assets/images/doctor_profile.png',
-            width: Static.getwidth(context, 42),
-            height: Static.getwidth(context, 42),
-            fit: BoxFit.cover,
-          ),
+    return IconButton(
+      onPressed: () {},
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(),
+      icon: ClipOval(
+        child: Image.asset(
+          isPreviewMode
+              ? 'assets/images/profile.png'
+              : 'assets/images/doctor_profile.png',
+          width: Static.getwidth(context, 42),
+          height: Static.getwidth(context, 42),
+          fit: BoxFit.cover,
         ),
       ),
     );

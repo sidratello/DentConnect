@@ -1,31 +1,20 @@
-
 import 'dart:ui';
-
 
 import 'package:flutter/material.dart';
 
-import 'package:template/core/app_colors.dart';
-
-
-
-
+import 'package:template/core/theme/app_colors.dart';
 
 class AppHelper {
-
-  static String token = '';
-
-
+  static String token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJnaGFsaWFoYXplbTIwMDNAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRGVudGlzdCIsImV4cCI6MTc4MzE2ODQ0MiwiaXNzIjoiRGVudGFsTGFiLkFwaSIsImF1ZCI6IkRlbnRhbExhYi5BcGkifQ.QpttK-SnCcxrBntIgWjbcde9PuhRzMrZkMYg_hf32Mg';
 
   static void clear() {
     token = '';
   }
-static Future<void> saveUserInfo(String token) async {
-  AppHelper.token = token;
 
-
-
-}
-
+  static Future<void> saveUserInfo(String token) async {
+    AppHelper.token = token;
+  }
 
   static double get screenWidth {
     final view = PlatformDispatcher.instance.views.first;
@@ -41,25 +30,23 @@ static Future<void> saveUserInfo(String token) async {
     return BorderRadius.circular(10);
   }
 
-
-
-static BoxDecoration primaryButtonDecoration() {
-  return BoxDecoration(
-    color: AppColors.primary200,
-    borderRadius: BorderRadius.circular(12),
-    image: const DecorationImage(
-      image: AssetImage('assets/images/Frame 2608747 (1)_cleanup.png'),
-      alignment: Alignment.centerLeft,
-      fit: BoxFit.cover,
-      opacity: 0.35,
-    ),
-  );
-}
+  static BoxDecoration primaryButtonDecoration() {
+    return BoxDecoration(
+      color: AppColors.primary200,
+      borderRadius: BorderRadius.circular(12),
+      image: const DecorationImage(
+        image: AssetImage('assets/images/Frame 2608747 (1)_cleanup.png'),
+        alignment: Alignment.centerLeft,
+        fit: BoxFit.cover,
+        opacity: 0.35,
+      ),
+    );
+  }
 
   static BoxDecoration glassBoxDecoration({double opacity = .12}) {
     return BoxDecoration(
       borderRadius: borderRadius(),
-      gradient: LinearGradient(
+      gradient: const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
@@ -73,14 +60,12 @@ static BoxDecoration primaryButtonDecoration() {
       ),
     );
   }
-static String getDoctorInitial(String name) {
-  final cleaned = name
-      .replaceAll('Dr.', '')
-      .replaceAll('د.', '')
-      .trim();
 
-  return cleaned.isNotEmpty ? cleaned[0].toUpperCase() : '?';
-}
+  static String getDoctorInitial(String name) {
+    final cleaned = name.replaceAll('Dr.', '').replaceAll('د.', '').trim();
+
+    return cleaned.isNotEmpty ? cleaned[0].toUpperCase() : '?';
+  }
 
   static void showBirthdayDatePicker(
     BuildContext context,
@@ -102,8 +87,8 @@ static String getDoctorInitial(String name) {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                // foregroundColor: AppColors.primaryPurple,
-              ),
+                  // foregroundColor: AppColors.primaryPurple,
+                  ),
             ),
           ),
           child: child!,
@@ -137,10 +122,6 @@ static String getDoctorInitial(String name) {
   //   Get.dialog(ErrorDialog(body: message), barrierDismissible: true);
   // }
 
-
-
-
-
   static bool validatePhoneNumber(String phone) {
     final regex = RegExp(r'^09\d{8}$');
     return regex.hasMatch(phone);
@@ -151,7 +132,6 @@ static String getDoctorInitial(String name) {
     return regex.hasMatch(phone);
   }
 
- 
   static String fmtviews(int v) {
     if (v >= 1000000) return '${(v / 1000000).toStringAsFixed(1)}M';
     if (v >= 1000) return '${(v / 1000).toStringAsFixed(1)}k';

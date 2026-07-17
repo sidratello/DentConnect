@@ -16,7 +16,7 @@ class AppbarHomeText extends StatelessWidget {
       children: [
         if (!isPreviewMode)
           Text(
-            ' ! محمد',
+            isPreviewMode ? '! مرحبا بك ' : ' مرحبا بك دكتور ',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
@@ -26,7 +26,7 @@ class AppbarHomeText extends StatelessWidget {
             ),
           ),
         Text(
-          isPreviewMode ? '! مرحبا بك ' : ' مرحبا بك دكتور ',
+          ' محمد',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'IBM Plex Sans Arabic',

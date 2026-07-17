@@ -7,14 +7,12 @@ class fpHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         SizedBox(height: 34),
         AuthHeader(
           title: 'نسيان كلمة المرور',
-        onBack: (){
-          Get.back();
-        },
+          onBack: () {},
         ),
       ],
     );

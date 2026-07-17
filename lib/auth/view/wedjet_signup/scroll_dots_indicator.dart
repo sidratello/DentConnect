@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:template/core/app_colors.dart';
+import 'package:template/core/theme/app_colors.dart';
+
 class ScrollDotsIndicator extends StatelessWidget {
   final int currentPage;
 
@@ -13,7 +14,7 @@ class ScrollDotsIndicator extends StatelessWidget {
         _dot(currentPage == 0),
         const SizedBox(width: 8),
         _dot(currentPage == 1),
-              const SizedBox(width: 8),
+        const SizedBox(width: 8),
         _dot(currentPage == 2),
       ],
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/core/app_colors.dart';
+import 'package:template/core/theme/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
 
 enum AppButtonType {
@@ -148,7 +148,6 @@ class AppButton extends StatelessWidget {
     );
   }
 
-
   BoxDecoration _gradientDecoration() {
     return BoxDecoration(
       gradient: const LinearGradient(
@@ -157,12 +156,12 @@ class AppButton extends StatelessWidget {
           Color(0xFF075AFF),
         ],
       ),
-       image: const DecorationImage(
-      image: AssetImage('assets/images/Frame 2608747 (1)_cleanup.png'),
-      alignment: Alignment.centerLeft,
-      fit: BoxFit.cover,
-      opacity: 0.35,
-    ),
+      image: const DecorationImage(
+        image: AssetImage('assets/images/Frame 2608747 (1)_cleanup.png'),
+        alignment: Alignment.centerLeft,
+        fit: BoxFit.cover,
+        opacity: 0.35,
+      ),
       borderRadius: BorderRadius.circular(borderRadius),
       boxShadow: [
         BoxShadow(

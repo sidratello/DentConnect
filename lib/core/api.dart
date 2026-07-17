@@ -4,8 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:template/core/api_response.dart';
 import 'package:template/core/errors/failures.dart';
 import 'package:template/core/global_interceptor.dart';
-
-
+import 'package:template/core/utils/static.dart';
 
 class ApiService {
   static final ApiService _instance = ApiService._internal();
@@ -16,7 +15,7 @@ class ApiService {
   ApiService._internal() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'http://10.225.77.225:44352/api/',
+        baseUrl: Static.ipconfig,
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 15),
         headers: {'Accept': 'application/json'},
@@ -25,44 +24,44 @@ class ApiService {
     _dio.interceptors.add(GlobalInterceptor());
   }
 
- Future<ApiResponse<T>> request<T>(
-  String path, {
-  required String method,
-  dynamic data,
-  Map<String, dynamic>? queryParameters,
-  Options? options,
-}) async {
-  try {
-    final finalOptions = (options ?? Options()).copyWith(
-      method: method,
-      headers: {...(options?.headers ?? {})},
-    );
+  Future<ApiResponse<T>> request<T>(
+    String path, {
+    required String method,
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
+    try {
+      final finalOptions = (options ?? Options()).copyWith(
+        method: method,
+        headers: {...(options?.headers ?? {})},
+      );
 
-    final response = await _dio.request(
-      path,
-      options: finalOptions,
-      data: data,
-      queryParameters: queryParameters,
-    );
+      final response = await _dio.request(
+        path,
+        options: finalOptions,
+        data: data,
+        queryParameters: queryParameters,
+      );
 
-    final message = response.statusMessage ?? 'تمت العملية بنجاح';
+      final message = response.statusMessage ?? 'تمت العملية بنجاح';
 
-    return ApiResponse.success(
-      data: response.data as T?,
-      message: message,
-      statusCode: response.statusCode,
-    );
-  } on DioException catch (e) {
-    final failure = ServerFailure.fromDioError(e);
+      return ApiResponse.success(
+        data: response.data as T?,
+        message: message,
+        statusCode: response.statusCode,
+      );
+    } on DioException catch (e) {
+      final failure = ServerFailure.fromDioError(e);
 
-    return ApiResponse.error(
-      failure.errMessage,
-      statusCode: e.response?.statusCode,
-    );
-  } catch (e) {
-    return ApiResponse.error('حدث خطأ غير متوقع: ${e.toString()}');
+      return ApiResponse.error(
+        failure.errMessage,
+        statusCode: e.response?.statusCode,
+      );
+    } catch (e) {
+      return ApiResponse.error('حدث خطأ غير متوقع: ${e.toString()}');
+    }
   }
-}
 
   Future<ApiResponse<T>> get<T>(
     String path, {
@@ -112,24 +111,23 @@ class ApiService {
 
       return request<T>(path, method: 'POST', data: formData);
     } else {
+      FormData formData = FormData();
 
-  FormData formData = FormData();
-
-  if (data != null) {
-    data.forEach((key, value) {
-      if (value != null) {
-        formData.fields.add(
-          MapEntry(key, value.toString()),
-        );
+      if (data != null) {
+        data.forEach((key, value) {
+          if (value != null) {
+            formData.fields.add(
+              MapEntry(key, value.toString()),
+            );
+          }
+        });
       }
-    });
-  }
 
-  return request<T>(
-    path,
-    method: 'POST',
-    data: formData,
-  );
-}
+      return request<T>(
+        path,
+        method: 'POST',
+        data: formData,
+      );
+    }
   }
 }

@@ -1,53 +1,42 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 import 'package:template/auth/repository/login_repo.dart';
 import 'package:template/core/app_router.dart';
 import 'package:template/core/storage_services.dart';
+
 class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final isPasswordVisible = false.obs;
   final LoginRepo _repo = LoginRepo();
   final isLoading = false.obs;
-late final String role;
-bool get isLab => role == 'Lab';
-bool get isDentist => role == 'Dentist';
+  late final String role;
+  bool get isLab => role == 'Lab';
+  bool get isDentist => role == 'Dentist';
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  @override
+  void onInit() {
+    super.onInit();
+    role = Get.arguments ?? 'Dentist';
+  }
 
-@override
-void onInit() {
-  super.onInit();
-  role = Get.arguments ?? 'Dentist';
-}
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
 
-
-
-
-
-
-   Future<void> loginDentist() async {
-
-
+  Future<void> loginDentist() async {
     isLoading.value = true;
 
     final response = await _repo.loginDentist(
-
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
-
     );
 
     isLoading.value = false;
- if (!response.success || response.data == null) {
+    if (!response.success || response.data == null) {
       Get.snackbar(
         'خطأ',
         response.message,
@@ -57,17 +46,19 @@ void onInit() {
     }
 
     final user = response.data!;
-  /// مهم: تأكد أن نوع الحساب المختار يطابق نوع الحساب الحقيقي من السيرفر
-  if (user.role != role) {
-    Get.snackbar(
-      'تنبيه',
-      role == 'Dentist'
-          ? 'هذا الحساب ليس حساب طبيب، الرجاء الدخول من قسم المخابر.'
-          : 'هذا الحساب ليس حساب مخبر، الرجاء الدخول من قسم الأطباء.',
-      snackPosition: SnackPosition.BOTTOM,
-    );
-    return;
-  }
+
+    /// مهم: تأكد أن نوع الحساب المختار يطابق نوع الحساب الحقيقي من السيرفر
+    if (user.role != role) {
+      Get.snackbar(
+        'تنبيه',
+        role == 'Dentist'
+            ? 'هذا الحساب ليس حساب طبيب، الرجاء الدخول من قسم المخابر.'
+            : 'هذا الحساب ليس حساب مخبر، الرجاء الدخول من قسم الأطباء.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
     /// ================= FULL ACCESS =================
     if (user.status == 'Active' &&
         user.accessMode == 'Full' &&
@@ -79,10 +70,9 @@ void onInit() {
         'تم تسجيل الدخول بنجاح',
         snackPosition: SnackPosition.BOTTOM,
       );
-     Get.toNamed(
-            AppRouter.orderconection,
-        
-          );
+      Get.toNamed(
+        AppRouter.orderconection,
+      );
       _goToHomeByRole(user.role);
 
       return;
@@ -94,21 +84,15 @@ void onInit() {
         title: 'البريد غير مؤكد',
         middleText:
             'يمكنك تأكيد البريد الإلكتروني الآن أو المتابعة بوضع الاطلاع فقط.',
-
         textConfirm: 'تأكيد البريد',
         textCancel: 'وضع الاطلاع',
-
         confirmTextColor: Colors.white,
-
         onConfirm: () {
-          Get.back();
-
           Get.toNamed(
             AppRouter.OTPpage,
             arguments: emailController.text.trim(),
           );
         },
-
         onCancel: () async {
           await _saveReadOnlyUser(user);
 

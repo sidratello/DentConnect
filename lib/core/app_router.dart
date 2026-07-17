@@ -1,6 +1,12 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:template/Dentist/CommunityPage/view/community_page.dart';
 import 'package:template/Dentist/HomePage/view/view_only.dart';
 import 'package:template/Dentist/LabDetailsPage/view/lab_details_page.dart';
+import 'package:template/Dentist/NotificationsPage/view/notifications_page.dart';
+import 'package:template/Dentist/PatientPage/view/create_new_patient_profile.dart';
+import 'package:template/Dentist/PatientPage/view/patient_page.dart';
+import 'package:template/Dentist/TemplatesPage/view/template_details_page.dart';
+import 'package:template/Dentist/TemplatesPage/view/templates_page.dart';
 import 'package:template/auth/binding/forpa_binding.dart';
 import 'package:template/auth/binding/login_binding.dart';
 import 'package:template/auth/binding/otp_binding.dart';
@@ -18,6 +24,13 @@ abstract class AppRouter {
   // static const choseuserpage = '/';
   static const homePage = '/';
   static const labDetailsPage = '/labDetailsPage';
+  static const casePage = '/casePage';
+  static const patientsPage = '/patientsPage';
+  static const createPatientPage = '/createPatientPage';
+  static const templatesPage = '/templatesPage';
+  static const templateDetailsPage = '/templateDetailsPage';
+  static const communityPage = '/communityPage';
+  static const notificationPage = '/notificationPage';
   static const loginpage = '/loginpage';
   static const signuppage = '/signuppage';
   static const OTPpage = '/OTPpage';
@@ -68,6 +81,31 @@ abstract class AppRouter {
     GetPage(
       name: labDetailsPage,
       page: () => const LabDetailsPage(),
+    ),
+    GetPage(
+      name: patientsPage,
+      page: () => const PatientsPage(),
+    ),
+    GetPage(
+      name: templatesPage,
+      page: () => const TemplatesPage(),
+    ),
+    GetPage(
+      name: templateDetailsPage,
+      page: () => const TemplateDetailsPage(),
+    ),
+    GetPage(
+      name: communityPage,
+      page: () => const CommunityPage(),
+    ),
+    GetPage(
+      name: notificationPage,
+      page: () => const NotificationsPage(),
+    ),
+
+    GetPage(
+      name: createPatientPage,
+      page: () => const CreateNewPatientProfile(),
     ),
   ];
 }

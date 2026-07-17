@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/core/app_colors.dart';
+import 'package:template/core/theme/app_colors.dart';
 
 class LabBackgroundLayout extends StatelessWidget {
   final Widget child;
@@ -33,7 +33,6 @@ class LabBackgroundLayout extends StatelessWidget {
               ),
             ),
           ),
-
           SafeArea(
             child: child,
           ),

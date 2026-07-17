@@ -1,84 +1,133 @@
 import 'package:flutter/material.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
+import 'package:template/Dentist/LabDetailsPage/controller/lab_controller.dart';
+import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/appbar_lab_details_vector.dart';
+import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_case_list.dart';
+import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_case_with_doctor_list.dart';
+import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_create_request_button.dart';
+import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_container.dart';
+import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_works_header.dart';
+import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_works_with_doctor_header.dart';
+import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/labs_backgroung_image.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/app_spacing.dart';
 
 class LabDetailsPage extends StatelessWidget {
   const LabDetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          /// الخلفية الأساسية
-          SizedBox(
-            width: double.infinity,
-            height: Static.getheight(context, 260),
-            child: Stack(
-              children: [
-                /// الصورة الأساسية
-                Image.asset(
-                  'assets/images/lab_card.png',
-                  width: double.infinity,
-                  height: Static.getheight(context, 260),
-                  fit: BoxFit.cover,
-                ),
+    Get.lazyPut(() => LabController());
 
-                /// التدرج الأبيض
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: Static.getheight(context, 120),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.white.withOpacity(0),
-                          Colors.white.withOpacity(0.1),
-                          Colors.white.withOpacity(0.5),
-                          Colors.white,
-                        ],
-                        stops: const [
-                          0,
-                          0.3,
-                          0.7,
-                          1,
-                        ],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: AppColors.surfaceTintColor,
+          elevation: 0,
+          surfaceTintColor: AppColors.surfaceTintColor,
+          automaticallyImplyLeading: false,
+          actions: const [AppbarLabDetailsVector()],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const LabsBackgroungImage(),
+              const LabDetailsContainer(),
+              const LabCreateRequestButton(),
+              const LabDetailsWorksHeader(),
+              const LabCaseList(),
+              Obx(
+                () {
+                  final controller = Get.find<LabController>();
+                  final homeController = Get.find<HomeController>();
+                  final bool canShowCases = !homeController
+                          .isPreviewMode.value &&
+                      controller.followStatus.value == FollowStatus.following;
+
+                  if (!canShowCases) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 26,
                       ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          /// زر الرجوع
-          SafeArea(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: Static.getheight(context, 16),
-                right: Static.getwidth(context, 24),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 28,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).shadowColor,
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            color: AppColors.border,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.black.withValues(alpha: 0.03),
+                              blurRadius: 18,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 68,
+                              height: 68,
+                              decoration: const BoxDecoration(
+                                color: AppColors.boxBlack,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.history_rounded,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 34,
+                              ),
+                            ),
+                            AppSpacing.height(context, 14),
+                            Text(
+                              'حالاتك السابقة مع المخبر',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'IBM Plex Sans Arabic',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            AppSpacing.height(context, 10),
+                            const Text(
+                              'بعد متابعة المخبر وإنشاء أول طلب، ستظهر هنا جميع الحالات السابقة الخاصة بك مع تفاصيلها الكاملة.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'IBM Plex Sans Arabic',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                height: 1.7,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return const Column(
+                    children: [
+                      LabDetailsWorksWithDoctorHeader(),
+                      LabCaseWithDoctorList(),
+                    ],
+                  );
+                },
               ),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Image.asset(
-                    'assets/images/vector_back.png',
-                    width: Static.getwidth(context, 32),
-                    height: Static.getheight(context, 37.57),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

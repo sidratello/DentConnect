@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/core/utils/static.dart';
 
+import '../../../../core/theme/app_colors.dart';
 import '../../../LabDetailsPage/view/lab_details_page.dart';
 
 class LabsListView extends StatelessWidget {
@@ -34,7 +35,7 @@ class LabsListView extends StatelessWidget {
           return LabCard(
             labId: index,
             isFollowing: index.isEven,
-            isPreviewMode: appModeController.isPreviewMode,
+            isPreviewMode: appModeController.isPreviewMode.value,
           );
         },
       ),
@@ -65,11 +66,11 @@ class LabCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: AppColors.black.withValues(alpha: 0.05),
               blurRadius: 14,
               offset: const Offset(0, 5),
             ),
@@ -100,16 +101,19 @@ class LabCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Text(
+                        'مخبر هشام',
+                        textAlign: TextAlign.end,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: 'IBM Plex Sans Arabic',
+                          fontWeight: FontWeight.w500,
+                          fontSize: Static.getwidth(context, 14),
+                          color: AppColors.black54,
+                        ),
+                      ),
                       Row(
                         children: [
-                          Icon(
-                            Icons.star_rounded,
-                            color: Colors.amber,
-                            size: Static.getwidth(context, 18),
-                          ),
-                          SizedBox(
-                            width: Static.getwidth(context, 2),
-                          ),
                           Text(
                             '4.2',
                             style: TextStyle(
@@ -118,20 +122,15 @@ class LabCard extends StatelessWidget {
                               fontSize: Static.getwidth(context, 13),
                             ),
                           ),
-                        ],
-                      ),
-                      Expanded(
-                        child: Text(
-                          'مخبر هشام',
-                          textAlign: TextAlign.end,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'IBM Plex Sans Arabic',
-                            fontWeight: FontWeight.w500,
-                            fontSize: Static.getwidth(context, 14),
-                            color: Colors.black87,
+                          SizedBox(
+                            width: Static.getwidth(context, 2),
                           ),
-                        ),
+                          Icon(
+                            Icons.star_rounded,
+                            color: AppColors.yellowRate,
+                            size: Static.getwidth(context, 18),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -146,33 +145,13 @@ class LabCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: isFollowing
-                            ? const Color.fromRGBO(
-                                0,
-                                200,
-                                83,
-                                0.08,
-                              )
-                            : const Color.fromRGBO(
-                                61,
-                                114,
-                                255,
-                                0.08,
-                              ),
+                            ? AppColors.boxGreen
+                            : AppColors.boxBlack,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
                           color: isFollowing
-                              ? const Color.fromRGBO(
-                                  0,
-                                  200,
-                                  83,
-                                  1,
-                                )
-                              : const Color.fromRGBO(
-                                  61,
-                                  114,
-                                  255,
-                                  1,
-                                ),
+                              ? AppColors.success
+                              : AppColors.primary,
                         ),
                       ),
                       child: Row(
@@ -183,18 +162,8 @@ class LabCard extends StatelessWidget {
                                 ? Icons.check_rounded
                                 : Icons.person_add_alt_1_rounded,
                             color: isFollowing
-                                ? const Color.fromRGBO(
-                                    0,
-                                    200,
-                                    83,
-                                    1,
-                                  )
-                                : const Color.fromRGBO(
-                                    61,
-                                    114,
-                                    255,
-                                    1,
-                                  ),
+                                ? AppColors.success
+                                : AppColors.primary,
                             size: Static.getwidth(context, 18),
                           ),
                           SizedBox(
@@ -207,18 +176,8 @@ class LabCard extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               fontSize: Static.getwidth(context, 13),
                               color: isFollowing
-                                  ? const Color.fromRGBO(
-                                      0,
-                                      200,
-                                      83,
-                                      1,
-                                    )
-                                  : const Color.fromRGBO(
-                                      61,
-                                      114,
-                                      255,
-                                      1,
-                                    ),
+                                  ? AppColors.success
+                                  : AppColors.primary,
                             ),
                           ),
                         ],

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/core/utils/static.dart';
 
+import '../../../../core/theme/app_colors.dart';
+
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
@@ -21,7 +23,7 @@ class BottomNavBar extends StatelessWidget {
         horizontal: Static.getwidth(context, 12),
       ),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         boxShadow: [
           BoxShadow(
             blurRadius: 10,
@@ -77,13 +79,11 @@ class BottomNavBar extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           border: isSelected
               ? Border.all(
-                  color: const Color.fromRGBO(0, 0, 202, 0.15),
+                  color: AppColors.boxBlack,
                   width: 1.2,
                 )
               : null,
-          color: isSelected
-              ? const Color.fromRGBO(0, 0, 202, 0.05)
-              : Colors.transparent,
+          color: isSelected ? AppColors.boxBlack : AppColors.surfaceTintColor,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -105,7 +105,7 @@ class BottomNavBar extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 fontSize: Static.getwidth(context, 11.27),
                 height: 16.91 / 11.27,
-                color: const Color.fromRGBO(142, 142, 142, 1),
+                color: AppColors.textSecondary,
               ),
             ),
           ],
@@ -137,7 +137,7 @@ class BottomNavBar extends StatelessWidget {
           children: [
             ClipOval(
               child: Image.asset(
-                appModeController.isPreviewMode
+                appModeController.isPreviewMode.value
                     ? 'assets/images/profile.png'
                     : 'assets/images/doctor_profile.png',
                 width: Static.getwidth(context, 33),

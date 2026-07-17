@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/core/app_colors.dart';
+import 'package:template/core/theme/app_colors.dart';
 
 class AuthLayout extends StatelessWidget {
   final List<Widget> children;
@@ -39,15 +39,14 @@ class AuthLayout extends StatelessWidget {
               ),
             ),
           ),
-
           SafeArea(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: ConstrainedBox(
-                 constraints: BoxConstraints(
-    minHeight: screenHeight,
-  ),
+                constraints: BoxConstraints(
+                  minHeight: screenHeight,
+                ),
                 child: Padding(
                   padding: padding ??
                       EdgeInsets.only(

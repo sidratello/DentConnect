@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:template/core/app_router.dart';
 import 'package:template/core/utils/static.dart';
 
 class AppbarNotificationIcon extends StatelessWidget {
@@ -7,7 +9,9 @@ class AppbarNotificationIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {},
+      onPressed: () {
+        Get.toNamed(AppRouter.notificationPage);
+      },
       icon: Image.asset(
         'assets/images/notification.png',
         width: Static.getwidth(context, 24),

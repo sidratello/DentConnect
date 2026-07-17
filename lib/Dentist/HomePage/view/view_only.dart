@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
-import 'package:template/Dentist/HomePage/view/home_page.dart';
+import 'package:template/Dentist/MainPage/view/main_page.dart';
 
 class ModeScreen extends StatelessWidget {
   const ModeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final appModeController = Get.find<HomeController>();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -18,7 +17,9 @@ class ModeScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Get.find<HomeController>().setPreviewMode(true);
-                Get.to(() => const HomePage());
+                Get.offAll(
+                  () => MainPage(),
+                );
               },
               child: const Text("وضع الاطلاع"),
             ),
@@ -26,7 +27,9 @@ class ModeScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Get.find<HomeController>().setPreviewMode(false);
-                Get.to(() => const HomePage());
+                Get.offAll(
+                  () => MainPage(),
+                );
               },
               child: const Text("الوضع العادي"),
             ),

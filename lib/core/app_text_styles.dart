@@ -1,13 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:template/core/app_colors.dart';
+import 'package:template/core/theme/app_colors.dart';
 import 'package:template/core/app_font_size.dart';
 
-
-
 class AppTextStyles {
-
-static TextStyle ibmBold22NeutralStyle = TextStyle(
+  static TextStyle ibmBold22NeutralStyle = TextStyle(
     fontFamily: "IBM Plex Sans Arabic",
     fontWeight: FontWeight.bold,
     fontSize: AppTextSizes.h7_22,
@@ -33,11 +30,8 @@ static TextStyle ibmBold22NeutralStyle = TextStyle(
     color: AppColors.neutral1000,
   );
 
-
-
-
   // 🔹 Regular 12 (Dark)
-  static TextStyle ibmRegular12DarkStyle = TextStyle(
+  static TextStyle ibmRegular12DarkStyle = const TextStyle(
     fontFamily: "IBM Plex Sans Arabic",
     fontWeight: FontWeight.w400,
     fontSize: AppTextSizes.body12,
@@ -53,7 +47,4 @@ static TextStyle ibmBold22NeutralStyle = TextStyle(
     height: 24 / 16,
     color: AppColors.white,
   );
-
-
-  
 }

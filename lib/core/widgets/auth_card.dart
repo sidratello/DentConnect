@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/core/app_colors.dart';
+import 'package:template/core/theme/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
 
 class AuthCard extends StatelessWidget {
@@ -30,7 +30,6 @@ class AuthCard extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: topSpacing),
-
         Container(
           width: double.infinity,
           padding: padding,
@@ -67,9 +66,7 @@ class AuthCard extends StatelessWidget {
                   color: AppColors.primaryBlue,
                 ),
               ),
-
               const SizedBox(height: 18),
-
               Text(
                 title,
                 textAlign: TextAlign.center,
@@ -79,9 +76,7 @@ class AuthCard extends StatelessWidget {
                   fontSize: 22,
                 ),
               ),
-
               const SizedBox(height: 8),
-
               Text(
                 subtitle,
                 textAlign: TextAlign.center,
@@ -90,14 +85,11 @@ class AuthCard extends StatelessWidget {
                   height: 1.7,
                 ),
               ),
-
               const SizedBox(height: 26),
-
               ...children,
             ],
           ),
         ),
-
         const SizedBox(height: 24),
       ],
     );

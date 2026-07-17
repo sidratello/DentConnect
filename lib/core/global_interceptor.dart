@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import 'package:template/core/app_helper.dart';
 import 'package:template/core/storage_services.dart';
+import 'package:template/core/utils/static.dart';
 
 class GlobalInterceptor extends dio.Interceptor {
   static const String _divider =
@@ -18,7 +19,7 @@ class GlobalInterceptor extends dio.Interceptor {
     dio.RequestOptions options,
     dio.RequestInterceptorHandler handler,
   ) {
-    final token = AppHelper.token;
+    final token = AppHelper.token.isNotEmpty ? AppHelper.token : Static.token;
 
     if (token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
@@ -115,7 +116,8 @@ class GlobalInterceptor extends dio.Interceptor {
       if (data == null) return 'null';
 
       if (data is dio.FormData) {
-        final fields = data.fields.map((e) => '${e.key}: ${e.value}').join('\n');
+        final fields =
+            data.fields.map((e) => '${e.key}: ${e.value}').join('\n');
 
         final files =
             data.files.map((e) => '${e.key}: ${e.value.filename}').join('\n');
