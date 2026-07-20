@@ -25,8 +25,8 @@ class GlobalInterceptor extends dio.Interceptor {
       options.headers['Authorization'] = 'Bearer $token';
     }
 
-    options.headers['Accept'] = 'application/json';
-    options.headers['Accept-Language'] = Get.locale?.languageCode ?? 'ar';
+    // options.headers['Accept'] = 'application/json';
+    // options.headers['Accept-Language'] = Get.locale?.languageCode ?? 'ar';
 
     options.extra['request_time'] = DateTime.now();
 

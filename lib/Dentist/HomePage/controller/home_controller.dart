@@ -1,20 +1,25 @@
 import 'package:get/get.dart';
+import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
 import 'package:template/core/api.dart';
 
 class HomeController extends GetxController {
   ApiService apiService = ApiService();
 
-  List<int> labsIds = [];
+  var labsIds = [];
+  var labsDetails = [];
+  var quickFilters = [];
   final RxBool isPreviewMode = false.obs;
   final topRated = false.obs;
+  final location = false.obs;
   final available = false.obs;
   final mobileScanner = false.obs;
   final selectedLocation = 'كل المواقع'.obs;
   RxBool isLoading = false.obs;
 
   @override
-  void onInit() {
-    fetchLabsLabels();
+  Future<void> onInit() async {
+    await fetchLabsLabels();
+    await fetchLabsDetails();
     super.onInit();
   }
 
@@ -26,6 +31,10 @@ class HomeController extends GetxController {
 
   void toggleTopRated() {
     topRated.toggle();
+  }
+
+  void toggleLocation() {
+    location.toggle();
   }
 
   void toggleAvailable() {
@@ -51,16 +60,37 @@ class HomeController extends GetxController {
     );
     try {
       if (response.statusCode == 200) {
+        print(response.data.toString());
         labsIds = response.data
             .map(
-              (e) => e.id,
+              (e) => LabModel.fromJson(e).id,
             )
-            .toList() as List<int>;
+            .toList();
       } else {
         print('Failed to fetch labs: ${response.message}');
       }
     } finally {
       isLoading = false.obs;
+    }
+  }
+
+  Future<void> fetchLabsDetails() async {
+    isLoading = true.obs;
+
+    for (int id in labsIds) {
+      var response = await apiService.get(
+        'Ratings/lab-profile/$id',
+      );
+      try {
+        if (response.statusCode == 200) {
+          print(response.data.toString());
+          labsDetails.add(LabModel.fromJson(response.data));
+        } else {
+          print('Failed to fetch labs: ${response.message}');
+        }
+      } finally {
+        isLoading = false.obs;
+      }
     }
   }
 }

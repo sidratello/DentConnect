@@ -15,13 +15,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dio = Dio();
 
-  (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-    final client = HttpClient();
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => true;
-    return client;
-  };
-
   await Get.putAsync<StorageService>(
     () async => await StorageService().init(),
   );

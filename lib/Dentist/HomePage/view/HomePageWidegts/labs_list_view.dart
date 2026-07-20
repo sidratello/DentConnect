@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
+import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
 import 'package:template/core/utils/static.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -24,7 +25,7 @@ class LabsListView extends StatelessWidget {
         primary: false,
         physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
-        itemCount: 6,
+        itemCount: appModeController.labsDetails.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: Static.getwidth(context, 12),
@@ -36,6 +37,7 @@ class LabsListView extends StatelessWidget {
             labId: index,
             isFollowing: index.isEven,
             isPreviewMode: appModeController.isPreviewMode.value,
+            labDetails: appModeController.labsDetails[index],
           );
         },
       ),
@@ -47,12 +49,14 @@ class LabCard extends StatelessWidget {
   final bool isFollowing;
   final int labId;
   final bool isPreviewMode;
+  final LabModel labDetails;
 
   const LabCard({
     super.key,
     required this.isFollowing,
     required this.isPreviewMode,
     required this.labId,
+    required this.labDetails,
   });
 
   @override
@@ -83,12 +87,14 @@ class LabCard extends StatelessWidget {
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(18),
               ),
-              child: Image.asset(
-                'assets/images/lab_card.png',
-                width: double.infinity,
-                height: Static.getheight(context, 110),
-                fit: BoxFit.cover,
-              ),
+              child: labDetails.mainImage != null
+                  ? Image.network(labDetails.mainImage.toString())
+                  : Image.asset(
+                      'assets/images/lab_card.png',
+                      width: double.infinity,
+                      height: Static.getheight(context, 110),
+                      fit: BoxFit.cover,
+                    ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(
@@ -102,20 +108,20 @@ class LabCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'مخبر هشام',
+                        labDetails.labName.toString(),
                         textAlign: TextAlign.end,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontFamily: 'IBM Plex Sans Arabic',
                           fontWeight: FontWeight.w500,
-                          fontSize: Static.getwidth(context, 14),
+                          fontSize: Static.getwidth(context, 12),
                           color: AppColors.black54,
                         ),
                       ),
                       Row(
                         children: [
                           Text(
-                            '4.2',
+                            labDetails.averageRating.toString(),
                             style: TextStyle(
                               fontFamily: 'IBM Plex Sans Arabic',
                               fontWeight: FontWeight.w500,
@@ -144,7 +150,7 @@ class LabCard extends StatelessWidget {
                         vertical: Static.getheight(context, 9),
                       ),
                       decoration: BoxDecoration(
-                        color: isFollowing
+                        color: labDetails.connectionStatus == 'Accepted'
                             ? AppColors.boxGreen
                             : AppColors.boxBlack,
                         borderRadius: BorderRadius.circular(10),
@@ -158,10 +164,10 @@ class LabCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            isFollowing
+                            labDetails.connectionStatus == 'Accepted'
                                 ? Icons.check_rounded
                                 : Icons.person_add_alt_1_rounded,
-                            color: isFollowing
+                            color: labDetails.connectionStatus == 'Accepted'
                                 ? AppColors.success
                                 : AppColors.primary,
                             size: Static.getwidth(context, 18),
@@ -170,12 +176,14 @@ class LabCard extends StatelessWidget {
                             width: Static.getwidth(context, 6),
                           ),
                           Text(
-                            isFollowing ? 'متابع' : 'متابعة',
+                            labDetails.connectionStatus == 'Accepted'
+                                ? 'متابع'
+                                : 'متابعة',
                             style: TextStyle(
                               fontFamily: 'IBM Plex Sans Arabic',
                               fontWeight: FontWeight.w500,
                               fontSize: Static.getwidth(context, 13),
-                              color: isFollowing
+                              color: labDetails.connectionStatus == 'Accepted'
                                   ? AppColors.success
                                   : AppColors.primary,
                             ),

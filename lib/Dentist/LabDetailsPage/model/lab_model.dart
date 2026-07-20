@@ -4,23 +4,31 @@ class LabModel {
   String? description;
   int? yearsOfExperience;
   String? availability;
-  List<String>? materials;
-  List<String>? specialties;
+  List? materials;
+  List? specialties;
   double? averageRating;
   List<Prices>? prices;
   List<String>? galleryImages;
 
-  LabModel(
-      {this.id,
-      this.labName,
-      this.description,
-      this.yearsOfExperience,
-      this.availability,
-      this.materials,
-      this.specialties,
-      this.averageRating,
-      this.prices,
-      this.galleryImages});
+  List<String>? mainImage;
+  String? hasScan;
+  String? connectionStatus;
+
+  LabModel({
+    this.id,
+    this.labName,
+    this.description,
+    this.yearsOfExperience,
+    this.availability,
+    this.materials,
+    this.specialties,
+    this.averageRating,
+    this.prices,
+    this.galleryImages,
+    this.mainImage,
+    this.hasScan,
+    this.connectionStatus,
+  });
 
   LabModel.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? '';
@@ -28,15 +36,19 @@ class LabModel {
     description = json['description'];
     yearsOfExperience = json['yearsOfExperience'];
     availability = json['availability'];
-    materials = json['materials'].cast<String>();
-    specialties = json['specialties'].cast<String>();
+    materials = json['materials'] ?? [];
+    specialties = json['specialties'] ?? [];
     averageRating = json['averageRating'];
+    mainImage = json['profilePicturesUrl'];
+    hasScan = json['hasScanVisitService'];
+    connectionStatus = json['connectionStatus'];
     if (json['prices'] != null) {
       prices = <Prices>[];
       json['prices'].forEach((v) {
         prices!.add(Prices.fromJson(v));
       });
     }
+
     // if (json['galleryImages'] != null) {
     //   galleryImages = <Null>[];
     //   json['galleryImages'].forEach((v) {

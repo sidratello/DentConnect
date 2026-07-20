@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:template/core/api_response.dart';
 import 'package:template/core/errors/failures.dart';
 import 'package:template/core/global_interceptor.dart';
@@ -18,9 +19,15 @@ class ApiService {
         baseUrl: Static.ipconfig,
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 15),
-        headers: {'Accept': 'application/json'},
+        headers: {'Accept': '*/*'},
       ),
     );
+    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
     _dio.interceptors.add(GlobalInterceptor());
   }
 
@@ -59,6 +66,7 @@ class ApiService {
         statusCode: e.response?.statusCode,
       );
     } catch (e) {
+      // إرجاع رسالة خطأ واضحة تتضمن تفاصيل الخطأ غير المتوقع
       return ApiResponse.error('حدث خطأ غير متوقع: ${e.toString()}');
     }
   }

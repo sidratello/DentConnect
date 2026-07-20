@@ -29,18 +29,24 @@ class HomeQuickFilters extends StatelessWidget {
             ),
           ),
           children: [
-            LocationFilterChip(
-              selectedLocation: controller.selectedLocation.value,
-              locations: const [
-                'كل المواقع',
-                'دمشق',
-                'ريف دمشق',
-                'حلب',
-                'حمص',
-                'اللاذقية',
-                'طرطوس',
-              ],
-              onSelected: controller.changeLocation,
+            // LocationFilterChip(
+            //   selectedLocation: controller.selectedLocation.value,
+            //   locations: const [
+            //     'كل المواقع',
+            //     'دمشق',
+            //     'ريف دمشق',
+            //     'حلب',
+            //     'حمص',
+            //     'اللاذقية',
+            //     'طرطوس',
+            //   ],
+            //   onSelected: controller.changeLocation,
+            // ),
+            QuickFilterChip(
+              icon: Icons.wrong_location_outlined,
+              title: 'حسب الموقع',
+              isSelected: controller.location.value,
+              onTap: controller.toggleLocation,
             ),
             QuickFilterChip(
               icon: Icons.star_rounded,
