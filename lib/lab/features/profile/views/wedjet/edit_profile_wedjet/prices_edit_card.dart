@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
+import 'package:template/core/widgets/custom_action_dialog.dart';
 import 'package:template/lab/features/profile/controller/profilecontroller.dart';
 import 'package:template/lab/features/profile/controller/editprofilecontroller.dart';
-import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/custom_action_dialog.dart';
 import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/section_card.dart';
 import 'package:template/lab/features/profile/views/wedjet/profile_wedjet.dart/text_for_table.dart';
 

@@ -62,6 +62,16 @@ Obx(() {
                   HomeActionCard(
                     title: 'مواعيد المسح الضوئي',
                     icon: Icons.medical_services_outlined,
+onTap: () async {
+  final canOpen =
+      await controller.canOpenScanSlots();
+
+  if (!canOpen) {
+    return;
+  }
+
+  Get.toNamed(AppRouter.scanSlots);
+}
                   ),
                   HomeActionCard(
                     title: 'المدونة',

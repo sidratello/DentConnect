@@ -14,6 +14,14 @@ import 'package:template/auth/view/reset_password_screen.dart';
 import 'package:template/auth/view/signup_screen.dart';
 
 import 'package:template/choose_user_type/view/choose_user_type.dart';
+import 'package:template/lab/features/add_scan_slot/binding/add_scan_slot_binding.dart';
+import 'package:template/lab/features/add_scan_slot/binding/booked_scan_appointments_binding.dart';
+import 'package:template/lab/features/add_scan_slot/binding/scan_slots_binding.dart';
+import 'package:template/lab/features/add_scan_slot/binding/update_scan_slot_binding.dart';
+import 'package:template/lab/features/add_scan_slot/views/UpdateScanSlotScreen.dart';
+import 'package:template/lab/features/add_scan_slot/views/add_scan_slot_screen.dart';
+import 'package:template/lab/features/add_scan_slot/views/booked_scan_appointments_screen.dart';
+import 'package:template/lab/features/add_scan_slot/views/scan_slots_screen.dart';
 import 'package:template/lab/features/case_order_details/binding/case_order_details_binding.dart';
 import 'package:template/lab/features/case_order_details/views/case_order_details_screen.dart';
 import 'package:template/lab/features/case_orders/binding/case_orders_binding.dart';
@@ -59,6 +67,12 @@ static const caseOrders = '/caseOrders';
 static const caseOrderDetails = '/caseOrderDetails';
 static const updateOrderStatus = '/updateOrderStatus';
 static const doctorOrders = '/doctorOrders';
+static const addScanSlot = '/addScanSlot';
+  static const scanSlots = '/scan-slots';
+  static const updateScanSlot =
+    '/updateScanSlot';
+    static const bookedScanAppointments =
+    '/booked-scan-appointments';
   static final List<GetPage<dynamic>> pages = [
     GetPage(
       name: choseuserpage,
@@ -157,6 +171,30 @@ GetPage(
   name: doctorOrders,
   page: () => const DoctorOrdersScreen(),
   binding: DoctorOrdersBinding(),
+),
+ GetPage(
+    name: scanSlots,
+    page: () => const ScanSlotsScreen(),
+    binding: ScanSlotsBinding(),
+  ),
+GetPage(
+  name: addScanSlot,
+  page: () => const AddScanSlotScreen(),
+  binding: AddScanSlotBinding(),
+),
+GetPage(
+  name: updateScanSlot,
+  page: () =>
+      const UpdateScanSlotScreen(),
+  binding: UpdateScanSlotBinding(),
+),
+GetPage(
+  name:
+      AppRouter.bookedScanAppointments,
+  page: () =>
+      const BookedScanAppointmentsScreen(),
+  binding:
+      BookedScanAppointmentsBinding(),
 ),
   ];
 

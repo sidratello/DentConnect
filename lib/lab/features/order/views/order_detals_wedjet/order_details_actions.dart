@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_helper.dart';
 import 'package:template/core/widgets/app_button.dart';
+import 'package:template/core/widgets/custom_action_dialog.dart';
 import 'package:template/lab/features/case_order_details/views/widget/details_section_card.dart';
 import 'package:template/lab/features/order/controller/order_details_controller.dart';
-import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/custom_action_dialog.dart';
 
 class OrderDetailsActionsWidget extends StatelessWidget {
   const OrderDetailsActionsWidget({super.key});

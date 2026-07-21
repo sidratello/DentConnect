@@ -182,7 +182,18 @@ Future<ApiResponse<T>> put<T>(
   );
 }
 
-
+Future<ApiResponse<T>> delete<T>(
+  String path, {
+  Map<String, dynamic>? data,
+  Map<String, dynamic>? queryParameters,
+}) {
+  return request<T>(
+    path,
+    method: 'DELETE',
+    data: data,
+    queryParameters: queryParameters,
+  );
+}
 
 
 }

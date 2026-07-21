@@ -3,8 +3,14 @@ import 'dart:ui';
 
 
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 
 import 'package:template/core/app_colors.dart';
+import 'package:template/lab/features/add_scan_slot/controller/scan_slots_controller.dart';
+import 'package:template/lab/features/add_scan_slot/model/scan_slot_model.dart';
+import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog/scan_booking_details_dialog.dart';
 
 
 
@@ -55,6 +61,8 @@ static BoxDecoration primaryButtonDecoration() {
     ),
   );
 }
+
+
 static String arabicImpressionType(String value) {
   switch (value) {
     case 'Digital':
@@ -257,7 +265,30 @@ static String getDoctorInitial(String name) {
   //   Get.dialog(ErrorDialog(body: message), barrierDismissible: true);
   // }
 
+static void showScanBookingDetails({
+  required BuildContext context,
+  required ScanSlotModel slot,
+  required ScanSlotsController controller,
+}) {
+  final booking = controller.bookingForSlot(
+    slot.id,
+  );
 
+  if (booking == null) {
+    Get.snackbar(
+      'تنبيه',
+      'لم يتم العثور على بيانات الحجز',
+      snackPosition: SnackPosition.BOTTOM,
+    );
+
+    return;
+  }
+
+  ScanBookingDetailsDialog.show(
+    context: context,
+    booking: booking,
+  );
+}
 static Widget shadowWrapper({
   required Widget child,
   double radius = 20,
