@@ -61,8 +61,20 @@ class HomePage extends GetView<HomeController> {
                     ),
                     SizedBox(height: Static.getheight(context, 20)),
                     LabsSectionHeader(
-                      selectedIndex: 0,
-                      onTap: (index) {},
+                      selectedIndex: controller.selectedIndex.value,
+                      onTap: (index) {
+                        if (controller.selectedIndex.value == index) {
+                          return;
+                        }
+                        controller.selectedIndex.value = index;
+                        if (index == 0) {
+                          controller.selectFilter(HomeFilter.none);
+                        } else if (index == 1) {
+                          controller.selectFilter(HomeFilter.disconnected);
+                        } else if (index == 2) {
+                          controller.selectFilter(HomeFilter.connected);
+                        }
+                      },
                     ),
                     SizedBox(height: Static.getheight(context, 20)),
                     controller.isLoading.value

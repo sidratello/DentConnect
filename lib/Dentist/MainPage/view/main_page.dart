@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/CreateOrderPage/view/create_order_page.dart';
 import 'package:template/Dentist/DoctorProfile/view/doctor_profile.dart';
 import 'package:template/Dentist/MainPage/controller/navigation_controller.dart';
 import 'package:template/Dentist/SearchLabsPage/archive/search_labs_page.dart';
@@ -26,13 +27,7 @@ class MainPage extends StatelessWidget {
             children: const [
               HomePage(),
               SearchLabsPage(),
-              Scaffold(
-                body: Center(
-                  child: Text(
-                    'Create Case Page',
-                  ),
-                ),
-              ),
+              CreateOrderPage(),
               CasePage(),
               DoctorProfilePage(),
             ],

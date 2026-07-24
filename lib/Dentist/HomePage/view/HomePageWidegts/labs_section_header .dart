@@ -59,7 +59,7 @@ class LabsSectionHeader extends StatelessWidget {
                       Expanded(
                         child: _buildTab(
                           context,
-                          title: ' المتصلة',
+                          title: 'المتصلة',
                           index: 2,
                         ),
                       ),

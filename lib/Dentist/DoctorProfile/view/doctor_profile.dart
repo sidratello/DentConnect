@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:template/Dentist/HomePage/view/HomePageWidegts/DrawerWidgets/app_drawer.dart';
+import 'package:template/core/theme/app_colors.dart';
+import 'package:template/core/utils/static.dart';
+import 'package:template/core/widgets/top_background.dart';
 
 class DoctorProfilePage extends StatelessWidget {
   const DoctorProfilePage({super.key});
@@ -10,132 +14,139 @@ class DoctorProfilePage extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF8FAFF),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        extendBodyBehindAppBar: true,
+        drawer: const AppDrawer(),
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.surfaceTintColor,
+          surfaceTintColor: AppColors.surfaceTintColor,
           elevation: 0,
           centerTitle: true,
-          title: const Text(
-            'الملف الشخصي',
+          title: Text(
+            'الملف الشخصي للطبيب',
             style: TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
               fontWeight: FontWeight.w700,
-              color: Colors.black,
+              fontSize: Static.getwidth(context, 22),
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x12000000),
-                      blurRadius: 16,
-                      offset: Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 96,
-                      height: 96,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: primary,
-                          width: 3,
-                        ),
-                        image: const DecorationImage(
-                          image: AssetImage(
-                            'assets/images/doctor_profile.png',
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'د. أحمد محمد',
-                      style: TextStyle(
-                        fontFamily: 'IBM Plex Sans Arabic',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 22,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    const Text(
-                      'طبيب أسنان عام',
-                      style: TextStyle(
-                        fontFamily: 'IBM Plex Sans Arabic',
-                        color: Colors.grey,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x12000000),
-                      blurRadius: 16,
-                      offset: Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.phone_android_rounded, color: primary),
-                        SizedBox(width: 10),
-                        Text(
-                          'معلومات التواصل',
-                          style: TextStyle(
-                            fontFamily: 'IBM Plex Sans Arabic',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                          ),
+        body: TopBackground(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x12000000),
+                          blurRadius: 16,
+                          offset: Offset(0, 6),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    _infoTile(
-                      Icons.email_outlined,
-                      'البريد الإلكتروني',
-                      'doctor@gmail.com',
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 96,
+                          height: 96,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: primary,
+                              width: 3,
+                            ),
+                            image: const DecorationImage(
+                              image: AssetImage(
+                                'assets/images/doctor_profile.png',
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          'د. أحمد محمد',
+                          style: TextStyle(
+                            fontFamily: 'IBM Plex Sans Arabic',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 22,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        const Text(
+                          'طبيب أسنان عام',
+                          style: TextStyle(
+                            fontFamily: 'IBM Plex Sans Arabic',
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(height: 14),
+                      ],
                     ),
-                    const Divider(height: 28),
-                    _infoTile(
-                      Icons.phone_outlined,
-                      'رقم الهاتف',
-                      '+963 999 999 999',
+                  ),
+                  const SizedBox(height: 24),
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x12000000),
+                          blurRadius: 16,
+                          offset: Offset(0, 6),
+                        ),
+                      ],
                     ),
-                    const Divider(height: 28),
-                    _infoTile(
-                      Icons.location_on_outlined,
-                      'المدينة',
-                      'دمشق',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Row(
+                          children: [
+                            Icon(Icons.phone_android_rounded, color: primary),
+                            SizedBox(width: 10),
+                            Text(
+                              'معلومات التواصل',
+                              style: TextStyle(
+                                fontFamily: 'IBM Plex Sans Arabic',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        _infoTile(
+                          Icons.email_outlined,
+                          'البريد الإلكتروني',
+                          'doctor@gmail.com',
+                        ),
+                        const Divider(height: 28),
+                        _infoTile(
+                          Icons.phone_outlined,
+                          'رقم الهاتف',
+                          '+963 999 999 999',
+                        ),
+                        const Divider(height: 28),
+                        _infoTile(
+                          Icons.location_on_outlined,
+                          'المدينة',
+                          'دمشق',
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

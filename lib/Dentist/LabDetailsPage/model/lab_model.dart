@@ -11,7 +11,7 @@ class LabModel {
   List<String>? galleryImages;
 
   List<String>? mainImage;
-  String? hasScan;
+  bool? hasScan;
   String? connectionStatus;
 
   LabModel({
@@ -32,16 +32,16 @@ class LabModel {
 
   LabModel.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? '';
-    labName = json['labName'];
+    labName = json['labName'] ?? json['name'] ?? '';
     description = json['description'];
     yearsOfExperience = json['yearsOfExperience'];
     availability = json['availability'];
     materials = json['materials'] ?? [];
     specialties = json['specialties'] ?? [];
-    averageRating = json['averageRating'];
-    mainImage = json['profilePicturesUrl'];
-    hasScan = json['hasScanVisitService'];
-    connectionStatus = json['connectionStatus'];
+    averageRating = json['averageRating'] ?? 0.0;
+    mainImage = json['profilePicturesUrl'] ?? [];
+    hasScan = json['hasScanVisitService'] ?? false;
+    connectionStatus = json['connectionStatus'] ?? 'NotConnected';
     if (json['prices'] != null) {
       prices = <Prices>[];
       json['prices'].forEach((v) {

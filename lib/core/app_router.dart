@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:template/Dentist/CommunityPage/view/community_page.dart';
+import 'package:template/Dentist/CreateOrderPage/view/create_order_page.dart';
 import 'package:template/Dentist/HomePage/view/view_only.dart';
 import 'package:template/Dentist/LabDetailsPage/view/lab_details_page.dart';
 import 'package:template/Dentist/NotificationsPage/view/notifications_page.dart';
@@ -23,6 +24,7 @@ import 'package:template/lab/features/orderconection/views/orderconection.dart';
 abstract class AppRouter {
   // static const choseuserpage = '/';
   static const homePage = '/';
+  static const createOrderPage = '/createOrderPage';
   static const labDetailsPage = '/labDetailsPage';
   static const casePage = '/casePage';
   static const patientsPage = '/patientsPage';
@@ -102,10 +104,13 @@ abstract class AppRouter {
       name: notificationPage,
       page: () => const NotificationsPage(),
     ),
-
     GetPage(
       name: createPatientPage,
       page: () => const CreateNewPatientProfile(),
+    ),
+    GetPage(
+      name: createOrderPage,
+      page: () => const CreateOrderPage(),
     ),
   ];
 }

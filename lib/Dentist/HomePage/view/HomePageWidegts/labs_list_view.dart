@@ -20,27 +20,39 @@ class LabsListView extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         horizontal: Static.getwidth(context, 24),
       ),
-      child: GridView.builder(
-        shrinkWrap: true,
-        primary: false,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
-        itemCount: appModeController.labsDetails.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: Static.getwidth(context, 12),
-          mainAxisSpacing: Static.getheight(context, 14),
-          childAspectRatio: 0.9,
-        ),
-        itemBuilder: (context, index) {
-          return LabCard(
-            labId: index,
-            isFollowing: index.isEven,
-            isPreviewMode: appModeController.isPreviewMode.value,
-            labDetails: appModeController.labsDetails[index],
-          );
-        },
-      ),
+      child: appModeController.labsDetails.isEmpty
+          ? Center(
+              child: Text(
+                'لا توجد مخابر متاحة',
+                style: TextStyle(
+                  fontFamily: 'IBM Plex Sans Arabic',
+                  fontWeight: FontWeight.w500,
+                  fontSize: Static.getwidth(context, 14),
+                  color: AppColors.black54,
+                ),
+              ),
+            )
+          : GridView.builder(
+              shrinkWrap: true,
+              primary: false,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: appModeController.labsDetails.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: Static.getwidth(context, 12),
+                mainAxisSpacing: Static.getheight(context, 14),
+                childAspectRatio: 0.9,
+              ),
+              itemBuilder: (context, index) {
+                return LabCard(
+                  labId: index,
+                  isFollowing: index.isEven,
+                  isPreviewMode: appModeController.isPreviewMode.value,
+                  labDetails: appModeController.labsDetails[index],
+                );
+              },
+            ),
     );
   }
 }
@@ -58,6 +70,15 @@ class LabCard extends StatelessWidget {
     required this.labId,
     required this.labDetails,
   });
+
+  String? getLabDetailsImage(
+    LabModel labDetails,
+  ) {
+    if (labDetails.mainImage != null && labDetails.mainImage!.isNotEmpty) {
+      return labDetails.mainImage![0].toString();
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +108,8 @@ class LabCard extends StatelessWidget {
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(18),
               ),
-              child: labDetails.mainImage != null
-                  ? Image.network(labDetails.mainImage.toString())
+              child: getLabDetailsImage(labDetails) != null
+                  ? Image.network(getLabDetailsImage(labDetails)!)
                   : Image.asset(
                       'assets/images/lab_card.png',
                       width: double.infinity,
@@ -155,7 +176,7 @@ class LabCard extends StatelessWidget {
                             : AppColors.boxBlack,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: isFollowing
+                          color: labDetails.connectionStatus == 'Accepted'
                               ? AppColors.success
                               : AppColors.primary,
                         ),

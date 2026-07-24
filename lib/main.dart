@@ -1,10 +1,7 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
-import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/core/app_router.dart';
 import 'package:template/core/storage_services.dart';
@@ -13,13 +10,14 @@ import 'package:template/core/theme/theme_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final dio = Dio();
 
   await Get.putAsync<StorageService>(
     () async => await StorageService().init(),
   );
 
   Get.put(HomeController());
+  Get.put(CreateOrderController());
+
   Get.put(ThemeController());
 
   runApp(const MyApp());
