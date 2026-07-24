@@ -4,7 +4,10 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class LabsBackgroungImage extends StatelessWidget {
-  const LabsBackgroungImage({super.key});
+  final String imagePath;
+
+  const LabsBackgroungImage(
+      {super.key, this.imagePath = 'assets/images/lab_card.png'});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class LabsBackgroungImage extends StatelessWidget {
       child: Stack(
         children: [
           Image.asset(
-            'assets/images/lab_card.png',
+            imagePath,
             width: double.infinity,
             height: Static.getheight(context, 260),
             fit: BoxFit.cover,

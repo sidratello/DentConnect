@@ -15,9 +15,9 @@ class HomeController extends GetxController {
   RxBool isLoading = false.obs;
 
   @override
-  Future<void> onInit() async {
-    await fetchLabsLabels();
-    await fetchLabsDetails();
+  void onInit() {
+    fetchLabsLabels();
+    fetchLabsDetails();
     super.onInit();
   }
 
@@ -47,6 +47,7 @@ class HomeController extends GetxController {
         break;
 
       case HomeFilter.none:
+        break;
       case HomeFilter.topRated:
         await fetchLabsByRating();
         break;

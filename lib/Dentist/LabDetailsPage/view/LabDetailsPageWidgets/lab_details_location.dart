@@ -4,7 +4,9 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class LabDetailsLocation extends StatelessWidget {
-  const LabDetailsLocation({super.key});
+  final String address;
+
+  const LabDetailsLocation({super.key, required this.address});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class LabDetailsLocation extends StatelessWidget {
               right: Static.getwidth(context, 6),
             ),
             child: Text(
-              'برزة - الشارع الرئيسي - شارع 17 نيسان بناء 23',
+              address,
               textAlign: TextAlign.right,
               style: TextStyle(
                 fontFamily: 'IBM Plex Sans Arabic',

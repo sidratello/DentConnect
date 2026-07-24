@@ -4,7 +4,9 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class LabDetailsPhoneNumber extends StatelessWidget {
-  const LabDetailsPhoneNumber({super.key});
+  final String phoneNumber;
+
+  const LabDetailsPhoneNumber({super.key, required this.phoneNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class LabDetailsPhoneNumber extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: Text(
-                '+963 955 347',
+                phoneNumber,
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontFamily: 'IBM Plex Sans Arabic',

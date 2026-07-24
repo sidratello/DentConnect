@@ -13,6 +13,8 @@ class LabModel {
   List<String>? mainImage;
   bool? hasScan;
   String? connectionStatus;
+  String? phone = 'testing phone number';
+  String? address = 'testing address';
 
   LabModel({
     this.id,

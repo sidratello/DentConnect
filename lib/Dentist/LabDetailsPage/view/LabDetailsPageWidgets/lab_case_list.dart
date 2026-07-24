@@ -4,22 +4,14 @@ import '../../../../core/utils/static.dart';
 import 'lab_image_item.dart';
 
 class LabCaseList extends StatelessWidget {
+  final List<String> images;
   const LabCaseList({
     super.key,
+    required this.images,
   });
 
   @override
   Widget build(BuildContext context) {
-    final images = [
-      'assets/images/teeth3.jpg',
-      'assets/images/teeth3.jpg',
-      'assets/images/teeth3.jpg',
-      'assets/images/teeth3.jpg',
-      'assets/images/teeth3.jpg',
-      'assets/images/teeth3.jpg',
-      'assets/images/teeth3.jpg',
-    ];
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: GridView.builder(

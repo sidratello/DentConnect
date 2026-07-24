@@ -20,7 +20,8 @@ class SearchResultLabCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(18),
       onTap: () {
         Get.to(
-          () => const LabDetailsPage(),
+          // TODO: fix this to pass the correct lab ID when navigating to the LabDetailsPage
+          () => const LabDetailsPage(id: 0),
         );
       },
       child: Container(

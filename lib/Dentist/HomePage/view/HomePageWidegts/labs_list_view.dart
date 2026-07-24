@@ -46,7 +46,7 @@ class LabsListView extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 return LabCard(
-                  labId: index,
+                  labId: appModeController.labsDetails[index].id,
                   isFollowing: index.isEven,
                   isPreviewMode: appModeController.isPreviewMode.value,
                   labDetails: appModeController.labsDetails[index],
@@ -85,7 +85,7 @@ class LabCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.to(
-          () => const LabDetailsPage(),
+          () => LabDetailsPage(id: labId),
           arguments: labId,
         );
       },

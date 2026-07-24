@@ -61,7 +61,7 @@ class LabDetailsNameRow extends StatelessWidget {
                   left: Static.getwidth(context, 12),
                 ),
                 child: Text(
-                  'مخبر هشام للتعويضات السنية',
+                  labController.getLabName(),
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontFamily: 'IBM Plex Sans Arabic',

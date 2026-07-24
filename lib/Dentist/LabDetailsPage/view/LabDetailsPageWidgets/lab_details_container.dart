@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_availabillity_row.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_description.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_location.dart';
@@ -12,7 +13,9 @@ import '../../../../core/utils/static.dart';
 import '../../../../core/widgets/app_spacing.dart';
 
 class LabDetailsContainer extends StatelessWidget {
-  const LabDetailsContainer({super.key});
+  final LabModel labModel;
+
+  const LabDetailsContainer({super.key, required this.labModel});
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +39,16 @@ class LabDetailsContainer extends StatelessWidget {
         children: [
           const LabDetailsNameRow(),
           AppSpacing.height(context, 14),
-          const LabDetailsDescription(),
+          LabDetailsDescription(description: labModel.description ?? ''),
           AppSpacing.height(context, 20),
-          const LabDetailsPhoneNumber(),
+          LabDetailsPhoneNumber(phoneNumber: labModel.phone ?? ''),
           AppSpacing.height(context, 20),
-          const LabDetailsLocation(),
+          LabDetailsLocation(address: labModel.address ?? ''),
           AppSpacing.height(context, 20),
-          const LabDetailsRatingRow(),
+          LabDetailsRatingRow(
+              yearsOfExperience: labModel.yearsOfExperience != null
+                  ? labModel.yearsOfExperience.toString()
+                  : '-'),
           AppSpacing.height(context, 20),
           const LabDetailsAvailabillityRow(),
           AppSpacing.height(context, 20),

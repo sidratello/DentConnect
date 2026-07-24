@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:template/Dentist/CommunityPage/view/community_page.dart';
 import 'package:template/Dentist/CreateOrderPage/view/create_order_page.dart';
@@ -82,7 +83,8 @@ abstract class AppRouter {
     ),
     GetPage(
       name: labDetailsPage,
-      page: () => const LabDetailsPage(),
+      // TODO: Update this to pass the correct lab ID when navigating to the LabDetailsPage
+      page: () => LabDetailsPage(id: Get.arguments),
     ),
     GetPage(
       name: patientsPage,

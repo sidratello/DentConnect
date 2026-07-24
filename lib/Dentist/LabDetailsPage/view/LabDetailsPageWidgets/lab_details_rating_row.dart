@@ -4,7 +4,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class LabDetailsRatingRow extends StatelessWidget {
-  const LabDetailsRatingRow({super.key});
+  final String yearsOfExperience;
+  const LabDetailsRatingRow({super.key, required this.yearsOfExperience});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class LabDetailsRatingRow extends StatelessWidget {
                 right: Static.getwidth(context, 4),
               ),
               child: Text(
-                '11 سنة',
+                yearsOfExperience,
                 style: TextStyle(
                   fontFamily: 'IBM Plex Sans Arabic',
                   fontWeight: FontWeight.w400,

@@ -14,11 +14,14 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/app_spacing.dart';
 
 class LabDetailsPage extends StatelessWidget {
-  const LabDetailsPage({super.key});
+  final int id;
+
+  const LabDetailsPage({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => LabController());
+    Get.lazyPut(() => LabController(id));
+    LabController labController = Get.find<LabController>();
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -32,102 +35,116 @@ class LabDetailsPage extends StatelessWidget {
           automaticallyImplyLeading: false,
           actions: const [AppbarLabDetailsVector()],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const LabsBackgroungImage(),
-              const LabDetailsContainer(),
-              const LabCreateRequestButton(),
-              const LabDetailsWorksHeader(),
-              const LabCaseList(),
-              Obx(
-                () {
-                  final controller = Get.find<LabController>();
-                  final homeController = Get.find<HomeController>();
-                  final bool canShowCases = !homeController
-                          .isPreviewMode.value &&
-                      controller.followStatus.value == FollowStatus.following;
-
-                  if (!canShowCases) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 26,
-                      ),
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 28,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).shadowColor,
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(
-                            color: AppColors.border,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.black.withValues(alpha: 0.03),
-                              blurRadius: 18,
-                              offset: const Offset(0, 6),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 68,
-                              height: 68,
-                              decoration: const BoxDecoration(
-                                color: AppColors.boxBlack,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.history_rounded,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 34,
-                              ),
-                            ),
-                            AppSpacing.height(context, 14),
-                            Text(
-                              'حالاتك السابقة مع المخبر',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'IBM Plex Sans Arabic',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
-                            AppSpacing.height(context, 10),
-                            const Text(
-                              'بعد متابعة المخبر وإنشاء أول طلب، ستظهر هنا جميع الحالات السابقة الخاصة بك مع تفاصيلها الكاملة.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'IBM Plex Sans Arabic',
-                                fontWeight: FontWeight.w400,
-                                fontSize: 15,
-                                height: 1.7,
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
-                  return const Column(
+        body: Obx(() {
+          return labController.isLoading.value || labController.labModel == null
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Column(
                     children: [
-                      LabDetailsWorksWithDoctorHeader(),
-                      LabCaseWithDoctorList(),
+                      LabsBackgroungImage(
+                          imagePath: labController.getLabImage()),
+                      LabDetailsContainer(labModel: labController.labModel!),
+                      const LabCreateRequestButton(),
+                      const LabDetailsWorksHeader(),
+                      LabCaseList(
+                          images: labController.labModel!.galleryImages ?? []),
+                      Obx(
+                        () {
+                          final controller = Get.find<LabController>();
+                          final homeController = Get.find<HomeController>();
+                          final bool canShowCases =
+                              !homeController.isPreviewMode.value &&
+                                  controller.followStatus.value ==
+                                      FollowStatus.following;
+
+                          if (!canShowCases) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 26,
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                  vertical: 28,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).shadowColor,
+                                  borderRadius: BorderRadius.circular(24),
+                                  border: Border.all(
+                                    color: AppColors.border,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.black
+                                          .withValues(alpha: 0.03),
+                                      blurRadius: 18,
+                                      offset: const Offset(0, 6),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 68,
+                                      height: 68,
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.boxBlack,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Icon(
+                                        Icons.history_rounded,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        size: 34,
+                                      ),
+                                    ),
+                                    AppSpacing.height(context, 14),
+                                    Text(
+                                      'حالاتك السابقة مع المخبر',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'IBM Plex Sans Arabic',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 18,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
+                                      ),
+                                    ),
+                                    AppSpacing.height(context, 10),
+                                    const Text(
+                                      'بعد متابعة المخبر وإنشاء أول طلب، ستظهر هنا جميع الحالات السابقة الخاصة بك مع تفاصيلها الكاملة.',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'IBM Plex Sans Arabic',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15,
+                                        height: 1.7,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                          return const Column(
+                            children: [
+                              LabDetailsWorksWithDoctorHeader(),
+                              LabCaseWithDoctorList(),
+                            ],
+                          );
+                        },
+                      ),
                     ],
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+                  ),
+                );
+        }),
       ),
     );
   }

@@ -5,16 +5,16 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class LabDetailsDescription extends StatelessWidget {
+  final String description;
+
   const LabDetailsDescription({
     super.key,
+    required this.description,
   });
 
   @override
   Widget build(BuildContext context) {
     final RxBool isExpanded = false.obs;
-
-    const String description =
-        'مخبر متخصص بالتعويضات السنية الرقمية والتقليدية مع خبرة طويلة في تصنيع مختلف أنواع التركيبات السنية باستخدام أحدث التقنيات والأجهزة الحديثة لضمان أفضل جودة ودقة في العمل وتقديم نتائج احترافية للأطباء والمرضى.';
 
     return Obx(
       () => Column(

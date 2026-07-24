@@ -8,75 +8,7 @@ import '../../model/compensation_item_model.dart';
 import 'compensation_item_card.dart';
 
 void showCompensationBottomSheet(
-  BuildContext context,
-) {
-  final List<CompensationItemModel> compensations = [
-    CompensationItemModel(
-      name: 'CRISTAL EMAX',
-      price: '80\$',
-    ),
-    CompensationItemModel(
-      name: 'VENEER',
-      price: '65\$',
-    ),
-    CompensationItemModel(
-      name: 'ZIRCON 2D',
-      price: '90\$',
-    ),
-    CompensationItemModel(
-      name: 'ZIRCON 3D VIP',
-      price: '120\$',
-    ),
-    CompensationItemModel(
-      name: 'ZIRCON 7D VIP',
-      price: '140\$',
-    ),
-    CompensationItemModel(
-      name: 'ZIRCON IMPLANT',
-      price: '150\$',
-    ),
-    CompensationItemModel(
-      name: 'ZIRCON FRAME WORK',
-      price: '95\$',
-    ),
-    CompensationItemModel(
-      name: 'CERAMIC CAD CAM',
-      price: '100\$',
-    ),
-    CompensationItemModel(
-      name: 'CERAMIC IMPLANT',
-      price: '130\$',
-    ),
-    CompensationItemModel(
-      name: 'CERAMIC MARYLAND',
-      price: '110\$',
-    ),
-    CompensationItemModel(
-      name: 'EMAX - INLAY',
-      price: '70\$',
-    ),
-    CompensationItemModel(
-      name: 'EMAX - ONLAY',
-      price: '72\$',
-    ),
-    CompensationItemModel(
-      name: 'SNAP ON SMILE',
-      price: '200\$',
-    ),
-    CompensationItemModel(
-      name: 'PARTIAL DIGITAL',
-      price: '85\$',
-    ),
-    CompensationItemModel(
-      name: 'ATTACHMINT',
-      price: '40\$',
-    ),
-    CompensationItemModel(
-      name: 'TEMPORARY',
-      price: '25\$',
-    ),
-  ];
-
+    BuildContext context, List<CompensationItemModel> compensations) {
   Get.bottomSheet(
     Container(
       height: MediaQuery.of(context).size.height * 0.82,

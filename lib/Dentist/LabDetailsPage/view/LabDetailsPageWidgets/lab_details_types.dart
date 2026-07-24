@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
+import '../../controller/lab_controller.dart';
 import 'compensation_bottom_sheet.dart';
 
 class LabDetailsTypes extends StatelessWidget {
@@ -9,6 +11,8 @@ class LabDetailsTypes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LabController controller = Get.find<LabController>();
+
     return Center(
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -18,6 +22,7 @@ class LabDetailsTypes extends StatelessWidget {
           onTap: () {
             showCompensationBottomSheet(
               context,
+              controller.compensations,
             );
           },
           child: Text(
