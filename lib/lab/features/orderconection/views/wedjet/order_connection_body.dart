@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 import 'package:template/core/widgets/CustomEmptyState.dart';
 import 'package:template/lab/features/homepage/controller/homecontroller.dart';
 import 'package:template/lab/features/orderconection/controller/order_connection_controller.dart';
@@ -19,7 +20,7 @@ class OrderConnectionBodyWidget extends StatelessWidget {
 
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
+        return const AppLoadingIndicator();
       }
 
 if (controller.requests.isEmpty) {

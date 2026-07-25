@@ -76,6 +76,9 @@ onTap: () async {
                   HomeActionCard(
                     title: 'المدونة',
                     icon: Icons.edit_note_outlined,
+                      onTap: () {
+    Get.toNamed(AppRouter.blogFeed);
+  },
                   ),
                  HomeActionCard(
   title: 'إدارة الحالات',

@@ -3,11 +3,12 @@
 /// ======================================
 
 import 'package:flutter/material.dart';
+import 'package:template/core/widgets/app_search_field.dart';
 import 'package:template/lab/features/orderconection/controller/connected_doctors_controller.dart';
 import 'package:template/lab/features/orderconection/controller/order_connection_controller.dart';
 import 'package:template/lab/features/orderconection/views/DoctorConnectionwedjet/connected_doctors_body.dart';
 import 'package:template/lab/features/orderconection/views/wedjet/lab_background_layout.dart';
-import 'package:template/lab/features/orderconection/views/wedjet/order_conection_seacrch.dart';
+// import 'package:template/lab/features/orderconection/views/wedjet/order_conection_seacrch.dart';
 import 'package:template/lab/features/orderconection/views/wedjet/order_connec_tabs.dart';
 
 import 'package:template/lab/features/orderconection/views/wedjet/order_connection_body.dart';
@@ -36,18 +37,30 @@ class OrderConnectionScreen extends StatelessWidget {
         children: [
           const OrderConnectionHeaderWidget(),
 
-          OrderConnectionSearchWidget(
+          // OrderConnectionSearchWidget(
 
 
-            onChanged: (value) {
-              if (controller.selectedTab.value ==
-                  OrderConnectionTab.connectedDoctors) {
-                connectedDoctorsController.searchDoctors(value);
-              } else {
-                controller.searchRequests(value);
-              }
-            },
-          ),
+          //   onChanged: (value) {
+          //     if (controller.selectedTab.value ==
+          //         OrderConnectionTab.connectedDoctors) {
+          //       connectedDoctorsController.searchDoctors(value);
+          //     } else {
+          //       controller.searchRequests(value);
+          //     }
+          //   },
+          // ),
+
+          AppSearchField(
+  hintText: 'ابحث باسم الطبيب أو العنوان',
+  onChanged: (value) {
+    if (controller.selectedTab.value ==
+        OrderConnectionTab.connectedDoctors) {
+      connectedDoctorsController.searchDoctors(value);
+    } else {
+      controller.searchRequests(value);
+    }
+  },
+),
 
           const OrderConnectionTabs(),
 

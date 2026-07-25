@@ -8,6 +8,11 @@ import 'package:template/core/app_helper.dart';
 import 'package:template/core/storage_services.dart';
 
 class GlobalInterceptor extends dio.Interceptor {
+    GlobalInterceptor() {
+    debugPrintSynchronously(
+      '🔥 GLOBAL INTERCEPTOR CREATED',
+    );
+  }
   static const String _divider =
       '----------------------------------------------------------------------';
 
@@ -18,6 +23,9 @@ class GlobalInterceptor extends dio.Interceptor {
     dio.RequestOptions options,
     dio.RequestInterceptorHandler handler,
   ) {
+      debugPrintSynchronously(
+    '🔥 GLOBAL INTERCEPTOR ON REQUEST',
+  );
     final token = AppHelper.token;
 
     if (token.isNotEmpty) {
@@ -50,6 +58,9 @@ class GlobalInterceptor extends dio.Interceptor {
     dio.Response response,
     dio.ResponseInterceptorHandler handler,
   ) {
+      debugPrintSynchronously(
+    '🔥 GLOBAL INTERCEPTOR ON RESPONSE',
+  );
     final requestTime =
         response.requestOptions.extra['request_time'] as DateTime?;
 

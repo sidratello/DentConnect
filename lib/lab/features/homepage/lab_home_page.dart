@@ -15,10 +15,20 @@ class LabHomePage extends StatelessWidget {
   backgroundColor:AppColors.background,
   bottomNavigationBar:  CustomBottomNavBar(
     currentIndex: 0,
+
+
+
     onTap: (index) {
+           if (index == 1) {
+            Get.toNamed(
+              AppRouter.penndingPosts,
+            );
+       
+          }
                 if (index == 3) {
             Get.toNamed(AppRouter.profile);
           }
+          
 
     },
   ),

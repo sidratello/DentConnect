@@ -20,13 +20,7 @@ class SignupthirdPage extends StatelessWidget {
     ? 'عنوان المخبر'
     : 'عنوان العيادة',
           controller:controller.addressPlaceController,
-            validator: (value) =>
-      AppValidators.validateRequired(
-        value,
-        controller.isLab
-            ? 'عنوان المخبر'
-            : 'عنوان العيادة',
-      ),
+  validator: AppValidators.validateAddress,
            prefixIcon: Icon(Icons.location_on),),
           SizedBox(height: 10),
 
@@ -35,6 +29,7 @@ class SignupthirdPage extends StatelessWidget {
     ? 'مدينة المخبر'
     : 'مدينة العيادة',
           controller:controller.cityPlaceController, 
+              validator: AppValidators.validateCity,
            prefixIcon: Icon(Icons.location_city),),
           SizedBox(height: 10),
 
@@ -43,6 +38,7 @@ class SignupthirdPage extends StatelessWidget {
     ? 'بلد المخبر'
     : 'بلد العيادة',
           controller:controller.countryPlaceController,
+              validator: AppValidators.validateCountry,
             prefixIcon: Icon(Icons.public),
           ),
 

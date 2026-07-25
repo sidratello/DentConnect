@@ -46,6 +46,6 @@ class OrderImage extends StatelessWidget {
 
   String _fullImageUrl(String path) {
     if (path.startsWith('http')) return path;
-    return 'http://192.168.1.10:44352/$path';
+    return 'http://192.168.1.3:44352/$path';
   }
 }

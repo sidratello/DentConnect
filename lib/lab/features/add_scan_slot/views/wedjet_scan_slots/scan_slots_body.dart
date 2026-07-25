@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/core/app_helper.dart';
 import 'package:template/core/app_text_styles.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 import 'package:template/core/widgets/EmptyStateCard.dart';
 import 'package:template/lab/features/add_scan_slot/model/scan_slot_model.dart';
 import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog/scan_booking_details_dialog.dart';
@@ -31,11 +32,7 @@ class ScanSlotsBody extends GetView<ScanSlotsController> {
           Expanded(
             child: Obx(() {
               if (controller.isLoading.value) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryBlue,
-                  ),
-                );
+       return const AppLoadingIndicator();
               }
 
               return RefreshIndicator(

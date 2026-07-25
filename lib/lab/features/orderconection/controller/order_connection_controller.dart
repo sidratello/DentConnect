@@ -1,6 +1,7 @@
 
 
 import 'package:get/get.dart';
+import 'package:template/lab/features/orderconection/controller/connected_doctors_controller.dart';
 import 'package:template/lab/features/orderconection/model/order_conection_model.dart';
 import 'package:template/lab/features/orderconection/repositry/order_connection_repo.dart';
 
@@ -87,7 +88,10 @@ Future<void> acceptRequest(int requestId) async {
     requests.removeWhere(
       (item) => item.id == requestId,
     );
-
+    if (Get.isRegistered<ConnectedDoctorsController>()) {
+      await Get.find<ConnectedDoctorsController>()
+          .getConnectedDoctors();
+    }
     Get.snackbar(
       'تم',
       response.message ?? 'تمت الموافقة على الطلب',

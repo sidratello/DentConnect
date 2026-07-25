@@ -16,7 +16,7 @@ class ApiService {
   ApiService._internal() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'http://192.168.1.10:44352/api/',
+        baseUrl: 'http://192.168.1.3:44352/api/',
         connectTimeout: const Duration(seconds: 20),
         receiveTimeout: const Duration(seconds: 20),
         headers: {'Accept': 'application/json'},
@@ -71,58 +71,138 @@ class ApiService {
     return request<T>(path, method: 'GET', queryParameters: queryParameters);
   }
 
-  Future<ApiResponse<T>> post<T>(
-    String path, {
-    Map<String, dynamic>? data,
-    File? file,
-    String? fileKey,
-  }) async {
-    final bool hasFile = file != null;
+//   Future<ApiResponse<T>> post<T>(
+//     String path, {
+//     Map<String, dynamic>? data,
+//     File? file,
+//     String? fileKey,
+//   }) async {
+//     final bool hasFile = file != null;
 
-    if (hasFile) {
-      FormData formData;
+//     if (hasFile) {
+//       FormData formData;
 
-      if (data != null && data.isNotEmpty) {
-        formData = FormData();
+//       if (data != null && data.isNotEmpty) {
+//         formData = FormData();
 
-        data.forEach((key, value) {
-          if (value != null) {
-            formData.fields.add(MapEntry(key, value.toString()));
-          }
-        });
-      } else {
-        formData = FormData();
-      }
+//         data.forEach((key, value) {
+//           if (value != null) {
+//             formData.fields.add(MapEntry(key, value.toString()));
+//           }
+//         });
+//       } else {
+//         formData = FormData();
+//       }
 
-      final key = fileKey ?? 'file';
-      if (key.isEmpty) {
-        throw ArgumentError("File key must not be empty.");
-      }
+//       final key = fileKey ?? 'file';
+//       if (key.isEmpty) {
+//         throw ArgumentError("File key must not be empty.");
+//       }
 
-      final fileName = file.path.split('/').last;
-      final filePart = await MultipartFile.fromFile(
-        file.path,
-        filename: fileName,
-      );
-      formData.files.add(MapEntry(key, filePart));
+//       final fileName = file.path.split('/').last;
+//       final filePart = await MultipartFile.fromFile(
+//         file.path,
+//         filename: fileName,
+//       );
+//       formData.files.add(MapEntry(key, filePart));
 
-      print(
-        '📦 Using FormData with ${formData.fields.length} fields and 1 file',
-      );
+//       print(
+//         '📦 Using FormData with ${formData.fields.length} fields and 1 file',
+//       );
 
-      return request<T>(path, method: 'POST', data: formData);
-    } else {
+//       return request<T>(path, method: 'POST', data: formData);
+//     } else {
 
-  FormData formData = FormData();
+//   FormData formData = FormData();
+
+//   if (data != null) {
+//     data.forEach((key, value) {
+//       if (value != null) {
+//         formData.fields.add(
+//           MapEntry(key, value.toString()),
+//         );
+//       }
+//     });
+//   }
+
+//   return request<T>(
+//     path,
+//     method: 'POST',
+//     data: formData,
+//   );
+// }
+//   }
+
+Future<ApiResponse<T>> post<T>(
+  String path, {
+  Map<String, dynamic>? data,
+  File? file,
+  List<File>? files,
+  String? fileKey,
+}) async {
+  if (file != null &&
+      files != null &&
+      files.isNotEmpty) {
+    throw ArgumentError(
+      'Use either file or files, not both.',
+    );
+  }
+
+  final formData = FormData();
 
   if (data != null) {
     data.forEach((key, value) {
       if (value != null) {
         formData.fields.add(
-          MapEntry(key, value.toString()),
+          MapEntry(
+            key,
+            value.toString(),
+          ),
         );
       }
     });
+  }
+
+  final hasFiles =
+      file != null ||
+      (files != null && files.isNotEmpty);
+
+  if (hasFiles) {
+    final key = fileKey ?? 'file';
+
+    if (key.trim().isEmpty) {
+      throw ArgumentError(
+        'File key must not be empty.',
+      );
+    }
+
+    if (file != null) {
+      formData.files.add(
+        MapEntry(
+          key,
+          await MultipartFile.fromFile(
+            file.path,
+            filename: _getFileName(file.path),
+          ),
+        ),
+      );
+    }
+
+    if (files != null) {
+      for (final currentFile in files) {
+        formData.files.add(
+          MapEntry(
+            key,
+            await MultipartFile.fromFile(
+              currentFile.path,
+              filename: _getFileName(
+                currentFile.path,
+              ),
+            ),
+          ),
+        );
+      }
+    }
   }
 
   return request<T>(
@@ -131,9 +211,13 @@ class ApiService {
     data: formData,
   );
 }
-  }
 
-
+String _getFileName(String path) {
+  return path
+      .replaceAll('\\', '/')
+      .split('/')
+      .last;
+}
 
 
 
@@ -173,6 +257,53 @@ Future<ApiResponse<T>> put<T>(
     );
 
     formData.files.add(MapEntry(key, filePart));
+  }
+
+  return request<T>(
+    path,
+    method: 'PUT',
+    data: formData,
+  );
+}
+
+
+Future<ApiResponse<T>> putWithFiles<T>(
+  String path, {
+  Map<String, dynamic>? data,
+  required List<File> files,
+  required String fileKey,
+}) async {
+  if (fileKey.trim().isEmpty) {
+    throw ArgumentError(
+      'File key must not be empty.',
+    );
+  }
+
+  final formData = FormData();
+
+  if (data != null) {
+    data.forEach((key, value) {
+      if (value != null) {
+        formData.fields.add(
+          MapEntry(
+            key,
+            value.toString(),
+          ),
+        );
+      }
+    });
+  }
+
+  for (final file in files) {
+    formData.files.add(
+      MapEntry(
+        fileKey,
+        await MultipartFile.fromFile(
+          file.path,
+          filename: _getFileName(file.path),
+        ),
+      ),
+    );
   }
 
   return request<T>(

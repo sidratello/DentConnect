@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 
 enum AppButtonType {
   filled,
@@ -114,16 +115,14 @@ class AppButton extends StatelessWidget {
   }
 
   Widget _content({Color? defaultColor}) {
-    if (isLoading) {
-      return SizedBox(
-        width: 22,
-        height: 22,
-        child: CircularProgressIndicator(
-          strokeWidth: 2.4,
-          color: defaultColor ?? AppColors.white,
-        ),
-      );
-    }
+if (isLoading) {
+  return AppLoadingIndicator(
+    size: 22,
+    strokeWidth: 2.4,
+    color: defaultColor ?? AppColors.white,
+    centered: false,
+  );
+}
 
     final text = Text(
       title,

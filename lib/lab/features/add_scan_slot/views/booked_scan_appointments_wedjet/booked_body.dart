@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 import 'package:template/core/widgets/EmptyStateCard.dart';
 import 'package:template/lab/features/add_scan_slot/views/booked_scan_appointments_wedjet/booked_card.dart';
 import 'package:template/lab/features/add_scan_slot/views/booked_scan_appointments_wedjet/booked_filter.dart';
@@ -28,13 +29,7 @@ class BookedScanAppointmentsBody
         () {
           if (controller.isLoading.value &&
               controller.bookings.isEmpty) {
-            return const Center(
-              child:
-                  CircularProgressIndicator(
-                color:
-                    AppColors.primaryBlue,
-              ),
-            );
+  return const AppLoadingIndicator();
           }
 
           return RefreshIndicator(

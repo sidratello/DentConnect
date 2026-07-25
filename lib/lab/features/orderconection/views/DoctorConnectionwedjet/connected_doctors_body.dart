@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 
 import 'package:template/core/widgets/CustomEmptyState.dart';
 import 'package:template/lab/features/orderconection/views/DoctorConnectionwedjet/connected_doctor_card.dart';
@@ -18,9 +19,7 @@ class ConnectedDoctorsBody extends StatelessWidget {
 
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+   return const AppLoadingIndicator();
       }
 
       if (controller.connectedDoctors.isEmpty) {

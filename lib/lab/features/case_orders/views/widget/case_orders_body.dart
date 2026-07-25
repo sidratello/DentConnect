@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/core/app_router.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 import 'package:template/core/widgets/CustomEmptyState.dart';
 
 import 'package:template/lab/features/case_orders/views/widget/SmallActionButton.dart';
@@ -20,7 +21,7 @@ class CaseOrdersBody extends StatelessWidget {
 
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
+          return const AppLoadingIndicator();
       }
 
   if (controller.orders.isEmpty) {
@@ -35,10 +36,12 @@ class CaseOrdersBody extends StatelessWidget {
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.55,
-                child: CustomEmptyState(
-                  title: 'لا توجد طلبات في هذه الحالة',
-                  subtitle: 'ستظهر الطلبات هنا عند إضافتها',
-
+                child: Center(
+                  child: CustomEmptyState(
+                    title: 'لا توجد طلبات في هذه الحالة',
+                    subtitle: 'ستظهر الطلبات هنا عند إضافتها',
+                  
+                  ),
                 ),
               ),
             ],

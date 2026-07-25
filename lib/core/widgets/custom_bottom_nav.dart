@@ -50,9 +50,9 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
 
           BottomNavItem(
-            icon: Icons.receipt_long_outlined,
+            icon: Icons.edit_document,
             activeIcon: Icons.receipt_long,
-            label: 'الطلبات',
+            label: 'منشوراتي',
             isSelected: currentIndex == 1,
             onTap: () => onTap(1),
           ),

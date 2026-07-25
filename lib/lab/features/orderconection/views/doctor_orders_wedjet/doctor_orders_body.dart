@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:template/core/app_helper.dart';
 import 'package:template/core/app_router.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 import 'package:template/core/widgets/CustomEmptyState.dart';
 import 'package:template/lab/features/case_orders/views/widget/InfoRow.dart';
 import 'package:template/lab/features/case_orders/views/widget/case_orders_card.dart';
@@ -19,17 +20,11 @@ class DoctorOrdersBody extends StatelessWidget {
 
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+    return const AppLoadingIndicator();
       }
+     final emptyStateHeight =
+          MediaQuery.sizeOf(context).height * 0.62;
 
-      if (controller.orders.isEmpty) {
-        return const CustomEmptyState(
-          title: 'لا توجد طلبات',
-          subtitle: 'لا توجد طلبات مرتبطة بهذا الطبيب حالياً.',
-        );
-      }
 
       return  RefreshIndicator(
   onRefresh: controller.getDoctorOrders,
@@ -43,6 +38,21 @@ class DoctorOrdersBody extends StatelessWidget {
       const SliverToBoxAdapter(
         child: SizedBox(height: 18),
       ),
+
+
+            if (controller.orders.isEmpty)
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: emptyStateHeight,
+                  child: const CustomEmptyState(
+                    title: 'لا توجد طلبات',
+                    subtitle:
+                        'لا توجد طلبات مرتبطة بهذا الطبيب حالياً.',
+                  ),
+                ),
+              )
+            else
+
 
       SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 import 'package:template/lab/features/case_order_details/views/wedjet_for_invoice.dart/invoice_button_section.dart';
 import 'package:template/lab/features/case_order_details/views/widget/case_order_details_header.dart';
 import 'package:template/lab/features/case_order_details/views/widget/details_section_card.dart';
@@ -14,7 +15,8 @@ import 'details_top_card.dart';
 
 
 class CaseOrderDetailsBody extends StatelessWidget {
-  const CaseOrderDetailsBody({super.key});
+  const 
+  CaseOrderDetailsBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class CaseOrderDetailsBody extends StatelessWidget {
 
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
+         return const AppLoadingIndicator();
       }
 
       final order = controller.order.value;

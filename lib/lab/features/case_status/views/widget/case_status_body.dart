@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 import '../../controller/case_status_controller.dart';
 import 'CaseStatusTotalCard.dart';
 import 'case_status_card.dart';
@@ -14,7 +15,7 @@ class CaseStatusBody extends StatelessWidget {
 
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
+      return const AppLoadingIndicator();
       }
 
       return RefreshIndicator(

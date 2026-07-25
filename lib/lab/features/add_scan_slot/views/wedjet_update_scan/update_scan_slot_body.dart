@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 import 'package:template/lab/features/case_order_details/views/widget/details_section_card.dart';
 
 import '../../controller/update_scan_slot_controller.dart';
@@ -30,9 +31,7 @@ class UpdateScanSlotBody
           final slot = controller.originalSlot;
 
           if (slot == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+        return const AppLoadingIndicator();
           }
 
           return ListView(

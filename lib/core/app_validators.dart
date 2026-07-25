@@ -44,4 +44,89 @@ class AppValidators {
 
     return null;
   }
+
+
+
+
+ static String? validateAddress(String? value) {
+    final address = value?.trim() ?? '';
+
+    if (address.isEmpty) {
+      return 'الرجاء إدخال العنوان';
+    }
+
+    if (address.length < 3) {
+      return 'العنوان يجب أن يتكون من 3 أحرف على الأقل';
+    }
+
+    return null;
+  }
+
+  static String? validateCity(String? value) {
+    final city = value?.trim() ?? '';
+
+    if (city.isEmpty) {
+      return 'الرجاء إدخال المدينة';
+    }
+
+    if (city.length < 2) {
+      return 'اسم المدينة قصير جداً';
+    }
+
+    return null;
+  }
+
+  static String? validateCountry(String? value) {
+    final country = value?.trim() ?? '';
+
+    if (country.isEmpty) {
+      return 'الرجاء إدخال البلد';
+    }
+
+    if (country.length < 2) {
+      return 'اسم البلد قصير جداً';
+    }
+
+    return null;
+  }
+
+
+   static  String? validateTitle(String? value) {
+    final text = value?.trim() ?? '';
+
+    if (text.isEmpty) {
+      return 'يرجى إدخال عنوان المنشور';
+    }
+
+    if (text.length < 3) {
+      return 'يجب أن يتكون العنوان من 3 أحرف على الأقل';
+    }
+
+    if (text.length > 200) {
+      return 'عنوان المنشور طويل جداً';
+    }
+
+    return null;
+  }
+
+  static  String? validateContent(String? value) {
+    final text = value?.trim() ?? '';
+
+    if (text.isEmpty) {
+      return 'يرجى إدخال محتوى المنشور';
+    }
+
+    if (text.length < 10) {
+      return 'يرجى كتابة محتوى أكثر تفصيلاً';
+    }
+
+    return null;
+  }
+
+
+
+
+
+
+
 }

@@ -30,6 +30,13 @@ import 'package:template/lab/features/case_status/binding/case_status_binding.da
 import 'package:template/lab/features/case_status/views/case_status_screen.dart';
 import 'package:template/lab/features/homepage/binding/homebinding.dart';
 import 'package:template/lab/features/homepage/lab_home_page.dart';
+import 'package:template/lab/features/lab_blog/binding/blog_feed_binding.dart';
+import 'package:template/lab/features/lab_blog/binding/create_blog_binding.dart';
+import 'package:template/lab/features/lab_blog/binding/posts_binding.dart';
+import 'package:template/lab/features/lab_blog/view/blog_details_screen.dart';
+import 'package:template/lab/features/lab_blog/view/blog_feed_screen.dart';
+import 'package:template/lab/features/lab_blog/view/create_blog_screen.dart';
+import 'package:template/lab/features/lab_blog/view/pennding_posts_screen.dart';
 import 'package:template/lab/features/order/binding/order_binding.dart';
 import 'package:template/lab/features/order/binding/order_details_binding.dart';
 import 'package:template/lab/features/order/views/order_details_screen.dart';
@@ -73,6 +80,13 @@ static const addScanSlot = '/addScanSlot';
     '/updateScanSlot';
     static const bookedScanAppointments =
     '/booked-scan-appointments';
+static const createBlog = '/create-blog';
+static const penndingPosts = '/pennding-posts';
+static const String blogFeed =
+    '/blog-feed';
+static const String blogPostDetails =
+    '/blog-post-details';
+
   static final List<GetPage<dynamic>> pages = [
     GetPage(
       name: choseuserpage,
@@ -195,6 +209,34 @@ GetPage(
       const BookedScanAppointmentsScreen(),
   binding:
       BookedScanAppointmentsBinding(),
+),
+
+GetPage(
+  name: createBlog,
+  page: () => const CreateBlogScreen(),
+  binding: CreateBlogBinding(),
+),
+
+
+GetPage(
+  name: penndingPosts,
+  page: () =>
+      const MyBlogPostsScreen(),
+  binding: MyBlogPostsBinding(),
+),
+
+
+GetPage(
+  name: AppRouter.blogFeed,
+  page: () =>
+      const BlogFeedScreen(),
+  binding: BlogFeedBinding(),
+),
+
+GetPage(
+  name: AppRouter.blogPostDetails,
+  page: () =>
+      const BlogPostDetailsScreen(),
 ),
   ];
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_router.dart';
+import 'package:template/core/widgets/AppLoadingIndicator.dart';
 import 'package:template/core/widgets/CustomEmptyState.dart';
 import 'package:template/lab/features/case_orders/views/widget/InfoRow.dart';
 import 'package:template/lab/features/case_orders/views/widget/case_orders_card.dart';
@@ -19,9 +20,7 @@ class LabOrderBodyWidget extends StatelessWidget {
 
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+    return const AppLoadingIndicator();
       }
 
       return CustomScrollView(
@@ -42,15 +41,17 @@ controller.orders.isEmpty
     ? SliverToBoxAdapter(
         child: SizedBox(
           height: MediaQuery.sizeOf(context).height * 0.55,
-          child: CustomEmptyState(
-            title: _emptyTitle(
-              controller.selectedFilter.value,
+          child: Center(
+            child: CustomEmptyState(
+              title: _emptyTitle(
+                controller.selectedFilter.value,
+              ),
+              subtitle: _emptySubtitle(
+                controller.selectedFilter.value,
+              ),
+              mainAxisAlignment: MainAxisAlignment.start,
+              animationSize: 170,
             ),
-            subtitle: _emptySubtitle(
-              controller.selectedFilter.value,
-            ),
-            mainAxisAlignment: MainAxisAlignment.start,
-            animationSize: 170,
           ),
         ),
       )

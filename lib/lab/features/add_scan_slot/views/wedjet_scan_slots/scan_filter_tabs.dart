@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/core/widgets/filter_item.dart';
 
 import '../../../../../../core/app_colors.dart';
-import '../../../../../../core/app_text_styles.dart';
 import '../../controller/scan_slots_controller.dart';
 
 
@@ -25,8 +25,9 @@ class ScanFilterTabs extends GetView<ScanSlotsController> {
         () => Row(
           children: [
             Expanded(
-              child: _FilterItem(
+              child: FilterItem(
                 title: 'الكل',
+                   fontSize: 15,
                 selected:
                     controller.selectedFilter.value ==
                         ScanSlotFilter.all,
@@ -38,8 +39,9 @@ class ScanFilterTabs extends GetView<ScanSlotsController> {
               ),
             ),
             Expanded(
-              child: _FilterItem(
+              child: FilterItem(
                 title: 'المتاحة',
+                   fontSize: 15,
                 selected:
                     controller.selectedFilter.value ==
                         ScanSlotFilter.available,
@@ -51,8 +53,9 @@ class ScanFilterTabs extends GetView<ScanSlotsController> {
               ),
             ),
             Expanded(
-              child: _FilterItem(
+              child: FilterItem(
                 title: 'المحجوزة',
+                   fontSize: 15,
                 selected:
                     controller.selectedFilter.value ==
                         ScanSlotFilter.booked,
@@ -64,60 +67,6 @@ class ScanFilterTabs extends GetView<ScanSlotsController> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _FilterItem extends StatelessWidget {
-  final String title;
-  final bool selected;
-  final VoidCallback onTap;
-
-  const _FilterItem({
-    required this.title,
-    required this.selected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 220),
-      decoration: BoxDecoration(
-        color: selected
-            ? AppColors.primaryBlue
-            : Colors.transparent,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: selected
-            ? [
-                BoxShadow(
-                  color:
-                      AppColors.primaryBlue.withOpacity(0.20),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ]
-            : null,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
-        child: Center(
-          child: Text(
-            title,
-            style:
-                AppTextStyles.ibmRegular14NeutralStyle.copyWith(
-              color: selected
-                  ? AppColors.white
-                  : AppColors.darkBlue,
-              fontWeight: selected
-                  ? FontWeight.w700
-                  : FontWeight.w600,
-              fontSize: 15,
-            ),
-          ),
         ),
       ),
     );
