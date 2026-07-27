@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../../model/scan_booking_model.dart';
 import 'booking_details_card.dart';
 import 'booking_details_row.dart';
 import 'booking_row_divider.dart';
 
-class BookingClinicSection
-    extends StatelessWidget {
-  final ScanBookingModel booking;
+class BookingClinicSection extends StatelessWidget {
+  final String clinicName;
+  final String clinicAddress;
+  final String clinicCity;
+  final String clinicCountry;
 
   const BookingClinicSection({
     super.key,
-    required this.booking,
+    required this.clinicName,
+    required this.clinicAddress,
+    required this.clinicCity,
+    required this.clinicCountry,
   });
 
   @override
@@ -23,7 +27,7 @@ class BookingClinicSection
         BookingDetailsRow(
           icon: Icons.business_outlined,
           label: 'اسم العيادة',
-          value: booking.clinicName,
+          value: clinicName,
         ),
         const BookingRowDivider(),
         BookingDetailsRow(
@@ -36,17 +40,12 @@ class BookingClinicSection
   }
 
   String _buildFullAddress() {
-    final addressParts = [
-      booking.clinicAddress,
-      booking.clinicCity,
-      booking.clinicCountry,
-    ];
-
-    return addressParts
-        .where(
-          (value) =>
-              value.trim().isNotEmpty,
-        )
+    return [
+      clinicAddress,
+      clinicCity,
+      clinicCountry,
+    ]
+        .where((value) => value.trim().isNotEmpty)
         .join(' - ');
   }
 }

@@ -37,6 +37,10 @@ import 'package:template/lab/features/lab_blog/view/blog_details_screen.dart';
 import 'package:template/lab/features/lab_blog/view/blog_feed_screen.dart';
 import 'package:template/lab/features/lab_blog/view/create_blog_screen.dart';
 import 'package:template/lab/features/lab_blog/view/pennding_posts_screen.dart';
+import 'package:template/lab/features/monthly_calendar/binding/calendar_day_details_binding.dart';
+import 'package:template/lab/features/monthly_calendar/binding/monthly_calendar_binding.dart';
+import 'package:template/lab/features/monthly_calendar/view/day_details_screen.dart';
+import 'package:template/lab/features/monthly_calendar/view/monthly_calendar_screen.dart';
 import 'package:template/lab/features/order/binding/order_binding.dart';
 import 'package:template/lab/features/order/binding/order_details_binding.dart';
 import 'package:template/lab/features/order/views/order_details_screen.dart';
@@ -86,7 +90,10 @@ static const String blogFeed =
     '/blog-feed';
 static const String blogPostDetails =
     '/blog-post-details';
-
+ static const monthlyCalendar =
+      '/monthly-calendar';
+      static const calendarDayDetails =
+    '/calendar-day-details';
   static final List<GetPage<dynamic>> pages = [
     GetPage(
       name: choseuserpage,
@@ -238,6 +245,24 @@ GetPage(
   page: () =>
       const BlogPostDetailsScreen(),
 ),
+
+GetPage(
+  name: AppRouter.monthlyCalendar,
+  page: () =>
+      const MonthlyCalendarScreen(),
+  binding:
+      MonthlyCalendarBinding(),
+),
+
+
+GetPage(
+  name: AppRouter.calendarDayDetails,
+  page: () =>
+      const CalendarDayDetailsScreen(),
+  binding:
+      CalendarDayDetailsBinding(),
+),
+
   ];
 
 }

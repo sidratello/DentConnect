@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/lab/features/add_scan_slot/controller/app_date_picker.dart';
 import 'package:template/lab/features/add_scan_slot/repositry/scan_slots_repo.dart';
+import 'package:template/lab/shared/controller/date_navigation_mixin.dart';
 
 import '../model/scan_booking_model.dart';
 import '../model/scan_slot_model.dart';
@@ -12,7 +11,7 @@ enum ScanSlotFilter {
   booked,
 }
 
-class ScanSlotsController extends GetxController {
+class ScanSlotsController extends GetxController with DateNavigationMixin {
   final ScanSlotsRepo _repo = ScanSlotsRepo();
 
   final isLoading = false.obs;
@@ -23,7 +22,13 @@ class ScanSlotsController extends GetxController {
 
   final bookingsCount = 0.obs;
 
+@override
   final selectedDate = DateTime.now().obs;
+
+@override
+String get datePickerHelpText {
+  return 'اختيار تاريخ المواعيد';
+}
 
   final selectedFilter = ScanSlotFilter.all.obs;
 
@@ -107,7 +112,7 @@ class ScanSlotsController extends GetxController {
     if (!currentDateExists &&
         sortedSlots.first.date != null) {
       selectedDate.value =
-          _normalizeDate(sortedSlots.first.date!);
+          normalizeDate(sortedSlots.first.date!);
     }
   }
 
@@ -121,7 +126,7 @@ class ScanSlotsController extends GetxController {
         continue;
       }
 
-      final normalizedDate = _normalizeDate(date);
+      final normalizedDate = normalizeDate(date);
 
       final alreadyAdded = result.any(
         (item) => isSameDate(
@@ -208,63 +213,11 @@ class ScanSlotsController extends GetxController {
     selectedFilter.value = filter;
   }
 
-  void previousDate() {
-    final dates = availableDates;
 
-    if (dates.isEmpty) {
-      return;
-    }
 
-    final currentIndex = dates.indexWhere(
-      (date) => isSameDate(
-        date,
-        selectedDate.value,
-      ),
-    );
 
-    if (currentIndex > 0) {
-      selectedDate.value =
-          dates[currentIndex - 1];
-    }
-  }
 
-  void nextDate() {
-    final dates = availableDates;
 
-    if (dates.isEmpty) {
-      return;
-    }
-
-    final currentIndex = dates.indexWhere(
-      (date) => isSameDate(
-        date,
-        selectedDate.value,
-      ),
-    );
-
-    if (currentIndex >= 0 &&
-        currentIndex < dates.length - 1) {
-      selectedDate.value =
-          dates[currentIndex + 1];
-    }
-  }
-
-  Future<void> pickDate(
-    BuildContext context,
-  ) async {
-    final pickedDate = await AppDatePicker.select(
-      context,
-      currentDate: selectedDate.value,
-      helpText: 'اختيار تاريخ المواعيد',
-      confirmText: 'اختيار',
-    );
-
-    if (pickedDate == null) {
-      return;
-    }
-
-    selectedDate.value = pickedDate;
-  }
 
   ScanBookingModel? bookingForSlot(int slotId) {
     final index = bookings.indexWhere(
@@ -358,7 +311,7 @@ class ScanSlotsController extends GetxController {
 
     if (updatedDate != null) {
       selectedDate.value =
-          _normalizeDate(updatedDate);
+          normalizeDate(updatedDate);
     }
 
     slots.refresh();
@@ -373,32 +326,14 @@ class ScanSlotsController extends GetxController {
 
     if (newDate != null) {
       selectedDate.value =
-          _normalizeDate(newDate);
+          normalizeDate(newDate);
     }
 
     slots.refresh();
   }
 
-  bool isSameDate(
-    DateTime? first,
-    DateTime? second,
-  ) {
-    if (first == null || second == null) {
-      return false;
-    }
 
-    return first.year == second.year &&
-        first.month == second.month &&
-        first.day == second.day;
-  }
 
-  DateTime _normalizeDate(DateTime date) {
-    return DateTime(
-      date.year,
-      date.month,
-      date.day,
-    );
-  }
 
   int _compareSlotsByTime(
     ScanSlotModel first,

@@ -55,10 +55,15 @@ Obx(() {
     },
   );
 }),
-                  HomeActionCard(
-                    title: 'تقويم الطلبات',
-                    icon: Icons.calendar_today_outlined,
-                  ),
+            HomeActionCard(
+  title: 'تقويم الطلبات',
+  icon: Icons.calendar_today_outlined,
+  onTap: () {
+    Get.toNamed(
+      AppRouter.monthlyCalendar,
+    );
+  },
+),
                   HomeActionCard(
                     title: 'مواعيد المسح الضوئي',
                     icon: Icons.medical_services_outlined,

@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 
-import '../../model/scan_booking_model.dart';
 import 'booking_details_card.dart';
 import 'booking_details_formatter.dart';
 import 'booking_details_row.dart';
 import 'booking_row_divider.dart';
-
-class BookingAppointmentSection
-    extends StatelessWidget {
-  final ScanBookingModel booking;
+class BookingAppointmentSection extends StatelessWidget {
+  final DateTime? date;
+  final String timeFormatted;
+  final String period;
 
   const BookingAppointmentSection({
     super.key,
-    required this.booking,
+    required this.date,
+    required this.timeFormatted,
+    required this.period,
   });
 
   @override
   Widget build(BuildContext context) {
     final isMorning =
-        booking.period.toUpperCase() == 'AM';
+        period.toUpperCase() == 'AM';
 
     return BookingDetailsCard(
       title: 'معلومات الموعد',
@@ -28,14 +29,14 @@ class BookingAppointmentSection
           icon: Icons.calendar_today_outlined,
           label: 'التاريخ',
           value: BookingDetailsFormatter.date(
-            booking.date,
+            date,
           ),
         ),
         const BookingRowDivider(),
         BookingDetailsRow(
           icon: Icons.access_time_rounded,
           label: 'الوقت',
-          value: booking.timeFormatted,
+          value: timeFormatted,
           valueTextDirection:
               TextDirection.rtl,
         ),
@@ -46,7 +47,7 @@ class BookingAppointmentSection
               : Icons.nightlight_outlined,
           label: 'الفترة',
           value: BookingDetailsFormatter.period(
-            booking.period,
+            period,
           ),
         ),
       ],

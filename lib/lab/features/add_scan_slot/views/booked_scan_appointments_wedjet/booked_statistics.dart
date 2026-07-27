@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/lab/features/add_scan_slot/views/wedjet_scan_slots/StatisticCard.dart';
+import 'package:template/lab/shared/wedjet/StatisticCard.dart';
 
 import '../../../../../../core/app_colors.dart';
 import '../../controller/booked_scan_appointments_controller.dart';

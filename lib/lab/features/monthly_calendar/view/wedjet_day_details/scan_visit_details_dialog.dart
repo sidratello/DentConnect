@@ -3,21 +3,21 @@ import 'package:get/get.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/widgets/app_button.dart';
-
 import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog/booking_appointment_section.dart';
 import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog/booking_clinic_section.dart';
-import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog/booking_dentist_section.dart';
+import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog/booking_details_card.dart';
+import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog/booking_details_row.dart';
 import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog/booking_dialog_header.dart';
-import 'package:template/lab/features/case_order_details/views/widget/details_section_card.dart';
+import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog/booking_row_divider.dart';
+import 'package:template/lab/features/monthly_calendar/model/calendar_day_details_model.dart';
 
-import '../../model/scan_booking_model.dart';
-
-class ScanBookingDetailsDialog {
-  const ScanBookingDetailsDialog._();
+class CalendarScanVisitDetailsDialog {
+  const CalendarScanVisitDetailsDialog._();
 
   static Future<void> show({
     required BuildContext context,
-    required ScanBookingModel booking,
+    required DateTime date,
+    required CalendarScanVisitModel visit,
   }) {
     return Get.dialog<void>(
       Directionality(
@@ -31,10 +31,13 @@ class ScanBookingDetailsDialog {
           child: ConstrainedBox(
             constraints: const BoxConstraints(
               maxWidth: 500,
-              maxHeight: 700,
+              maxHeight: 650,
             ),
-            child: DetailsSectionCard(
-              padding: EdgeInsets.zero,
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -51,34 +54,50 @@ class ScanBookingDetailsDialog {
                       ),
                       child: Column(
                         children: [
-                    BookingAppointmentSection(
-  date: booking.date,
-  timeFormatted: booking.timeFormatted,
-  period: booking.period,
+                   BookingAppointmentSection(
+  date: date,
+  timeFormatted: visit.formattedTime,
+  period: visit.period,
 ),
                           const SizedBox(height: 16),
-                          BookingDentistSection(
-                            booking: booking,
-                          ),
-                          const SizedBox(height: 16),
-                    BookingClinicSection(
-  clinicName: booking.clinicName,
-  clinicAddress: booking.clinicAddress,
-  clinicCity: booking.clinicCity,
-  clinicCountry: booking.clinicCountry,
+                      BookingDetailsCard(
+      title: 'معلومات الطبيب',
+      icon: Icons.person_outline_rounded,
+      children: [
+        BookingDetailsRow(
+          icon: Icons.badge_outlined,
+          label: 'اسم الطبيب',
+          value: visit.doctorName,
+        ),
+        const BookingRowDivider(),
+
+                         BookingDetailsRow(
+          icon: Icons.phone_outlined,
+          label: 'رقم الهاتف',
+          value: visit.doctorPhone,
+          valueTextDirection:
+              TextDirection.rtl,
+        ),
+               const SizedBox(height: 16),
+      ],
+                      ),
+                             const SizedBox(height: 16),
+                   BookingClinicSection(
+  clinicName: visit.doctorNamePlace,
+  clinicAddress: visit.doctorAddressPlace,
+  clinicCity: visit.doctorCityPlace,
+  clinicCountry: visit.doctorCountryPlace,
 ),
                           const SizedBox(height: 22),
                           AppButton(
                             title: 'إغلاق',
                             onTap: Get.back,
-                            type:
-                                AppButtonType.filled,
+                            type: AppButtonType.filled,
                             height: 46,
                             borderRadius: 12,
                             backgroundColor:
                                 AppColors.primaryBlue,
-                            textColor:
-                                AppColors.white,
+                            textColor: AppColors.white,
                           ),
                         ],
                       ),
@@ -94,3 +113,10 @@ class ScanBookingDetailsDialog {
     );
   }
 }
+
+
+
+
+
+
+

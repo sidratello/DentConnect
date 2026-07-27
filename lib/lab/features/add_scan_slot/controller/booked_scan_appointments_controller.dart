@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/lab/shared/controller/date_navigation_mixin.dart';
 
 import '../model/scan_booking_model.dart';
 import '../repositry/scan_slots_repo.dart';
-import 'app_date_picker.dart';
+
 
 enum BookedAppointmentsFilter {
   all,
@@ -11,7 +11,7 @@ enum BookedAppointmentsFilter {
 }
 
 class BookedScanAppointmentsController
-    extends GetxController {
+    extends GetxController with DateNavigationMixin {
   final ScanSlotsRepo _repo;
 
   BookedScanAppointmentsController({
@@ -22,10 +22,13 @@ class BookedScanAppointmentsController
 
   final bookings = <ScanBookingModel>[].obs;
 
+@override
   final selectedDate = DateTime.now().obs;
 
   final selectedFilter =
       BookedAppointmentsFilter.all.obs;
+
+
 
   @override
   void onInit() {
@@ -33,6 +36,19 @@ class BookedScanAppointmentsController
     loadBookings();
   }
 
+      @override
+String get datePickerHelpText {
+  return 'اختيار تاريخ الحجوزات';
+}
+@override
+Future<void> onSelectedDateChanged(
+  DateTime date,
+) {
+  selectedFilter.value =
+      BookedAppointmentsFilter.all;
+
+  return Future.value();
+}
   Future<void> loadBookings() async {
     if (isLoading.value) {
       return;
@@ -73,6 +89,7 @@ class BookedScanAppointmentsController
     }
   }
 
+@override
   List<DateTime> get availableDates {
     final dates = <DateTime>[];
 
@@ -84,7 +101,7 @@ class BookedScanAppointmentsController
       }
 
       final normalizedDate =
-          _normalizeDate(date);
+          normalizeDate(date);
 
       final exists = dates.any(
         (item) => isSameDate(
@@ -158,83 +175,22 @@ class BookedScanAppointmentsController
         .length;
   }
 
-  void changeFilter(
-    BookedAppointmentsFilter filter,
-  ) {
-    selectedFilter.value = filter;
+void changeFilter(
+  BookedAppointmentsFilter filter,
+) {
+  selectedFilter.value = filter;
 
-    if (filter ==
-        BookedAppointmentsFilter.today) {
-      selectedDate.value =
-          _normalizeDate(DateTime.now());
-    }
-  }
-
-  void previousDate() {
-    final dates = availableDates;
-
-    if (dates.isEmpty) {
-      return;
-    }
-
-    final currentIndex =
-        dates.indexWhere(
-      (date) => isSameDate(
-        date,
-        selectedDate.value,
-      ),
-    );
-
-    if (currentIndex > 0) {
-      selectedDate.value =
-          dates[currentIndex - 1];
-    }
-  }
-
-  void nextDate() {
-    final dates = availableDates;
-
-    if (dates.isEmpty) {
-      return;
-    }
-
-    final currentIndex =
-        dates.indexWhere(
-      (date) => isSameDate(
-        date,
-        selectedDate.value,
-      ),
-    );
-
-    if (currentIndex >= 0 &&
-        currentIndex <
-            dates.length - 1) {
-      selectedDate.value =
-          dates[currentIndex + 1];
-    }
-  }
-
-  Future<void> pickDate(
-    BuildContext context,
-  ) async {
-    final selected =
-        await AppDatePicker.select(
-      context,
-      currentDate: selectedDate.value,
-      helpText: 'اختيار تاريخ الحجوزات',
-      confirmText: 'اختيار',
-    );
-
-    if (selected == null) {
-      return;
-    }
-
+  if (filter ==
+      BookedAppointmentsFilter.today) {
     selectedDate.value =
-        _normalizeDate(selected);
-
-    selectedFilter.value =
-        BookedAppointmentsFilter.all;
+        normalizeDate(DateTime.now());
   }
+}
+
+
+
+
+
 
   void _selectFirstBookingDate() {
     if (bookings.isEmpty) {
@@ -260,29 +216,9 @@ class BookedScanAppointmentsController
     }
   }
 
-  bool isSameDate(
-    DateTime? first,
-    DateTime? second,
-  ) {
-    if (first == null ||
-        second == null) {
-      return false;
-    }
 
-    return first.year == second.year &&
-        first.month == second.month &&
-        first.day == second.day;
-  }
 
-  DateTime _normalizeDate(
-    DateTime date,
-  ) {
-    return DateTime(
-      date.year,
-      date.month,
-      date.day,
-    );
-  }
+
 
   int _compareBookingsByTime(
     ScanBookingModel first,

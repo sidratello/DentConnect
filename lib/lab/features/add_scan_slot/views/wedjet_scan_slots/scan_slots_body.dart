@@ -8,11 +8,11 @@ import 'package:template/lab/features/add_scan_slot/model/scan_slot_model.dart';
 import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog/scan_booking_details_dialog.dart';
 import 'package:template/lab/features/add_scan_slot/views/wedjet_scan_slots/ScanSlotsAddAction.dart';
 import 'package:template/lab/features/add_scan_slot/views/wedjet_scan_slots/delete_scan_slot_dialog.dart';
-import 'package:template/lab/features/add_scan_slot/views/wedjet_scan_slots/scan_date_navigation_card.dart';
 import 'package:template/lab/features/add_scan_slot/views/wedjet_scan_slots/scan_filter_tabs.dart';
 import 'package:template/lab/features/add_scan_slot/views/wedjet_scan_slots/scan_period_section.dart';
 import 'package:template/lab/features/add_scan_slot/views/wedjet_scan_slots/scan_slots_header.dart';
 import 'package:template/lab/features/add_scan_slot/views/wedjet_scan_slots/scan_statistics_row.dart';
+import 'package:template/lab/shared/wedjet/scan_date_navigation_card.dart';
 
 import '../../../../../../core/app_colors.dart';
 import '../../controller/scan_slots_controller.dart';

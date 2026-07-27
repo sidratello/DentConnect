@@ -7,11 +7,11 @@ import 'package:template/lab/features/add_scan_slot/views/booked_scan_appointmen
 import 'package:template/lab/features/add_scan_slot/views/booked_scan_appointments_wedjet/booked_header.dart';
 import 'package:template/lab/features/add_scan_slot/views/booked_scan_appointments_wedjet/booked_note.dart';
 import 'package:template/lab/features/add_scan_slot/views/booked_scan_appointments_wedjet/booked_statistics.dart';
+import 'package:template/lab/shared/wedjet/scan_date_navigation_card.dart';
 
 import '../../../../../../core/app_colors.dart';
 import '../../controller/booked_scan_appointments_controller.dart';
 import '../booking_details_dialog/scan_booking_details_dialog.dart';
-import '../wedjet_scan_slots/scan_date_navigation_card.dart';
 
 
 class BookedScanAppointmentsBody
