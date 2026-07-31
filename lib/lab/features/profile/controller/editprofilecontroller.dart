@@ -10,7 +10,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/lab/features/profile/controller/profilecontroller.dart';
 import 'package:template/lab/features/profile/model/profile_modil.dart';
-import 'package:template/lab/features/profile/repositry/edit_profile_repo.dart' show updateLabProfile, addLabPrice, getCompensationTypesRepo, deleteLabPrice, updateLabPrice, addGalleryImageRepo, deleteGalleryImageRepo;
+import 'package:template/lab/features/profile/repositry/edit_profile_repo.dart' show updateLabProfile, addLabPrice, getCompensationTypesRepo, deleteLabPrice, updateLabPrice, addGalleryImageRepo, deleteGalleryImageRepo, uploadLabProfilePictureRepo, deleteLabProfilePictureRepo;
 
 import 'package:template/lab/features/profile/repositry/profile_repo.dart';
 
@@ -33,6 +33,123 @@ final hasScanVisitService = false.obs;
 void changeScanService(bool value) {
   hasScanVisitService.value = value;
 }
+
+final profilePictureUrl = ''.obs;
+final selectedProfilePicture = Rxn<File>();
+final isProfilePictureLoading = false.obs;
+
+bool get hasProfilePicture {
+  return selectedProfilePicture.value != null ||
+      profilePictureUrl.value.trim().isNotEmpty;
+}
+
+
+
+
+ Future<void> pickAndUploadProfilePicture() async {
+    if (isProfilePictureLoading.value) return;
+
+    final bool hadPreviousPicture = hasProfilePicture;
+
+    final XFile? pickedImage = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+      maxWidth: 1600,
+      maxHeight: 1600,
+    );
+
+    if (pickedImage == null) return;
+
+    final previousLocalImage = selectedProfilePicture.value;
+    final previousNetworkUrl = profilePictureUrl.value;
+
+    final selectedFile = File(pickedImage.path);
+
+    selectedProfilePicture.value = selectedFile;
+    isProfilePictureLoading.value = true;
+
+    try {
+      final response = await uploadLabProfilePictureRepo(
+        image: selectedFile,
+      );
+
+      if (!response.success) {
+        selectedProfilePicture.value = previousLocalImage;
+        profilePictureUrl.value = previousNetworkUrl;
+
+        Get.snackbar(
+          'خطأ',
+          response.message,
+        );
+        return;
+      }
+        final String returnedUrl =
+          response.data?['profilePictureUrl']?.toString().trim() ?? '';
+
+      if (returnedUrl.isNotEmpty) {
+        profilePictureUrl.value = returnedUrl;
+        selectedProfilePicture.value = null;
+      }
+
+      Get.snackbar(
+        'تم',
+        hadPreviousPicture
+            ? 'تم تغيير صورة المختبر بنجاح'
+            : 'تمت إضافة صورة المختبر بنجاح',
+      );
+    } catch (error) {
+      selectedProfilePicture.value = previousLocalImage;
+      profilePictureUrl.value = previousNetworkUrl;
+
+      Get.snackbar(
+        'خطأ',
+        'حدث خطأ أثناء رفع صورة المختبر',
+      );
+    } finally {
+      isProfilePictureLoading.value = false;
+    }
+  }
+
+
+
+
+
+
+  // حذف صورة المختبر
+  Future<void> deleteProfilePicture() async {
+    if (isProfilePictureLoading.value || !hasProfilePicture) {
+      return;
+    }
+
+    isProfilePictureLoading.value = true;
+
+    try {
+      final response = await deleteLabProfilePictureRepo();
+
+      if (!response.success) {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+        );
+        return;
+      }
+
+      profilePictureUrl.value = '';
+      selectedProfilePicture.value = null;
+
+      Get.snackbar(
+        'تم',
+        'تم حذف صورة المختبر بنجاح',
+      );
+    } catch (error) {
+      Get.snackbar(
+        'خطأ',
+        'حدث خطأ أثناء حذف صورة المختبر',
+      );
+    } finally {
+      isProfilePictureLoading.value = false;
+    }
+  }
 
 
 

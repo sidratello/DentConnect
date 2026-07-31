@@ -63,10 +63,11 @@ class ConnectedDoctorCard extends StatelessWidget {
               Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  DoctorInitialIcon(
-                    initial: initial,
-                      showSmallInitial: false,
-                  ),
+            DoctorInitialIcon(
+  initial: initial,
+  imageUrl: doctor.profilePictureUrl,
+  showSmallInitial: false,
+),
                   Positioned(
                     right: 3.w,
                     bottom: 8.h,
@@ -144,6 +145,7 @@ onSelected: (value) {
       address: doctor.fullAddress,
       phone: doctor.phone,
       email: doctor.email,
+      profilePictureUrl: doctor.profilePictureUrl,
       description:
           '  هذا الطبيب متصل مع المخبر ويمكنه  رؤية الطلبات الخاصة به.',
       showConnectedIndicator: true,
@@ -209,6 +211,7 @@ onSelected: (value) {
         type: AppButtonType.outlined,
         height: 46.h,
         borderRadius: 12.r,
+        
        backgroundColor: const Color.fromARGB(255, 214, 227, 250),
   borderColor: const Color(0xFFC3D5FF),
   textColor: AppColors.darkBlue,
@@ -232,6 +235,7 @@ onSelected: (value) {
     address: doctor.fullAddress,
     phone: doctor.phone,
     email: doctor.email,
+    profilePictureUrl: doctor.profilePictureUrl,
     description:
         '  هذا الطبيب متصل مع المخبر ويمكنه  رؤية الطلبات الخاصة به.',
     showConnectedIndicator: true,

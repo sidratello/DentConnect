@@ -425,60 +425,52 @@ class CreateBlogController extends GetxController {
     }
   }
 
-  Future<void> _updatePost() async {
-    final post = editingPost.value;
+ Future<void> _updatePost() async {
+  final post = editingPost.value;
 
-    if (post == null) {
+  if (post == null) {
+    return;
+  }
+
+  isSubmitting.value = true;
+
+  try {
+    final response =
+        await _repository.updateBlogPost(
+      postId: post.postId,
+      title: titleController.text.trim(),
+      content: contentController.text.trim(),
+      isSensitiveRedacted:
+          isSensitiveRedacted.value,
+      newDocumentFiles:
+          List<File>.from(selectedImages),
+    );
+
+    if (!response.success ||
+        response.data == null) {
+      _showError(response.message);
       return;
     }
 
-    isSubmitting.value = true;
+    final message =
+        response.data!.reviewMessage.trim().isNotEmpty
+            ? response.data!.reviewMessage
+            : 'تم تعديل المنشور وإرساله للمراجعة.';
 
-    try {
-      final response =
-          await _repository.updateBlogPost(
-        postId: post.postId,
-        title: titleController.text.trim(),
-        content:
-            contentController.text.trim(),
-        isSensitiveRedacted:
-            isSensitiveRedacted.value,
-        newDocumentFiles:
-            List<File>.from(
-          selectedImages,
-        ),
-      );
-
-      if (!response.success ||
-          response.data == null) {
-        _showError(response.message);
-        return;
-      }
-
-      Get.snackbar(
-        'تم تعديل المنشور',
-        response.data!.reviewMessage
-                .isNotEmpty
-            ? response
-                .data!.reviewMessage
-            : 'تم تعديل المنشور وإرساله للمراجعة.',
-        snackPosition:
-            SnackPosition.BOTTOM,
-      );
-
-      /// ترجع إلى شاشة المنشورات وتخبرها
-      /// أن التعديل نجح.
-      Get.back(
-        result: true,
-      );
-    } catch (_) {
-      _showError(
-        'حدث خطأ أثناء تعديل المنشور.',
-      );
-    } finally {
-      isSubmitting.value = false;
-    }
+    Get.back(
+      result: {
+        'success': true,
+        'message': message,
+      },
+    );
+  } catch (_) {
+    _showError(
+      'حدث خطأ أثناء تعديل المنشور.',
+    );
+  } finally {
+    isSubmitting.value = false;
   }
+}
 
   void clearForm() {
     titleController.clear();

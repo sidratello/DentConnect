@@ -51,7 +51,21 @@ class LabProfileViewScreen extends StatelessWidget {
 
                 child: Column(
                   children: [
-                   LabProfileHeader(profile: profile),
+                 Obx(
+  () {
+    final profile = controller.profile.value;
+
+    if (profile == null) {
+      return const SizedBox.shrink();
+    }
+
+    return LabProfileHeader(
+      profile: profile,
+      profilePictureUrl:
+          controller.profilePictureUrl.value,
+    );
+  },
+),
 
     SizedBox(height: 30.h),
                      Padding(

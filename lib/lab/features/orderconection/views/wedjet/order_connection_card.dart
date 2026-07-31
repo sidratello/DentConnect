@@ -61,7 +61,10 @@ const OrderConnectionCard({
           children: [
             Row(
               children: [
-                DoctorInitialIcon(initial: initial),
+           DoctorInitialIcon(
+  initial: initial,
+  imageUrl: item.dentist.profilePictureUrl,
+),
 
                 SizedBox(width: 14.w),
 

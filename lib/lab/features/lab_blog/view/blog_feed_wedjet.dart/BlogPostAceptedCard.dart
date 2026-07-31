@@ -56,12 +56,12 @@ class BlogPostAceptedCard
               crossAxisAlignment:
                   CrossAxisAlignment.start,
               children: [
-                BlogPostAuthor(
-                  authorName:
-                      post.authorName,
-                  isDoctor:
-                      post.isDoctorPost,
-                ),
+     BlogPostAuthor(
+  authorName: post.authorName,
+  isDoctor: post.isDoctorPost,
+  profilePictureUrl:
+      post.authorProfilePictureUrl,
+),
                 const SizedBox(height: 15),
                 Text(
                   post.title,

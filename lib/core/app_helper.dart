@@ -19,7 +19,8 @@ import 'package:template/lab/features/add_scan_slot/views/booking_details_dialog
 class AppHelper {
 
   static String token = '';
-
+static const String serverBaseUrl =
+    'http://192.168.1.3:44352/';
 
 
   static void clear() {
@@ -184,6 +185,26 @@ static String arabicImpressionStage(String value) {
       return value;
   }
 }
+
+static String buildImageUrl(String? path) {
+  final trimmedPath = path?.trim() ?? '';
+
+  if (trimmedPath.isEmpty) {
+    return '';
+  }
+
+  if (trimmedPath.startsWith('http://') ||
+      trimmedPath.startsWith('https://')) {
+    return trimmedPath;
+  }
+
+  final normalizedPath = trimmedPath.startsWith('/')
+      ? trimmedPath.substring(1)
+      : trimmedPath;
+
+  return '$serverBaseUrl$normalizedPath';
+}
+
   static BoxDecoration glassBoxDecoration({double opacity = .12}) {
     return BoxDecoration(
       borderRadius: borderRadius(),

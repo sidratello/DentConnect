@@ -10,6 +10,7 @@ class BlogPostModel {
   final String reviewMessage;
   final DateTime? createdAt;
   final List<BlogPostAttachment> attachments;
+  final String authorProfilePictureUrl;
 
   const BlogPostModel({
     required this.postId,
@@ -23,58 +24,108 @@ class BlogPostModel {
     required this.reviewMessage,
     required this.createdAt,
     required this.attachments,
+    required this.authorProfilePictureUrl,
   });
 
   factory BlogPostModel.fromJson(
     Map<String, dynamic> json,
   ) {
     return BlogPostModel(
-      postId: json['postId'] ?? 0,
-      title: json['title']?.toString() ?? '',
-      content: json['content']?.toString() ?? '',
-      type: json['type']?.toString() ?? '',
-      authorId: json['authorId'] ?? 0,
-      authorName: json['authorName']?.toString() ?? '',
+      postId: _toInt(
+        json['postId'] ?? json['id'],
+      ),
+      title:
+          json['title']?.toString() ?? '',
+      content:
+          json['content']?.toString() ?? '',
+      type:
+          json['type']?.toString() ?? '',
+      authorId:
+          _toInt(json['authorId']),
+      authorName:
+          json['authorName']?.toString() ?? '',
+      authorProfilePictureUrl:
+          json['authorProfilePictureUrl']
+                  ?.toString()
+                  .trim() ??
+              '',
       isSensitiveRedacted:
-          json['isSensitiveRedacted'] ?? false,
-      status: json['status']?.toString() ?? '',
+          json['isSensitiveRedacted'] == true,
+      status:
+          json['status']?.toString() ?? '',
       reviewMessage:
-          json['reviewMessage']?.toString() ?? '',
+          json['reviewMessage']
+                  ?.toString() ??
+              '',
       createdAt: DateTime.tryParse(
         json['createdAt']?.toString() ?? '',
       ),
-      attachments:
-          (json['attachments'] as List<dynamic>? ?? [])
-              .map(
-                (item) => BlogPostAttachment.fromJson(
-                  Map<String, dynamic>.from(item),
-                ),
-              )
-              .toList(),
+      attachments: _parseAttachments(
+        json['attachments'],
+      ),
     );
   }
 
-  
   factory BlogPostModel.fromSearchJson(
     Map<String, dynamic> json, {
     required String postType,
   }) {
     return BlogPostModel(
-      postId: _toInt(json['id']),
-      title: json['title']?.toString() ?? '',
-      content: json['content']?.toString() ?? '',
+      postId: _toInt(
+        json['id'] ?? json['postId'],
+      ),
+      title:
+          json['title']?.toString() ?? '',
+      content:
+          json['content']?.toString() ?? '',
       type: postType,
-      authorId: _toInt(json['authorId']),
+      authorId:
+          _toInt(json['authorId']),
       authorName:
           json['authorName']?.toString() ?? '',
-      isSensitiveRedacted: false,
-      status: json['status']?.toString() ?? '',
-      reviewMessage: '',
+      authorProfilePictureUrl:
+          json['authorProfilePictureUrl']
+                  ?.toString()
+                  .trim() ??
+              '',
+      isSensitiveRedacted:
+          json['isSensitiveRedacted'] == true,
+      status:
+          json['status']?.toString() ?? '',
+      reviewMessage:
+          json['reviewMessage']
+                  ?.toString() ??
+              '',
       createdAt: DateTime.tryParse(
         json['createdAt']?.toString() ?? '',
       ),
-      attachments: const [],
+
+      // صور المنشور في نتيجة البحث
+      attachments: _parseAttachments(
+        json['attachments'],
+      ),
     );
+  }
+
+  static List<BlogPostAttachment>
+      _parseAttachments(
+    dynamic value,
+  ) {
+    if (value is! List) {
+      return <BlogPostAttachment>[];
+    }
+
+    return value
+        .whereType<Map>()
+        .map(
+          (item) =>
+              BlogPostAttachment.fromJson(
+            Map<String, dynamic>.from(
+              item,
+            ),
+          ),
+        )
+        .toList();
   }
 
   bool get isDoctorPost =>
@@ -85,6 +136,11 @@ class BlogPostModel {
 
   bool get hasAttachments =>
       attachments.isNotEmpty;
+
+  bool get hasAuthorProfilePicture =>
+      authorProfilePictureUrl
+          .trim()
+          .isNotEmpty;
 
   BlogPostAttachment? get firstAttachment {
     if (attachments.isEmpty) {
@@ -106,7 +162,6 @@ class BlogPostModel {
   }
 }
 
-
 class BlogPostAttachment {
   final int id;
   final String path;
@@ -126,13 +181,29 @@ class BlogPostAttachment {
     Map<String, dynamic> json,
   ) {
     return BlogPostAttachment(
-      id: json['id'] ?? 0,
-      path: json['path']?.toString() ?? '',
-      type: json['type']?.toString() ?? '',
+      id: _toInt(json['id']),
+      path:
+          json['path']?.toString() ?? '',
+      type:
+          json['type']?.toString() ?? '',
       uploadedAt: DateTime.tryParse(
         json['uploadedAt']?.toString() ?? '',
       ),
-      blogPostId: json['blogPostId'] ?? 0,
+
+      // نتيجة البحث قد لا تحتوي على blogPostId
+      blogPostId:
+          _toInt(json['blogPostId']),
     );
+  }
+
+  static int _toInt(dynamic value) {
+    if (value is int) {
+      return value;
+    }
+
+    return int.tryParse(
+          value?.toString() ?? '',
+        ) ??
+        0;
   }
 }

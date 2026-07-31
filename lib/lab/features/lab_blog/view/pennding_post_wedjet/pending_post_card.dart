@@ -1,9 +1,12 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
 import 'package:template/lab/features/lab_blog/model/post_model.dart';
+import 'package:template/lab/features/lab_blog/view/pennding_post_wedjet/author_profile_picture.dart';
 import 'package:template/lab/features/lab_blog/view/pennding_post_wedjet/pennding_post_image.dart';
 import 'package:template/lab/features/lab_blog/view/pennding_post_wedjet/pennding_post_status_badge.dart';
 
@@ -23,6 +26,8 @@ final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
+    final authorImageUrl =
+    post.authorProfilePictureUrl;
     final imagePath = post.attachments.isEmpty
         ? null
         : post.attachments.first.path;
@@ -50,134 +55,172 @@ final VoidCallback? onDelete;
             ],
           ),
           child: Column(
+  children: [
+    Row(
+      textDirection: ui.TextDirection.rtl,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        AuthorProfilePicture(
+          imageUrl: post.authorProfilePictureUrl,
+          isLab: post.isLabPost,
+          size: 52,
+        ),
+
+        const SizedBox(width: 10),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
-                children: [
-                  BlogPostImage(
-                    path: imagePath,
-                  ),
-
-                  const SizedBox(width: 14),
-
-      Expanded(
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Text(
-              post.title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles
-                  .ibmMedium18NeutralStyle
-                  .copyWith(
-                color: AppColors.darkBlue,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-
-          PopupMenuButton<String>(
-            padding: EdgeInsets.zero,
-            icon: const Icon(
-              Icons.more_vert_rounded,
-              color: AppColors.normalText,
-            ),
-            onSelected: (value) {
-              switch (value) {
-                case 'edit':
-                  onEdit?.call();
-                  break;
-
-                case 'delete':
-                  onDelete?.call();
-                  break;
-              }
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem<String>(
-                value: 'edit',
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.edit_outlined,
-                      size: 20,
-                    ),
-                    SizedBox(width: 8),
-                    Text('تعديل المنشور'),
-                  ],
+              Text(
+                post.authorName.trim().isEmpty
+                    ? 'مخبر أسنان'
+                    : post.authorName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.right,
+                style: AppTextStyles
+                    .ibmMedium18NeutralStyle
+                    .copyWith(
+                  color: AppColors.darkBlue,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              const PopupMenuItem<String>(
-                value: 'delete',
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.delete_outline_rounded,
-                      size: 20,
+
+            
+
+       
+            ],
+          ),
+        ),
+
+        PopupMenuButton<String>(
+          padding: EdgeInsets.zero,
+          icon: const Icon(
+            Icons.more_vert_rounded,
+            color: AppColors.normalText,
+          ),
+          onSelected: (value) {
+            switch (value) {
+              case 'edit':
+                onEdit?.call();
+                break;
+
+              case 'delete':
+                onDelete?.call();
+                break;
+            }
+          },
+          itemBuilder: (context) => const [
+            PopupMenuItem<String>(
+              value: 'edit',
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.edit_outlined,
+                    size: 20,
+                  ),
+                  SizedBox(width: 8),
+                  Text('تعديل المنشور'),
+                ],
+              ),
+            ),
+            PopupMenuItem<String>(
+              value: 'delete',
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.delete_outline_rounded,
+                    size: 20,
+                    color: Colors.red,
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    'حذف المنشور',
+                    style: TextStyle(
                       color: Colors.red,
                     ),
-                    SizedBox(width: 8),
-                    Text(
-                      'حذف المنشور',
-                      style: TextStyle(
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+
+    const SizedBox(height: 14),
+
+    Row(
+      crossAxisAlignment:
+          CrossAxisAlignment.start,
+      children: [
+        BlogPostImage(
+          path: imagePath,
+        ),
+
+        const SizedBox(width: 14),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
+            children: [
+              Text(
+                post.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles
+                    .ibmMedium18NeutralStyle
+                    .copyWith(
+                  color: AppColors.darkBlue,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              Text(
+                post.content,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles
+                    .ibmRegular14NeutralStyle
+                    .copyWith(
+                  color: AppColors.normalText,
+                  height: 1.5,
                 ),
               ),
             ],
           ),
-        ],
-      ),
-
-      const SizedBox(height: 8),
-
-      Text(
-        post.content,
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles
-            .ibmRegular14NeutralStyle
-            .copyWith(
-          color: AppColors.normalText,
-          height: 1.5,
         ),
-      ),
-    ],
-  ),
-),
-                ],
-              ),
+      ],
+    ),
 
-              const SizedBox(height: 14),
+    const SizedBox(height: 14),
 
-              Row(
-                children: [
-                  BlogPostStatusBadge(
-                    status: post.status,
-                  ),
+    Row(
+      children: [
+        BlogPostStatusBadge(
+          status: post.status,
+        ),
 
-                  const Spacer(),
+        const Spacer(),
 
-                  Text(
-                    _formatDate(post.createdAt),
-                    style: AppTextStyles
-                        .ibmRegular12DarkStyle
-                        .copyWith(
-                      color: AppColors.normalText,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+        Text(
+          _formatDate(post.createdAt),
+          style: AppTextStyles
+              .ibmRegular12DarkStyle
+              .copyWith(
+            color: AppColors.normalText,
           ),
+        ),
+      ],
+    ),
+  ],
+),
         ),
       ),
     );

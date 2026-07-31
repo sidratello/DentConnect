@@ -9,4 +9,11 @@ class LabProfileRepo {
       'lab-profile/me',
     );
   }
+
+   Future<ApiResponse<Map<String, dynamic>>>
+      getLabProfilePicture() async {
+    return await _apiService.get<Map<String, dynamic>>(
+      'profile-picture-lab',
+    );
+  }
 }

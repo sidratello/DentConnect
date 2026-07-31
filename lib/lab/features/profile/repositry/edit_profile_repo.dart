@@ -126,3 +126,22 @@ Future<ApiResponse<String>> deleteGalleryImageRepo({
     method: 'DELETE',
   );
 }
+Future<ApiResponse<Map<String, dynamic>>> uploadLabProfilePictureRepo({
+  required File image,
+}) async {
+  final ApiService apiService = ApiService();
+
+  return await apiService.post<Map<String, dynamic>>(
+    'profile-picture-lab',
+    file: image,
+    fileKey: 'File',
+  );
+}
+
+Future<ApiResponse<Map<String, dynamic>>> deleteLabProfilePictureRepo() async {
+  final ApiService apiService = ApiService();
+
+  return await apiService.delete<Map<String, dynamic>>(
+    'profile-picture-lab',
+  );
+}

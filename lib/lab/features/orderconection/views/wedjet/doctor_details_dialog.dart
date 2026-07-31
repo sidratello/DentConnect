@@ -35,6 +35,7 @@ void showDoctorDetailsDialog({
   required DoctorDialogAction primaryAction,
   required DoctorDialogAction secondaryAction,
   bool showConnectedIndicator = false,
+  String profilePictureUrl = '',
 }) {
   final initial = AppHelper.getDoctorInitial(doctorName);
 
@@ -83,6 +84,7 @@ void showDoctorDetailsDialog({
                           children: [
                             DoctorInitialIcon(
                               initial: initial,
+                                imageUrl: profilePictureUrl,
                               showSmallInitial: !showConnectedIndicator,
                             ),
 

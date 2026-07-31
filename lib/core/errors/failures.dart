@@ -188,6 +188,8 @@ if (lowerMessage.contains('otp is still valid')) {
     if (lowerMessage.contains('name')) {
       return 'الاسم غير صالح.';
     }
-
+if (lowerMessage.contains('invalid file type')) {
+  return 'نوع الملف غير مسموح. يرجى اختيار صورة بصيغة JPG أو JPEG أو PNG أو WEBP.';
+}
     return message;
   }}

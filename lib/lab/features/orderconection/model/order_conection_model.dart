@@ -15,12 +15,22 @@ class OrderConnectionModel {
     required this.dentist,
   });
 
-  factory OrderConnectionModel.fromJson(Map<String, dynamic> json) {
+  factory OrderConnectionModel.fromJson(
+    Map<String, dynamic> json,
+  ) {
     return OrderConnectionModel(
       id: json['id'] ?? 0,
-      status: json['status'] ?? '',
-      createdAt: DateTime.parse(json['createdAt']),
-      dentist: DentistModel.fromJson(json['dentist'] ?? {}),
+      status: json['status']?.toString() ?? '',
+      createdAt:
+          DateTime.tryParse(
+            json['createdAt']?.toString() ?? '',
+          ) ??
+          DateTime.now(),
+      dentist: DentistModel.fromJson(
+        json['dentist'] is Map<String, dynamic>
+            ? json['dentist']
+            : <String, dynamic>{},
+      ),
     );
   }
 }
@@ -33,8 +43,9 @@ class DentistModel {
   final String addressPlace;
   final String cityPlace;
   final String countryPlace;
+  final String profilePictureUrl;
 
-  DentistModel({
+  const DentistModel({
     required this.id,
     required this.name,
     required this.phone,
@@ -42,17 +53,24 @@ class DentistModel {
     required this.addressPlace,
     required this.cityPlace,
     required this.countryPlace,
+    required this.profilePictureUrl,
   });
 
-  factory DentistModel.fromJson(Map<String, dynamic> json) {
+  factory DentistModel.fromJson(
+    Map<String, dynamic> json,
+  ) {
     return DentistModel(
       id: json['id'] ?? 0,
-      name: json['name'] ?? '',
-      phone: json['phone'] ?? '',
-      namePlace: json['namePlace'] ?? '',
-      addressPlace: json['addressPlace'] ?? '',
-      cityPlace: json['cityPlace'] ?? '',
-      countryPlace: json['countryPlace'] ?? '',
+      name: json['name']?.toString() ?? '',
+      phone: json['phone']?.toString() ?? '',
+      namePlace: json['namePlace']?.toString() ?? '',
+      addressPlace:
+          json['addressPlace']?.toString() ?? '',
+      cityPlace: json['cityPlace']?.toString() ?? '',
+      countryPlace:
+          json['countryPlace']?.toString() ?? '',
+      profilePictureUrl:
+          json['profilePictureUrl']?.toString() ?? '',
     );
   }
 }

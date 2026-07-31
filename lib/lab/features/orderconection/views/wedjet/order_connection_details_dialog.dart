@@ -14,6 +14,7 @@ void showOrderConnectionDetailsDialog(
     context: context,
     doctorName: item.dentist.name,
     clinicName: item.dentist.namePlace,
+     profilePictureUrl: item.dentist.profilePictureUrl,
     address:
         '${item.dentist.countryPlace} - ${item.dentist.cityPlace} - ${item.dentist.addressPlace}',
     phone: item.dentist.phone,

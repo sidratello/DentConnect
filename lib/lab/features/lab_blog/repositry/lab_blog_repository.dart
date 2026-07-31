@@ -84,7 +84,9 @@ class LabBlogRepository {
 
     return ApiResponse.success(
       data: post,
-      message: response.message,
+     message: post.reviewMessage.isNotEmpty
+      ? post.reviewMessage
+      : 'تم تعديل المنشور بنجاح.',
       statusCode: response.statusCode,
     );
   } catch (_) {

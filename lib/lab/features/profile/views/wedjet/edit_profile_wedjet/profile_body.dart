@@ -9,6 +9,7 @@ import 'package:template/lab/features/profile/controller/editprofilecontroller.d
 import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/Specialties_Section.dart';
 import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/basic_info_section.dart';
 import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/gallery_edit_section.dart';
+import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/lab_profile_picture/lab_profile_picture_section.dart';
 import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/price_edit_section.dart';
 import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/prices_edit_card.dart';
 
@@ -30,8 +31,12 @@ class LabProfileBody extends StatelessWidget {
 
      
 
-          SizedBox(height: 18.h),
+      
+LabProfilePictureSection(
+  controller: controller,
+),
 
+SizedBox(height: 16.h),
     BasicInfoSection(controller: controller),
 SizedBox(height: 16.h),
 SpecialtiesSection(controller: controller),

@@ -41,6 +41,8 @@ class BlogPostDetailsContent extends StatelessWidget {
           BlogPostAuthor(
             authorName: post.authorName,
             isDoctor: post.isDoctorPost,
+              profilePictureUrl:
+      post.authorProfilePictureUrl,
           ),
 
           if (post.createdAt != null) ...[

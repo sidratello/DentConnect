@@ -7,6 +7,7 @@ class ConnectedDoctorModel {
   final String clinicAddress;
   final String city;
   final String country;
+  final String profilePictureUrl;
 
   const ConnectedDoctorModel({
     required this.id,
@@ -17,18 +18,25 @@ class ConnectedDoctorModel {
     required this.clinicAddress,
     required this.city,
     required this.country,
+    required this.profilePictureUrl,
   });
 
-  factory ConnectedDoctorModel.fromJson(Map<String, dynamic> json) {
+  factory ConnectedDoctorModel.fromJson(
+    Map<String, dynamic> json,
+  ) {
     return ConnectedDoctorModel(
       id: json['id'] ?? 0,
       name: json['name']?.toString() ?? '',
       email: json['email']?.toString() ?? '',
       phone: json['phone']?.toString() ?? '',
-      clinicName: json['clinicName']?.toString() ?? '',
-      clinicAddress: json['clinicAddress']?.toString() ?? '',
+      clinicName:
+          json['clinicName']?.toString() ?? '',
+      clinicAddress:
+          json['clinicAddress']?.toString() ?? '',
       city: json['city']?.toString() ?? '',
       country: json['country']?.toString() ?? '',
+      profilePictureUrl:
+          json['profilePictureUrl']?.toString() ?? '',
     );
   }
 
@@ -37,7 +45,9 @@ class ConnectedDoctorModel {
       country,
       city,
       clinicAddress,
-    ].where((value) => value.trim().isNotEmpty).toList();
+    ].where(
+      (value) => value.trim().isNotEmpty,
+    ).toList();
 
     return parts.isEmpty ? '-' : parts.join(' - ');
   }
