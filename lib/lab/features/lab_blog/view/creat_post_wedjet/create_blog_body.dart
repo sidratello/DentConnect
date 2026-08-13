@@ -130,7 +130,15 @@ class CreateBlogBody extends StatelessWidget {
                 const SizedBox(height: 20),
                 const SensitiveInfoCard(),
                 const SizedBox(height: 22),
-                const BlogImagesPicker(),
+                // const BlogImagesPicker(),
+                BlogImagesPicker(
+  selectedImages:
+      controller.selectedImages,
+  onPickImages:
+      controller.pickImages,
+  onRemoveImage:
+      controller.removeNewImage,
+),
               ],
             ),
           ),

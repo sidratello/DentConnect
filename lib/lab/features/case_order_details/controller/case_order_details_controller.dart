@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/core/app_router.dart';
 import 'package:template/lab/shared/models/lab_order_model.dart';
 
 import '../model/order_quote_model.dart';
@@ -17,7 +18,7 @@ class CaseOrderDetailsController extends GetxController {
   final quote = Rxn<OrderQuoteModel>();
 
   late final int orderId;
-
+final wasOrderUpdated = false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -103,6 +104,36 @@ class CaseOrderDetailsController extends GetxController {
     return order.value?.impressionType == 'Digital' &&
         (order.value?.files.isNotEmpty ?? false);
   }
+Future<void> openUpdateOrderStatus() async {
+  final currentOrder = order.value;
+
+  if (currentOrder == null) {
+    return;
+  }
+
+  final result = await Get.toNamed(
+    AppRouter.updateOrderStatus,
+    arguments: currentOrder,
+  );
+
+  if (result is LabOrderModel) {
+    order.value = result;
+    wasOrderUpdated.value = true;
+  }
+}
+void goBack() {
+  final currentOrder = order.value;
+
+  if (wasOrderUpdated.value &&
+      currentOrder != null) {
+    Get.back(
+      result: currentOrder,
+    );
+    return;
+  }
+
+  Get.back();
+}
 
   @override
   void onClose() {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:template/core/app_helper.dart';
-import 'package:template/core/app_router.dart';
 import 'package:template/core/widgets/AppLoadingIndicator.dart';
 import 'package:template/core/widgets/CustomEmptyState.dart';
 import 'package:template/lab/features/case_orders/views/widget/InfoRow.dart';
@@ -75,18 +74,10 @@ class DoctorOrdersBody extends StatelessWidget {
                     textColor: AppHelper.getColor(order.status),
                     background: AppHelper.getLightColor(order.status),
                   ),
-                 onTap: () {
-  if (order.status == 'Pennding') {
-    Get.toNamed(
-      AppRouter.orderDetails,
-      arguments: order,
-    );
-  } else {
-    Get.toNamed(
-      AppRouter.caseOrderDetails,
-      arguments: order,
-    );
-  }
+onTap: () {
+  controller.openOrderDetails(
+    order,
+  );
 },
                 ),
               );

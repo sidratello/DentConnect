@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:template/core/app_helper.dart';
+import 'package:template/core/app_router.dart';
 import '../model/case_status_model.dart';
 import '../repositry/case_status_repo.dart';
 
@@ -85,5 +86,21 @@ case 'InColoring':
     }
   }
 
+Future<void> openStatusOrders(
+  CaseStatusModel selectedStatus,
+) async {
+  final result = await Get.toNamed(
+    AppRouter.caseOrders,
+    arguments: {
+      'status': selectedStatus.status,
+      'title': getArabicTitle(
+        selectedStatus.status,
+      ),
+    },
+  );
 
+  if (result == true) {
+    await getStatuses();
+  }
+}
 }

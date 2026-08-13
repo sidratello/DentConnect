@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:template/core/app_router.dart';
 import 'package:template/lab/shared/models/lab_order_model.dart';
 
 import '../repositry/doctor_orders_repo.dart';
@@ -44,4 +45,36 @@ class DoctorOrdersController extends GetxController {
       );
     }
   }
+
+
+  Future<void> openOrderDetails(
+  LabOrderModel order,
+) async {
+  final result = await Get.toNamed(
+    order.status == 'Pennding'
+        ? AppRouter.orderDetails
+        : AppRouter.caseOrderDetails,
+    arguments: order,
+  );
+
+  if (result is LabOrderModel) {
+    handleUpdatedOrder(result);
+  }
+}
+
+void handleUpdatedOrder(
+  LabOrderModel updatedOrder,
+) {
+  final index = orders.indexWhere(
+    (item) =>
+        item.orderId ==
+        updatedOrder.orderId,
+  );
+
+  if (index == -1) {
+    return;
+  }
+
+  orders[index] = updatedOrder;
+}
 }

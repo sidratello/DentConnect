@@ -20,7 +20,7 @@ class AppHelper {
 
   static String token = '';
 static const String serverBaseUrl =
-    'http://192.168.1.3:44352/';
+    'http://192.168.1.3:44334/';
 
 
   static void clear() {

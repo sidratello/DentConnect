@@ -30,6 +30,16 @@ import 'package:template/lab/features/case_status/binding/case_status_binding.da
 import 'package:template/lab/features/case_status/views/case_status_screen.dart';
 import 'package:template/lab/features/homepage/binding/homebinding.dart';
 import 'package:template/lab/features/homepage/lab_home_page.dart';
+import 'package:template/lab/features/lab_ad/binding/create_lab_ad_binding.dart';
+import 'package:template/lab/features/lab_ad/binding/lab_ad_details_binding.dart';
+import 'package:template/lab/features/lab_ad/binding/lab_ads_binding.dart';
+import 'package:template/lab/features/lab_ad/view/create_lab_ad_screen.dart';
+import 'package:template/lab/features/lab_ad/view/lab_ad_details_screen.dart';
+import 'package:template/lab/features/lab_ad/view/lab_ads_screen.dart';
+import 'package:template/lab/features/lab_ad_payment/binding/ad_payment_binding.dart';
+import 'package:template/lab/features/lab_ad_payment/view/ad_payment_screen.dart';
+import 'package:template/lab/features/lab_ad_payment/view/lab_falure_pay.dart';
+import 'package:template/lab/features/lab_ad_payment/view/sucess_pay.dart';
 import 'package:template/lab/features/lab_blog/binding/blog_feed_binding.dart';
 import 'package:template/lab/features/lab_blog/binding/create_blog_binding.dart';
 import 'package:template/lab/features/lab_blog/binding/posts_binding.dart';
@@ -94,6 +104,18 @@ static const String blogPostDetails =
       '/monthly-calendar';
       static const calendarDayDetails =
     '/calendar-day-details';
+    static const createLabAd =
+    '/create-lab-ad';
+    static const labAds = '/lab-ads';
+static const labAdDetails =
+    '/lab-ad-details';
+    static const labAdPayment =
+    '/lab-ad-payment';
+    static const labAdPaymentSuccess =
+    '/lab-ad-payment-success';
+
+static const labAdPaymentFailed =
+    '/lab-ad-payment-failed';
   static final List<GetPage<dynamic>> pages = [
     GetPage(
       name: choseuserpage,
@@ -261,6 +283,48 @@ GetPage(
       const CalendarDayDetailsScreen(),
   binding:
       CalendarDayDetailsBinding(),
+),
+
+GetPage(
+  name: createLabAd,
+  page: () =>
+      const CreateLabAdScreen(),
+  binding:
+      CreateLabAdBinding(),
+),
+GetPage(
+  name: labAds,
+  page: () => const LabAdsScreen(),
+  binding: LabAdsBinding(),
+),
+
+
+GetPage(
+  name: labAdDetails,
+  page: () =>
+      const LabAdDetailsScreen(),
+  binding:
+      LabAdDetailsBinding(),
+),
+
+GetPage(
+  name: labAdPayment,
+  page: () =>
+      const LabAdPaymentScreen(),
+  binding:
+      LabAdPaymentBinding(),
+),
+
+GetPage(
+  name: labAdPaymentSuccess,
+  page: () =>
+      const LabAdPaymentSuccessScreen(),
+),
+
+GetPage(
+  name: labAdPaymentFailed,
+  page: () =>
+      const LabAdPaymentFailedScreen(),
 ),
 
   ];

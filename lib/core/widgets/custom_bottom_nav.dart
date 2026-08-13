@@ -79,9 +79,9 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
 
           BottomNavItem(
-            icon: Icons.medical_services_outlined,
-            activeIcon: Icons.medical_services,
-            label: 'الحالات',
+            icon: Icons.campaign_outlined,
+            activeIcon: Icons.campaign_outlined,
+            label: 'اعلاناتي',
             isSelected: currentIndex == 2,
             onTap: () => onTap(2),
           ),

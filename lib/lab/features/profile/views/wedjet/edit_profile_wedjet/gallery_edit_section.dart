@@ -19,7 +19,7 @@ class GalleryEditSection extends StatelessWidget {
   });
 
   String imageUrl(String path) {
-    const baseUrl = 'http://192.168.1.3:44352/';
+    const baseUrl = 'http://192.168.1.3:44334/';
 
     if (path.startsWith('/')) {
       return '$baseUrl${path.substring(1)}';

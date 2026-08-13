@@ -125,7 +125,36 @@ class AppValidators {
 
 
 
+static String? validateAdvertisementContent(
+  String? value,
+) {
+  final content = value?.trim() ?? '';
 
+  if (content.isEmpty) {
+    return 'الرجاء إدخال محتوى الإعلان';
+  }
+
+  if (content.length < 10) {
+    return 'يرجى كتابة محتوى إعلان أكثر تفصيلاً';
+  }
+
+  if (content.length > 1000) {
+    return 'يجب ألا يتجاوز محتوى الإعلان 1000 حرف';
+  }
+
+  return null;
+}
+
+static String? validateAdvertisementDate(
+  String? value,
+) {
+  if (value == null ||
+      value.trim().isEmpty) {
+    return 'الرجاء اختيار تاريخ انتهاء الإعلان';
+  }
+
+  return null;
+}
 
 
 

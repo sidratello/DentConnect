@@ -15,7 +15,7 @@ final List<BlogPostAttachment> attachments;
   });
 
   static const String baseUrl =
-      'http://192.168.1.3:44352/';
+      'http://192.168.1.3:44334/';
 
   @override
   Widget build(BuildContext context) {

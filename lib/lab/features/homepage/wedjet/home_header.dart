@@ -6,6 +6,7 @@ import 'package:template/core/app_text_styles.dart';
 import 'package:template/lab/features/homepage/controller/homecontroller.dart';
 
 import 'package:get/get.dart';
+import 'package:template/lab/features/homepage/wedjet/LabMenuItem.dart';
 
 
 
@@ -54,11 +55,7 @@ class LabHomeHeader extends StatelessWidget {
 
           const Spacer(),
 
-          Icon(
-            Icons.notifications_none,
-            color: Colors.white,
-            size: 30.sp,
-          ),
+    const LabHomeMenu(),
         ],
       ),
     );

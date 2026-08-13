@@ -30,12 +30,7 @@ class CaseOrderDetailsActions extends StatelessWidget {
             color: Colors.white,
             size: 24,
           ),
-          onTap: () {
-            Get.toNamed(
-              AppRouter.updateOrderStatus,
-              arguments: order,
-            );
-          },
+    onTap: controller.openUpdateOrderStatus,
         ),
       );
     });

@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:template/core/app_router.dart';
 
 
 import 'package:template/lab/shared/models/lab_order_model.dart';
@@ -7,7 +8,7 @@ import '../repositry/case_orders_repo.dart';
 
 class CaseOrdersController extends GetxController {
   final CaseOrdersRepo _repo = CaseOrdersRepo();
-
+final wasAnyOrderUpdated = false.obs;
   final isLoading = false.obs;
   final orders = <LabOrderModel>[].obs;
 
@@ -43,7 +44,51 @@ class CaseOrdersController extends GetxController {
     return status != 'Cancelled' && status != 'RequestInfo';
   }
 
+Future<void> openOrderDetails(
+  LabOrderModel selectedOrder,
+) async {
+  final result = await Get.toNamed(
+    AppRouter.caseOrderDetails,
+    arguments: selectedOrder,
+  );
 
+  if (result is LabOrderModel) {
+    handleUpdatedOrder(result);
+  }
+}
+void handleUpdatedOrder(
+  LabOrderModel updatedOrder,
+) {
+  final existingIndex =
+      orders.indexWhere(
+    (item) =>
+        item.orderId ==
+        updatedOrder.orderId,
+  );
 
+  if (existingIndex == -1) {
+    return;
+  }
+
+  wasAnyOrderUpdated.value = true;
+
+  if (updatedOrder.status != status) {
+    orders.removeAt(existingIndex);
+    return;
+  }
+
+  orders[existingIndex] =
+      updatedOrder;
+}
+void goBack() {
+  if (wasAnyOrderUpdated.value) {
+    Get.back(
+      result: true,
+    );
+    return;
+  }
+
+  Get.back();
+}
 
 }

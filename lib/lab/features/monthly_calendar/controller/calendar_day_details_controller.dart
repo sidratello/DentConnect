@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:template/core/app_colors.dart';
+import 'package:template/core/app_router.dart';
 import 'package:template/lab/features/monthly_calendar/model/calendar_day_details_model.dart';
 import 'package:template/lab/features/monthly_calendar/repository/monthly_calendar_repository.dart';
 import 'package:template/lab/shared/models/lab_order_model.dart';
@@ -150,4 +151,44 @@ List<LabOrderModel> get visibleOrders {
           const EdgeInsets.all(16),
     );
   }
+
+
+Future<void> openOrderDetails(
+  LabOrderModel selectedOrder,
+) async {
+  final result = await Get.toNamed(
+    AppRouter.caseOrderDetails,
+    arguments: selectedOrder,
+  );
+
+  if (result is LabOrderModel) {
+    handleUpdatedOrder(result);
+  }
+}
+
+void handleUpdatedOrder(
+  LabOrderModel updatedOrder,
+) {
+  final currentDetails = details.value;
+
+  if (currentDetails == null) {
+    return;
+  }
+
+  final index = currentDetails.orders.indexWhere(
+    (order) =>
+        order.orderId ==
+        updatedOrder.orderId,
+  );
+
+  if (index == -1) {
+    return;
+  }
+
+  currentDetails.orders[index] =
+      updatedOrder;
+
+  details.refresh();
+}
+
 }

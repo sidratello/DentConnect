@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_helper.dart';
-import 'package:template/core/app_router.dart';
 import 'package:template/core/app_text_styles.dart';
 import 'package:template/lab/features/case_orders/views/widget/InfoRow.dart';
 import 'package:template/lab/features/case_orders/views/widget/case_orders_card.dart';
@@ -12,10 +10,12 @@ import 'package:template/lab/shared/models/lab_order_model.dart';
 class CalendarOrdersSection
     extends StatelessWidget {
   final List<LabOrderModel> orders;
-
+  final ValueChanged<LabOrderModel>
+      onOrderTap;
   const CalendarOrdersSection({
     super.key,
     required this.orders,
+       required this.onOrderTap,
   });
 
   @override
@@ -73,12 +73,9 @@ class CalendarOrdersSection
                   order.status,
                 ),
               ),
-onTap: () {
-  Get.toNamed(
-    AppRouter.caseOrderDetails,
-    arguments: order,
-  );
-},
+           onTap: () {
+                onOrderTap(order);
+              },
             );
           },
         ),

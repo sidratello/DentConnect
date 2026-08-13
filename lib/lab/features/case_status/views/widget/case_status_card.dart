@@ -25,15 +25,11 @@ final lightColor = controller.getLightColor(status.status);
     color: Colors.transparent,
     child: InkWell(
       borderRadius: BorderRadius.circular(18),
-      onTap: () {
-        Get.toNamed(
-          AppRouter.caseOrders,
-          arguments: {
-            'status': status.status,
-            'title': controller.getArabicTitle(status.status),
-          },
-        );
-      },
+    onTap: () {
+  controller.openStatusOrders(
+    status,
+  );
+},
       child:
     Container(
       height: 86,

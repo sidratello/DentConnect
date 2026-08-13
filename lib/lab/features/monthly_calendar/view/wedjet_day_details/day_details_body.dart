@@ -78,11 +78,12 @@ class CalendarDayDetailsBody
                       Icons.event_busy_outlined,
                 )
               else ...[
-                CalendarOrdersSection(
-                  orders:
-                      controller
-                          .visibleOrders,
-                ),
+   CalendarOrdersSection(
+  orders:
+      controller.visibleOrders,
+  onOrderTap:
+      controller.openOrderDetails,
+),
 
                 if (controller
                         .visibleOrders
