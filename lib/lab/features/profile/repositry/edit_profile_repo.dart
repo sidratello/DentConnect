@@ -145,3 +145,30 @@ Future<ApiResponse<Map<String, dynamic>>> deleteLabProfilePictureRepo() async {
     'profile-picture-lab',
   );
 }
+
+Future<ApiResponse<Map<String, dynamic>>>
+    getMyFatoorahSupplierCodeRepo() async {
+  final ApiService apiService =
+      ApiService();
+
+  return await apiService.get<
+      Map<String, dynamic>>(
+    'lab/myfatoorah-code',
+  );
+}
+
+Future<ApiResponse<Map<String, dynamic>>>
+    updateMyFatoorahSupplierCodeRepo({
+  required String code,
+}) async {
+  final ApiService apiService =
+      ApiService();
+
+  return await apiService.put<
+      Map<String, dynamic>>(
+    'lab/myfatoorah-code',
+    data: {
+      'MyFatoorahSupplierCode': code,
+    },
+  );
+}

@@ -16,6 +16,7 @@ import 'package:template/lab/features/profile/views/wedjet/profile_wedjet.dart/_
 import 'package:template/lab/features/profile/views/wedjet/profile_wedjet.dart/_StatusCard.dart';
 import 'package:template/lab/features/profile/views/wedjet/profile_wedjet.dart/_TopBar.dart';
 import 'package:template/lab/features/profile/views/wedjet/profile_wedjet.dart/gallery_card.dart';
+import 'package:template/lab/features/profile/views/wedjet/profile_wedjet.dart/my_fatoorah_code_card.dart';
 
 class LabProfileViewScreen extends StatelessWidget {
   const LabProfileViewScreen({super.key});
@@ -107,6 +108,19 @@ SwitchRow(
   value: profile.hasScanVisitService,
   readOnly: true,
 ),
+
+SizedBox(height: 10.h),
+
+Obx(
+  () => MyFatoorahCodeCard(
+    code: controller
+        .myFatoorahSupplierCode
+        .value,
+  ),
+),
+
+SizedBox(height: 10.h),
+
                  GalleryCard(profile: profile),
 
 SizedBox(height: 10.h),

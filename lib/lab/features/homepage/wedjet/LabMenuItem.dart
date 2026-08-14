@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_router.dart';
-import 'package:template/core/app_text_styles.dart';
+import 'package:template/lab/features/homepage/wedjet/lab_menu_item_widget.dart';
 
 enum LabMenuItem {
   ads,
@@ -38,7 +38,7 @@ class LabHomeMenu extends StatelessWidget {
       onSelected: _onSelected,
 
       itemBuilder: (context) => [
-        _buildMenuItem(
+        LabMenuItemWidget<LabMenuItem>(
           value: LabMenuItem.ads,
           icon: Icons.campaign_outlined,
           title: 'الإعلانات',
@@ -47,7 +47,7 @@ class LabHomeMenu extends StatelessWidget {
 
         const PopupMenuDivider(),
 
-        _buildMenuItem(
+        LabMenuItemWidget<LabMenuItem>(
           value: LabMenuItem.complaints,
           icon:
               Icons.help_outline_rounded,
@@ -58,7 +58,7 @@ class LabHomeMenu extends StatelessWidget {
 
         const PopupMenuDivider(),
 
-        _buildMenuItem(
+        LabMenuItemWidget<LabMenuItem>(
           value: LabMenuItem.invoices,
           icon:
               Icons.receipt_long_outlined,
@@ -69,7 +69,7 @@ class LabHomeMenu extends StatelessWidget {
 
         const PopupMenuDivider(),
 
-        _buildMenuItem(
+        LabMenuItemWidget<LabMenuItem>(
           value:
               LabMenuItem.subscriptions,
           icon:
@@ -124,86 +124,16 @@ class LabHomeMenu extends StatelessWidget {
     );
   }
 
-  PopupMenuItem<LabMenuItem>
-      _buildMenuItem({
-    required LabMenuItem value,
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
-    return PopupMenuItem<LabMenuItem>(
-      value: value,
-      height: 72.h,
-      child: Row(
-        textDirection: TextDirection.rtl,
-        children: [
-          Container(
-            width: 44.w,
-            height: 44.w,
-            decoration: BoxDecoration(
-              color: AppColors.littleBlue
-                  .withOpacity(.35),
-              borderRadius:
-                  BorderRadius.circular(
-                12.r,
-              ),
-            ),
-            child: Icon(
-              icon,
-              color: AppColors.primaryBlue,
-              size: 24.sp,
-            ),
-          ),
-
-          SizedBox(width: 12.w),
-
-          Expanded(
-            child: Column(
-              mainAxisSize:
-                  MainAxisSize.min,
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles
-                      .ibmBold22NeutralStyle
-                      .copyWith(
-                    color:
-                        AppColors.darkBlue,
-                    fontSize: 16.sp,
-                  ),
-                ),
-
-                SizedBox(height: 3.h),
-
-                Text(
-                  subtitle,
-                  style: AppTextStyles
-                      .ibmRegular14NeutralStyle
-                      .copyWith(
-                    color:
-                        AppColors.normalText,
-                    fontSize: 12.sp,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   void _onSelected(
     LabMenuItem item,
   ) {
     switch (item) {
-      case LabMenuItem.ads:
-        Get.toNamed(
-          AppRouter.labAds,
-        );
-        break;
+case LabMenuItem.ads:
+  Get.toNamed(
+    AppRouter.labAdFeed,
+  );
+  break;
 
       case LabMenuItem.complaints:
         // Get.toNamed(

@@ -16,4 +16,13 @@ class LabProfileRepo {
       'profile-picture-lab',
     );
   }
+
+  Future<ApiResponse<Map<String, dynamic>>>
+    getMyFatoorahSupplierCode()
+    async {
+  return await _apiService.get<
+      Map<String, dynamic>>(
+    'lab/myfatoorah-code',
+  );
+}
 }

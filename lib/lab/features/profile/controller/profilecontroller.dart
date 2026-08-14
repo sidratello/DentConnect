@@ -14,7 +14,8 @@ class LabProfileController extends GetxController {
   final Rxn<LabProfileModel> profile = Rxn<LabProfileModel>();
 final profilePictureUrl = ''.obs;
   final LabProfileRepo repo = LabProfileRepo();
-
+final myFatoorahSupplierCode =
+    ''.obs;
   @override
   void onInit() {
     super.onInit();
@@ -44,11 +45,26 @@ Future<void> getProfile() async {
       final results = await Future.wait([
         repo.getLabProfile(),
         repo.getLabProfilePicture(),
+         repo.getMyFatoorahSupplierCode(),
       ]);
 
       final profileResponse = results[0];
       final pictureResponse = results[1];
 
+final myFatoorahResponse =
+    results[2];
+    if (myFatoorahResponse.success &&
+    myFatoorahResponse.data != null) {
+  myFatoorahSupplierCode.value =
+      myFatoorahResponse
+              .data?[
+                  'myFatoorahSupplierCode']
+              ?.toString() ??
+          '';
+} else {
+  myFatoorahSupplierCode.value =
+      '';
+}
       if (profileResponse.success &&
           profileResponse.data != null) {
         profile.value = LabProfileModel.fromJson(
@@ -98,6 +114,26 @@ Future<void> getProfile() async {
 
 
 
+Future<void>
+    getMyFatoorahSupplierCode()
+    async {
+  final response =
+      await repo
+          .getMyFatoorahSupplierCode();
+
+  if (response.success &&
+      response.data != null) {
+    myFatoorahSupplierCode.value =
+        response
+                .data?[
+                    'myFatoorahSupplierCode']
+                ?.toString() ??
+            '';
+  } else {
+    myFatoorahSupplierCode.value =
+        '';
+  }
+}
 
 
 }

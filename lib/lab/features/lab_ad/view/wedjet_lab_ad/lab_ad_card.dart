@@ -1,6 +1,8 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:intl/intl.dart';
 
 import 'package:template/core/app_colors.dart';
@@ -8,6 +10,7 @@ import 'package:template/core/app_text_styles.dart';
 import 'package:template/core/widgets/app_button.dart';
 import 'package:template/lab/features/case_orders/views/widget/InfoRow.dart';
 import 'package:template/lab/features/lab_ad/view/wedjet_lab_ad/lab_ad_image.dart';
+import 'package:template/lab/features/lab_ad/view/wedjet_lab_ad_feed/AdImagesGalleryScreen.dart';
 
 import '../../model/lab_ad_model.dart';
 import 'lab_ad_status_chip.dart';
@@ -201,17 +204,32 @@ class _AdvertisementImage
 
   @override
   Widget build(BuildContext context) {
-    return AppNetworkContentImage(
-      imagePath: advertisement.images.isEmpty
+    return InkWell(
+       borderRadius:
+          BorderRadius.circular(14),
+
+      onTap: advertisement.images.isEmpty
           ? null
-          : advertisement.images.first,
-      additionalImagesCount:
-          advertisement.images.isEmpty
-              ? 0
-              : advertisement.images.length - 1,
-      width: 116,
-      height: 116,
-      borderRadius: 14,
+          : () {
+              Get.to(
+                () => AdImagesGalleryScreen(
+                  images:
+                      advertisement.images,
+                ),
+              );
+            },
+      child: AppNetworkContentImage(
+        imagePath: advertisement.images.isEmpty
+            ? null
+            : advertisement.images.first,
+        additionalImagesCount:
+            advertisement.images.isEmpty
+                ? 0
+                : advertisement.images.length - 1,
+        width: 116,
+        height: 116,
+        borderRadius: 14,
+      ),
     );
   }
 }

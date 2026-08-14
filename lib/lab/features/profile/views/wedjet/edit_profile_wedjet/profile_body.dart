@@ -12,7 +12,7 @@ import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/g
 import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/lab_profile_picture/lab_profile_picture_section.dart';
 import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/price_edit_section.dart';
 import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/prices_edit_card.dart';
-
+import 'package:template/lab/features/profile/views/wedjet/edit_profile_wedjet/my_fatoorah_code_edit_card.dart';
 
 
 
@@ -46,7 +46,11 @@ PricesEditSection(controller: controller),
 PricesEditCard(
   controller: controller,
 ),
+SizedBox(height: 16.h),
 
+MyFatoorahCodeEditCard(
+  controller: controller,
+),
 SizedBox(height: 16.h),
 
 GalleryEditSection(controller: controller),

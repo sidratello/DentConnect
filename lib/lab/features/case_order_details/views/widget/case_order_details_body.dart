@@ -39,7 +39,9 @@ class CaseOrderDetailsBody extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 0, 22, 110),
           children: [
-              CaseOrdersdetalsHeader(),
+            CaseOrdersdetalsHeader(
+  onBack: controller.goBack,
+),
            
             DetailsSectionCard(
               child: DetailsTopCard(

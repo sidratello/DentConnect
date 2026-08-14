@@ -32,9 +32,11 @@ import 'package:template/lab/features/homepage/binding/homebinding.dart';
 import 'package:template/lab/features/homepage/lab_home_page.dart';
 import 'package:template/lab/features/lab_ad/binding/create_lab_ad_binding.dart';
 import 'package:template/lab/features/lab_ad/binding/lab_ad_details_binding.dart';
+import 'package:template/lab/features/lab_ad/binding/lab_ad_feed_binding.dart';
 import 'package:template/lab/features/lab_ad/binding/lab_ads_binding.dart';
 import 'package:template/lab/features/lab_ad/view/create_lab_ad_screen.dart';
 import 'package:template/lab/features/lab_ad/view/lab_ad_details_screen.dart';
+import 'package:template/lab/features/lab_ad/view/lab_ad_feed_screen.dart';
 import 'package:template/lab/features/lab_ad/view/lab_ads_screen.dart';
 import 'package:template/lab/features/lab_ad_payment/binding/ad_payment_binding.dart';
 import 'package:template/lab/features/lab_ad_payment/view/ad_payment_screen.dart';
@@ -116,6 +118,8 @@ static const labAdDetails =
 
 static const labAdPaymentFailed =
     '/lab-ad-payment-failed';
+    static const labAdFeed =
+    '/lab-ad-feed';
   static final List<GetPage<dynamic>> pages = [
     GetPage(
       name: choseuserpage,
@@ -326,7 +330,14 @@ GetPage(
   page: () =>
       const LabAdPaymentFailedScreen(),
 ),
-
+GetPage(
+  name:
+      AppRouter.labAdFeed,
+  page: () =>
+      const LabAdFeedScreen(),
+  binding:
+      LabAdFeedBinding(),
+),
   ];
 
 }

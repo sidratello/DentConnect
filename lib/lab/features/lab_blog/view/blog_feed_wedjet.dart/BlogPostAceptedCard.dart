@@ -92,13 +92,10 @@ class BlogPostAceptedCard
                 if (post.firstAttachment !=
                     null) ...[
                   const SizedBox(height: 14),
-                  BlogPostImage(
-                    attachment:
-                        post.firstAttachment!,
-                    additionalImagesCount:
-                        post.attachments.length -
-                            1,
-                  ),
+            BlogPostImage(
+  attachments:
+      post.attachments,
+),
                 ],
                 const SizedBox(height: 14),
                 Divider(

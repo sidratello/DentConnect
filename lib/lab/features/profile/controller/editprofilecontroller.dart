@@ -10,7 +10,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/lab/features/profile/controller/profilecontroller.dart';
 import 'package:template/lab/features/profile/model/profile_modil.dart';
-import 'package:template/lab/features/profile/repositry/edit_profile_repo.dart' show updateLabProfile, addLabPrice, getCompensationTypesRepo, deleteLabPrice, updateLabPrice, addGalleryImageRepo, deleteGalleryImageRepo, uploadLabProfilePictureRepo, deleteLabProfilePictureRepo;
+import 'package:template/lab/features/profile/repositry/edit_profile_repo.dart' show updateLabProfile, addLabPrice, getCompensationTypesRepo, deleteLabPrice, updateLabPrice, addGalleryImageRepo, deleteGalleryImageRepo, uploadLabProfilePictureRepo, deleteLabProfilePictureRepo, getMyFatoorahSupplierCodeRepo, updateMyFatoorahSupplierCodeRepo;
 
 import 'package:template/lab/features/profile/repositry/profile_repo.dart';
 
@@ -27,6 +27,12 @@ final descriptionController = TextEditingController();
 final yearsController = TextEditingController();
   final isLoading = false.obs;
   final LabProfileRepo repo = LabProfileRepo();
+
+final myFatoorahCodeController =
+    TextEditingController();
+
+final isMyFatoorahCodeLoading =
+    false.obs;
 
 
 final hasScanVisitService = false.obs;
@@ -157,6 +163,7 @@ bool get hasProfilePicture {
   void onInit() {
     super.onInit();
     getCompensationTypes();
+    getMyFatoorahSupplierCode();
 final profile = Get.arguments as LabProfileModel;
 hasScanVisitService.value = profile.hasScanVisitService;
 nameController.text = profile.owner.name;
@@ -405,6 +412,96 @@ Future<void> deleteGalleryImage(int imageId) async {
 
 
 
+Future<void>
+    getMyFatoorahSupplierCode()
+    async {
+  final response =
+      await getMyFatoorahSupplierCodeRepo();
+
+  if (!response.success ||
+      response.data == null) {
+    return;
+  }
+
+  myFatoorahCodeController.text =
+      response
+              .data?[
+                  'myFatoorahSupplierCode']
+              ?.toString() ??
+          '';
+}
+
+
+
+Future<void>
+    updateMyFatoorahSupplierCode()
+    async {
+  final code =
+      myFatoorahCodeController.text
+          .trim();
+
+  if (code.isEmpty) {
+    Get.snackbar(
+      'تنبيه',
+      'يرجى إدخال كود حساب المختبر',
+    );
+    return;
+  }
+
+  if (isMyFatoorahCodeLoading.value) {
+    return;
+  }
+
+  isMyFatoorahCodeLoading.value =
+      true;
+
+  try {
+    final response =
+        await updateMyFatoorahSupplierCodeRepo(
+      code: code,
+    );
+
+    if (!response.success) {
+      Get.snackbar(
+        'خطأ',
+        response.message,
+      );
+      return;
+    }
+
+    final returnedCode =
+        response
+            .data?[
+                'myFatoorahSupplierCode']
+            ?.toString();
+
+    if (returnedCode != null &&
+        returnedCode.isNotEmpty) {
+      myFatoorahCodeController.text =
+          returnedCode;
+    }
+
+    if (Get.isRegistered<
+        LabProfileController>()) {
+      await Get.find<
+              LabProfileController>()
+          .getMyFatoorahSupplierCode();
+    }
+
+
+    
+
+    Get.snackbar(
+      'تم',
+      'تم تحديث كود حساب المخبر بنجاح',
+    );
+  } finally {
+    isMyFatoorahCodeLoading.value =
+        false;
+  }
+}
+
+
   @override
   void onClose() {
     nameController.dispose();
@@ -413,6 +510,7 @@ Future<void> deleteGalleryImage(int imageId) async {
     namePlaceController.dispose();
     addressController.dispose();
     yearsController.dispose();
+    myFatoorahCodeController.dispose();
     super.onClose();
   }
 }

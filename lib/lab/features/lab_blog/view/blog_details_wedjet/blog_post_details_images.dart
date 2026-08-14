@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
+import 'package:template/lab/features/lab_ad/view/wedjet_lab_ad/lab_ad_image.dart';
+import 'package:template/lab/features/lab_ad/view/wedjet_lab_ad_feed/AdImagesGalleryScreen.dart';
 import 'package:template/lab/features/lab_blog/model/post_model.dart';
-import 'package:template/lab/features/lab_blog/view/blog_feed_wedjet.dart/blog_post_image.dart';
 
 class BlogPostDetailsImages
     extends StatefulWidget {
@@ -78,17 +81,34 @@ class _BlogPostDetailsImagesState
                       index;
                 });
               },
-              itemBuilder: (
-                context,
-                index,
-              ) {
-                return BlogPostImage(
-                  attachment:
-                      attachments[index],
-                  additionalImagesCount:
-                      0,
-                );
-              },
+            itemBuilder: (
+  context,
+  index,
+) {
+  return InkWell(
+    onTap: () {
+      Get.to(
+        () => AdImagesGalleryScreen(
+          images: attachments
+              .map(
+                (attachment) =>
+                    attachment.path,
+              )
+              .toList(),
+          initialIndex: index,
+        ),
+      );
+    },
+    borderRadius:
+        BorderRadius.circular(16),
+    child: AppNetworkContentImage(
+      imagePath:
+          attachments[index].path,
+      aspectRatio: 16 / 9,
+      borderRadius: 16,
+    ),
+  );
+},
             ),
           ),
 
