@@ -13,7 +13,7 @@ import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/labs_
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/app_spacing.dart';
 
-class LabDetailsPage extends StatelessWidget {
+class LabDetailsPage extends GetView<LabController> {
   final int id;
 
   const LabDetailsPage({super.key, required this.id});
@@ -133,10 +133,13 @@ class LabDetailsPage extends StatelessWidget {
                               ),
                             );
                           }
-                          return const Column(
+
+                          return Column(
                             children: [
-                              LabDetailsWorksWithDoctorHeader(),
-                              LabCaseWithDoctorList(),
+                              const LabDetailsWorksWithDoctorHeader(),
+                              LabCaseWithDoctorList(
+                                controller: labController,
+                              ),
                             ],
                           );
                         },

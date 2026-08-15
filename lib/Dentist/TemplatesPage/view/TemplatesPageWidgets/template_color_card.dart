@@ -4,8 +4,11 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class TemplateColorCard extends StatelessWidget {
+  final String color;
+
   const TemplateColorCard({
     super.key,
+    required this.color,
   });
 
   @override
@@ -32,7 +35,7 @@ class TemplateColorCard extends StatelessWidget {
             ),
           ),
           Text(
-            'A2',
+            color,
             style: TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
               fontWeight: FontWeight.w600,

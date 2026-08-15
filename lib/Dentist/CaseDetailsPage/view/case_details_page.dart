@@ -12,11 +12,11 @@ import 'package:template/core/widgets/appbar_vector_black.dart';
 import 'package:template/core/widgets/top_background.dart';
 
 class CaseDetailsPage extends StatelessWidget {
-  final CaseDetailsModel details;
+  final Orders? orders;
 
   const CaseDetailsPage({
     super.key,
-    required this.details,
+    required this.orders,
   });
 
   @override
@@ -48,38 +48,41 @@ class CaseDetailsPage extends StatelessWidget {
               children: [
                 AppSpacing.height(context, 24),
                 CaseStatusCard(
-                  patientName: details.patientName,
-                  caseNumber: details.caseNumber,
-                  status: details.status,
-                  isUrgent: details.isUrgent,
+                  patientName: orders?.patientName ?? '',
+                  caseNumber: orders?.id.toString() ?? '',
+                  status: orders?.status ?? '',
+                  isUrgent: orders?.isUrgent ?? false,
                 ),
                 AppSpacing.height(context, 18),
                 CaseImagesCard(
-                  images: details.images,
+                  images: orders?.requiredImages ?? [],
                 ),
                 AppSpacing.height(context, 18),
                 CaseInfoCard(
-                  patientName: details.patientName,
-                  teethNumbers: details.teethNumbers,
-                  restorationType: details.restorationType,
-                  color: details.color,
-                  impressionType: details.impressionType,
-                  hasAccessory: details.hasAccessory,
-                  templateName: details.hasTemplate ? details.templateName : '',
+                  patientName: orders?.patientName ?? '',
+                  teethNumbers: orders?.items
+                          ?.map((item) => item.toothNumbers)
+                          .join(', ') ??
+                      '',
+                  restorationType: orders?.items?.first != null
+                      ? orders?.items?.first.compensationType ?? ''
+                      : '',
+                  color: orders?.shade ?? '',
+                  impressionType: orders?.impressionType ?? '',
+                  hasAccessory: orders?.hasAccessories ?? false,
                 ),
                 AppSpacing.height(context, 18),
                 CaseNotesCard(
-                  description: details.shortDescription,
-                  notes: details.notes,
+                  description: orders?.title ?? '',
+                  notes: orders?.notes ?? '',
                 ),
                 AppSpacing.height(context, 18),
                 CaseOrderInfoCard(
-                  sentDate: details.sentDate,
-                  deliveryDate: details.deliveryDate,
-                  rating: details.doctorRating,
-                  price: details.price == null
+                  sentDate: orders?.createdAt?.split('T').first ?? '',
+                  deliveryDate: orders?.deliveryDate?.split('T').first ?? '',
+                  price: orders?.estimatedPrice == null
                       ? ''
-                      : details.price!.toStringAsFixed(0),
+                      : orders!.estimatedPrice!.toStringAsFixed(0),
                 ),
                 AppSpacing.height(context, 30),
               ],

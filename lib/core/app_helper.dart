@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:template/core/theme/app_colors.dart';
+import 'package:template/core/utils/static.dart';
 
 class AppHelper {
-  static String token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJnaGFsaWFoYXplbTIwMDNAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRGVudGlzdCIsImV4cCI6MTc4MzE2ODQ0MiwiaXNzIjoiRGVudGFsTGFiLkFwaSIsImF1ZCI6IkRlbnRhbExhYi5BcGkifQ.QpttK-SnCcxrBntIgWjbcde9PuhRzMrZkMYg_hf32Mg';
+  static String token = Static.token;
 
   static void clear() {
     token = '';

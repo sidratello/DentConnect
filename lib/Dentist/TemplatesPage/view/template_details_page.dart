@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:template/Dentist/TemplatesPage/model/template_model.dart';
+import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_impression_card.dart';
+import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_options_card.dart';
+import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_required_images_card.dart';
+import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_work_type_card.dart';
 import 'package:template/core/widgets/appbar_vector_black.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_color_card.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_duration_card.dart';
@@ -12,7 +17,12 @@ import 'package:template/core/widgets/top_background.dart';
 import '../../../core/theme/app_colors.dart';
 
 class TemplateDetailsPage extends StatelessWidget {
-  const TemplateDetailsPage({super.key});
+  final CaseTemplate template;
+
+  const TemplateDetailsPage({
+    super.key,
+    required this.template,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +53,42 @@ class TemplateDetailsPage extends StatelessWidget {
             ),
             child: Column(
               children: [
-                const TemplatePreviewCard(),
+                TemplatePreviewCard(
+                  title: template.title,
+                ),
                 AppSpacing.height(context, 16),
-                const TemplateColorCard(),
+                TemplateWorkTypeCard(
+                  workType: template.workType,
+                ),
                 AppSpacing.height(context, 16),
-                const TemplateMaterialsCard(),
+                TemplateColorCard(
+                  color: template.defaultShade,
+                ),
                 AppSpacing.height(context, 16),
-                const TemplateDurationCard(),
+                TemplateMaterialsCard(
+                  materials: template.materials,
+                ),
                 AppSpacing.height(context, 16),
-                const TemplateNotesCard(),
+                TemplateImpressionCard(
+                  impression: template.preferredImpression,
+                ),
+                AppSpacing.height(context, 16),
+                TemplateRequiredImagesCard(
+                  images: template.requiredImages,
+                ),
+                AppSpacing.height(context, 16),
+                TemplateDurationCard(
+                  days: template.deliveryDays,
+                ),
+                AppSpacing.height(context, 16),
+                TemplateNotesCard(
+                  notes: template.notes,
+                ),
+                AppSpacing.height(context, 16),
+                TemplateOptionsCard(
+                  urgent: template.isUrgent,
+                  tryIn: template.needsTryIn,
+                ),
               ],
             ),
           ),

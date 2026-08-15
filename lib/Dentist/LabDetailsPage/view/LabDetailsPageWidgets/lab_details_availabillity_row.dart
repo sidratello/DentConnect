@@ -70,10 +70,20 @@ class LabDetailsAvailabillityRow extends StatelessWidget {
             GestureDetector(
               onTap: canOpen
                   ? () {
-                      scannerSheet(
-                        context,
-                        controller,
-                      );
+                      if (controller.availableSlots.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content:
+                                Text('لا توجد مواعيد متاحة للماسح المتنقل'),
+                            backgroundColor: AppColors.lightRed,
+                          ),
+                        );
+                      } else {
+                        scannerSheet(
+                          context,
+                          controller,
+                        );
+                      }
                     }
                   : null,
               child: Opacity(

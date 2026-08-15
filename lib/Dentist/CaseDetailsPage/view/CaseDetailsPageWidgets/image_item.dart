@@ -25,8 +25,8 @@ class ImageItem extends StatelessWidget {
               maxScale: 4,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  image,
+                child: Image.network(
+                  '${Static.imageBaseUrl}/$image',
                   fit: BoxFit.contain,
                 ),
               ),
@@ -45,7 +45,7 @@ class ImageItem extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             image: DecorationImage(
-              image: AssetImage(image),
+              image: NetworkImage('${Static.imageBaseUrl}/$image'),
               fit: BoxFit.cover,
             ),
             boxShadow: [

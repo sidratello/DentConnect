@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/SearchLabsPage/view/SearchLabsPageWidgets/search_labs_results_page.dart';
 import 'package:template/core/widgets/app_spacing.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -12,14 +13,28 @@ class SearchActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<HomeController>();
     return Row(
       children: [
         Expanded(
           flex: 2,
           child: InkWell(
             borderRadius: BorderRadius.circular(18),
-            onTap: () {
-              Get.to(() => const SearchLabsResultsPage());
+            onTap: () async {
+              final success = await controller.fetchLabSearchResult(
+                controller.searchText.value,
+              );
+              if (!success) return;
+              if (controller.searchLab.isEmpty) {
+                Get.snackbar(
+                  'لا توجد نتائج',
+                  'لم يتم العثور على أي مخبر',
+                );
+                return;
+              }
+              Get.to(
+                () => const SearchLabsResultsPage(),
+              );
             },
             child: Container(
               height: Static.getheight(context, 52),

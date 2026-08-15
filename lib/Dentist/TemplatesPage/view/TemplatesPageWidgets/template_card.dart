@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:template/Dentist/TemplatesPage/view/template_details_page.dart';
 import 'package:template/core/app_router.dart';
-
+import 'package:template/Dentist/TemplatesPage/model/template_model.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class TemplateCard extends StatelessWidget {
+  final CaseTemplate template;
+  final VoidCallback onDelete;
+
   const TemplateCard({
     super.key,
+    required this.template,
+    required this.onDelete,
   });
 
   @override
@@ -16,8 +22,10 @@ class TemplateCard extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
-        Get.toNamed(
-          AppRouter.templateDetailsPage,
+        Get.to(
+          () => TemplateDetailsPage(
+            template: template,
+          ),
         );
       },
       child: Container(
@@ -47,7 +55,7 @@ class TemplateCard extends StatelessWidget {
                   horizontal: Static.getwidth(context, 16),
                 ),
                 child: Text(
-                  'فيلر صدفي',
+                  template.title,
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontFamily: 'IBM Plex Sans Arabic',
@@ -64,7 +72,7 @@ class TemplateCard extends StatelessWidget {
               ),
               child: InkWell(
                 borderRadius: BorderRadius.circular(100),
-                onTap: () {},
+                onTap: onDelete,
                 child: Container(
                   width: Static.getwidth(context, 36),
                   height: Static.getwidth(context, 36),

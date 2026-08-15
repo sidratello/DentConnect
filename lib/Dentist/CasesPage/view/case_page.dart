@@ -11,10 +11,8 @@ import 'package:template/core/widgets/top_background.dart';
 import '../controller/case_controller.dart';
 import '../model/case_status.dart';
 
-class CasePage extends StatelessWidget {
-  const CasePage({
-    super.key,
-  });
+class CasePage extends GetView<CaseController> {
+  const CasePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +67,16 @@ class CasePage extends StatelessWidget {
                             status: CaseStatus.inDesign,
                           ),
                           CaseSection(
+                            title: 'قيد التلوين',
+                            status: CaseStatus.inColoring,
+                          ),
+                          CaseSection(
                             title: 'قيد التنفيذ',
                             status: CaseStatus.inProgress,
+                          ),
+                          CaseSection(
+                            title: 'بانتظار التوضيح',
+                            status: CaseStatus.waitingForClarification,
                           ),
                           CaseSection(
                             title: 'جاهزة',

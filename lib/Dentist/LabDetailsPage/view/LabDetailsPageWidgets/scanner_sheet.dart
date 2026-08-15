@@ -66,14 +66,12 @@ void scannerSheet(
           ...List.generate(
             controller.availableDates.length,
             (index) {
-              final date = controller.availableDates[index];
+              final slot = controller.availableSlots[index];
 
               return ScannerDateItem(
-                date: date,
+                date: slot.readableDate,
                 onTap: () {
-                  controller.selectDate(
-                    date,
-                  );
+                  controller.selectDate(slot);
                 },
               );
             },

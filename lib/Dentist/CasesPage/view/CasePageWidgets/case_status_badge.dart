@@ -56,6 +56,16 @@ class CaseStatusBadge extends StatelessWidget {
         text = 'ملغاة';
         color = AppColors.statusCancelled;
         break;
+
+      case CaseStatus.inColoring:
+        text = 'قيد التلوين';
+        color = AppColors.statusInProgress;
+        break;
+
+      case CaseStatus.waitingForClarification:
+        text = 'بانتظار التوضيح';
+        color = AppColors.statusNeedInfo;
+        break;
     }
     return Container(
       padding: const EdgeInsets.symmetric(

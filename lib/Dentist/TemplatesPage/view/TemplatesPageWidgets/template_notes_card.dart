@@ -5,9 +5,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class TemplateNotesCard extends StatelessWidget {
-  const TemplateNotesCard({
-    super.key,
-  });
+  final List<String> notes;
+  const TemplateNotesCard({super.key, required this.notes});
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +32,22 @@ class TemplateNotesCard extends StatelessWidget {
             ),
           ),
           AppSpacing.height(context, 12),
-          Text(
-            'يفضل التأكد من توافق اللون مع الأسنان المجاورة قبل التطبيق النهائي ومراجعة الحالة السريرية للمريض قبل البدء.',
-            style: TextStyle(
-              fontFamily: 'IBM Plex Sans Arabic',
-              fontWeight: FontWeight.w400,
-              fontSize: Static.getwidth(context, 14),
-              height: 21 / 14,
+          ...notes.map(
+            (note) => Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.circle,
+                    size: 8,
+                    color: AppColors.primary,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(note),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

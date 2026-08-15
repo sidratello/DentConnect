@@ -5,8 +5,11 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class TemplateMaterialsCard extends StatelessWidget {
+  final List<String> materials;
+
   const TemplateMaterialsCard({
     super.key,
+    required this.materials,
   });
 
   @override
@@ -33,14 +36,34 @@ class TemplateMaterialsCard extends StatelessWidget {
             ),
           ),
           AppSpacing.height(context, 12),
-          const Text(
-            '• Composite',
-          ),
-          const Text(
-            '• Nano Hybrid',
-          ),
-          const Text(
-            '• Adhesive Bond',
+          ...materials.map(
+            (material) => Padding(
+              padding: EdgeInsets.only(
+                bottom: Static.getheight(context, 8),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.check_circle_rounded,
+                    color: AppColors.success,
+                    size: Static.getwidth(context, 18),
+                  ),
+                  SizedBox(
+                    width: Static.getwidth(context, 8),
+                  ),
+                  Expanded(
+                    child: Text(
+                      material,
+                      style: TextStyle(
+                        fontFamily: 'IBM Plex Sans Arabic',
+                        fontWeight: FontWeight.w500,
+                        fontSize: Static.getwidth(context, 15),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

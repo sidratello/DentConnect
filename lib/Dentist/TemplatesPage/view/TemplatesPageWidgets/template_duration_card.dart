@@ -4,8 +4,11 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class TemplateDurationCard extends StatelessWidget {
+  final int days;
+
   const TemplateDurationCard({
     super.key,
+    required this.days,
   });
 
   @override
@@ -32,7 +35,7 @@ class TemplateDurationCard extends StatelessWidget {
             ),
           ),
           Text(
-            '45 دقيقة',
+            '$days أيام',
             style: TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
               fontWeight: FontWeight.w600,

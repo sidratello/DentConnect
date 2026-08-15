@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:template/Dentist/SearchLabsPage/model/search_lab_model.dart';
+import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/SearchLabsPage/view/SearchLabsPageWidgets/search_result_lab_card.dart';
 import 'package:template/core/utils/static.dart';
 import 'package:template/core/widgets/appbar_vector_black.dart';
@@ -14,23 +15,7 @@ class SearchLabsResultsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labs = [
-      const SearchLabModel(
-        name: 'مخبر هشام',
-        city: 'دمشق',
-        rating: 4.8,
-      ),
-      const SearchLabModel(
-        name: 'مخبر الأسنان الرقمية',
-        city: 'حمص',
-        rating: 4.6,
-      ),
-      const SearchLabModel(
-        name: 'مخبر الإبداع',
-        city: 'حلب',
-        rating: 4.4,
-      ),
-    ];
+    final controller = Get.find<HomeController>();
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(248, 250, 255, 1),
@@ -60,56 +45,58 @@ class SearchLabsResultsPage extends StatelessWidget {
                 24,
               ),
             ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: Static.getheight(
-                    context,
-                    8,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '${labs.length} مخبر',
-                      style: const TextStyle(
-                        fontFamily: 'IBM Plex Sans Arabic',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.sort_rounded,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: Static.getheight(
-                    context,
-                    16,
-                  ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    itemCount: labs.length,
-                    separatorBuilder: (_, __) => SizedBox(
-                      height: Static.getheight(
-                        context,
-                        12,
-                      ),
-                    ),
-                    itemBuilder: (
+            child: Obx(() {
+              return Column(
+                children: [
+                  SizedBox(
+                    height: Static.getheight(
                       context,
-                      index,
-                    ) {
-                      return SearchResultLabCard(
-                        lab: labs[index],
-                      );
-                    },
+                      8,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${controller.searchLab.length} مخبر',
+                        style: const TextStyle(
+                          fontFamily: 'IBM Plex Sans Arabic',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const Icon(
+                        Icons.sort_rounded,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: Static.getheight(
+                      context,
+                      16,
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.separated(
+                      itemCount: controller.searchLab.length,
+                      separatorBuilder: (_, __) => SizedBox(
+                        height: Static.getheight(
+                          context,
+                          12,
+                        ),
+                      ),
+                      itemBuilder: (
+                        context,
+                        index,
+                      ) {
+                        return SearchResultLabCard(
+                          lab: controller.searchLab[index],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            }),
           ),
         ),
       ),

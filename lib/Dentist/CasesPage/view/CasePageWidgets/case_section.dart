@@ -24,10 +24,8 @@ class CaseSection extends StatelessWidget {
     final controller = Get.find<CaseController>();
 
     return Obx(() {
-      final List<CaseModel> cases = controller.getCases(status);
-
+      final List<CaseItem> cases = controller.getCases(status);
       final bool expanded = controller.expandedSections[status] ?? true;
-
       final int visibleCount = controller.visibleCount[status] ?? 3;
 
       return Padding(
@@ -41,17 +39,12 @@ class CaseSection extends StatelessWidget {
               count: cases.length,
               expanded: expanded,
               onTap: () {
-                controller.toggleSection(
-                  status,
-                );
+                controller.toggleSection(status);
               },
             ),
             if (expanded) ...[
               SizedBox(
-                height: Static.getheight(
-                  context,
-                  12,
-                ),
+                height: Static.getheight(context, 12),
               ),
               if (cases.isEmpty)
                 const CaseEmptyWidget(
@@ -64,19 +57,13 @@ class CaseSection extends StatelessWidget {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.symmetric(
-                        horizontal: Static.getwidth(
-                          context,
-                          24,
-                        ),
+                        horizontal: Static.getwidth(context, 24),
                       ),
                       itemCount: cases.length > visibleCount
                           ? visibleCount
                           : cases.length,
                       separatorBuilder: (_, __) => SizedBox(
-                        height: Static.getheight(
-                          context,
-                          12,
-                        ),
+                        height: Static.getheight(context, 12),
                       ),
                       itemBuilder: (context, index) {
                         return CaseCardItem(
@@ -87,10 +74,7 @@ class CaseSection extends StatelessWidget {
                     if (cases.length > visibleCount)
                       Padding(
                         padding: EdgeInsets.only(
-                          top: Static.getheight(
-                            context,
-                            12,
-                          ),
+                          top: Static.getheight(context, 12),
                         ),
                         child: TextButton(
                           onPressed: () {

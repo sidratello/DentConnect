@@ -1,5 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/model/advertisement_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
+import 'package:template/Dentist/SearchLabsPage/model/search_lab_model.dart';
 import 'package:template/core/api.dart';
 
 class HomeController extends GetxController {
@@ -13,11 +16,14 @@ class HomeController extends GetxController {
   final selectedFilter = HomeFilter.none.obs;
   final selectedLocation = 'كل المواقع'.obs;
   RxBool isLoading = false.obs;
+  final PageController adsPageController = PageController();
+  final RxString searchText = ''.obs;
+  final RxInt currentAdIndex = 0.obs;
 
   @override
   void onInit() {
+    fetchAdvertisement();
     fetchLabsLabels();
-    fetchLabsDetails();
     super.onInit();
   }
 
@@ -35,7 +41,6 @@ class HomeController extends GetxController {
       labsIds.clear();
 
       await fetchLabsLabels();
-      await fetchLabsDetails();
       return;
     }
 
@@ -70,45 +75,24 @@ class HomeController extends GetxController {
 
   Future<void> fetchLabsLabels() async {
     isLoading.value = true;
+    List labs = [];
+
     var response = await apiService.get(
       'Labs/all',
     );
     try {
       if (response.statusCode == 200) {
         print(response.data.toString());
-        labsIds.value = response.data
-            .map(
-              (e) => LabModel.fromJson(e).id,
-            )
-            .toList();
+        labs =
+            (response.data as List).map((e) => LabModel.fromJson(e)).toList();
       } else {
         print('Failed to fetch labs: ${response.message}');
       }
     } finally {
+      labsIds.value = labs;
+      labsDetails.value = labs;
       isLoading.value = false;
     }
-  }
-
-  Future<void> fetchLabsDetails() async {
-    isLoading.value = true;
-    List nn = [];
-    for (int id in labsIds) {
-      var response = await apiService.get(
-        'Ratings/lab-profile/$id',
-      );
-      try {
-        if (response.statusCode == 200) {
-          print(response.data.toString());
-          nn.add(LabModel.fromJson(response.data));
-        } else {
-          print('Failed to fetch labs: ${response.message}');
-        }
-      } catch (e) {
-        print('Error fetching lab details for ID $id: $e');
-      }
-    }
-    labsDetails.addAll(nn);
-    isLoading.value = false;
   }
 
   Future<void> fetchLabsByLocation() async {
@@ -250,6 +234,89 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       print('Error fetching nearby labs: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> sendFollowRequest(int labId) async {
+    try {
+      var response = await apiService.post(
+        'Connections/follow/$labId',
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'تم الإرسال',
+          'تم إرسال طلب المتابعة بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  RxList<AdvertisementModel> advertisements = <AdvertisementModel>[].obs;
+  Future<void> fetchAdvertisement() async {
+    isLoading.value = true;
+    var response = await apiService.get(
+      'Advertisement/dentists',
+    );
+    try {
+      if (response.statusCode == 200) {
+        print(response.data.toString());
+        advertisements.value = (response.data as List)
+            .map((e) => AdvertisementModel.fromJson(e))
+            .toList();
+      } else {
+        print('Failed to fetch advertisements: ${response.message}');
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  final Rxn<SearchLabModel> searchResult = Rxn<SearchLabModel>();
+  RxList<Labs> searchLab = <Labs>[].obs;
+
+  Future<bool> fetchLabSearchResult(String text) async {
+    isLoading.value = true;
+
+    var response = await apiService.post(
+      'Search/labs',
+      data: {
+        'name': text,
+      },
+    );
+    try {
+      if (response.statusCode == 200) {
+        final result = SearchLabModel.fromJson(response.data);
+        searchLab.assignAll(result.labs ?? []);
+        return true;
+      } else {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+        );
+        return false;
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+      );
+      return false;
     } finally {
       isLoading.value = false;
     }

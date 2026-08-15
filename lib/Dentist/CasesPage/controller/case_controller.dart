@@ -1,9 +1,24 @@
 import 'package:get/get.dart';
-
+import 'package:template/core/api.dart';
 import '../model/case_model.dart';
 import '../model/case_status.dart';
 
 class CaseController extends GetxController {
+  final ApiService apiService = ApiService();
+
+  final RxBool isLoading = false.obs;
+
+  final Rxn<CaseModel> caseModel = Rxn<CaseModel>();
+
+  @override
+  void onInit() {
+    fetchCases();
+    super.onInit();
+  }
+  // ------------------------------------------
+  // Sections
+  // ------------------------------------------
+
   final expandedSections = <CaseStatus, bool>{
     CaseStatus.waitingApproval: true,
     CaseStatus.accepted: true,
@@ -13,7 +28,13 @@ class CaseController extends GetxController {
     CaseStatus.ready: true,
     CaseStatus.delivered: true,
     CaseStatus.cancelled: true,
+    CaseStatus.inColoring: true,
+    CaseStatus.waitingForClarification: true,
   }.obs;
+
+  // ------------------------------------------
+  // Visible items count
+  // ------------------------------------------
 
   final visibleCount = <CaseStatus, int>{
     CaseStatus.waitingApproval: 3,
@@ -24,15 +45,23 @@ class CaseController extends GetxController {
     CaseStatus.ready: 3,
     CaseStatus.delivered: 3,
     CaseStatus.cancelled: 3,
+    CaseStatus.inColoring: 3,
+    CaseStatus.waitingForClarification: 3,
   }.obs;
 
-  void toggleSection(
-    CaseStatus status,
-  ) {
+  // ------------------------------------------
+  // Toggle section
+  // ------------------------------------------
+
+  void toggleSection(CaseStatus status) {
     expandedSections[status] = !(expandedSections[status] ?? true);
 
     expandedSections.refresh();
   }
+
+  // ------------------------------------------
+  // Show more
+  // ------------------------------------------
 
   void showMore(
     CaseStatus status,
@@ -43,55 +72,92 @@ class CaseController extends GetxController {
     visibleCount.refresh();
   }
 
-  final cases = <CaseModel>[
-    const CaseModel(
-      id: 1,
-      imagePath: 'assets/images/case_image.png',
-      compensationName: 'ZIRCON 3D',
-      compensationDescription:
-          'تعويض زيركون ثلاثي الأبعاد بدقة عالية ومظهر جمالي ممتاز.',
-      price: '60\$',
-      rating: 4.8,
-      status: CaseStatus.waitingApproval,
-    ),
-    const CaseModel(
-      id: 2,
-      imagePath: 'assets/images/case_image.png',
-      compensationName: 'EMAX',
-      compensationDescription:
-          'تعويض خزفي عالي الشفافية مناسب للأسنان الأمامية.',
-      price: '90\$',
-      rating: 4.6,
-      status: CaseStatus.accepted,
-    ),
-    const CaseModel(
-      id: 3,
-      imagePath: 'assets/images/case_image.png',
-      compensationName: 'VENEER',
-      compensationDescription: 'فينير تجميلي لإعطاء ابتسامة طبيعية ومميزة.',
-      price: '75\$',
-      rating: 4.7,
-      status: CaseStatus.needInfo,
-    ),
-    const CaseModel(
-      id: 10,
-      imagePath: 'assets/images/case_image.png',
-      compensationName: 'ZIRCON 3D',
-      compensationDescription: 'تعويض زيركون ثلاثي الأبعاد بدقة عالية.',
-      price: '60\$',
-      rating: 4.8,
-      status: CaseStatus.delivered,
-      isRated: false,
-    ),
-  ].obs;
+  // ------------------------------------------
+  // Get cases by status
+  // ------------------------------------------
 
-  List<CaseModel> getCases(
-    CaseStatus status,
-  ) {
-    return cases
-        .where(
-          (e) => e.status == status,
-        )
-        .toList();
+  List<CaseItem> getCases(CaseStatus status) {
+    final model = caseModel.value;
+
+    if (model == null) {
+      return [];
+    }
+
+    switch (status) {
+      case CaseStatus.waitingApproval:
+        return model.pending ?? [];
+
+      case CaseStatus.accepted:
+        return model.accepted ?? [];
+
+      case CaseStatus.needInfo:
+        return model.requestInfo ?? [];
+
+      case CaseStatus.inDesign:
+        return model.inDesign ?? [];
+
+      case CaseStatus.inProgress:
+        return model.inProduction ?? [];
+
+      case CaseStatus.ready:
+        return model.ready ?? [];
+
+      case CaseStatus.delivered:
+        return model.delivered ?? [];
+
+      case CaseStatus.cancelled:
+        return model.cancelled ?? [];
+
+      case CaseStatus.inColoring:
+        return model.inColoring ?? [];
+
+      case CaseStatus.waitingForClarification:
+        return model.waitingForClarification ?? [];
+    }
+  }
+
+  // ------------------------------------------
+  // Fetch Cases
+  // ------------------------------------------
+
+  Future<void> fetchCases() async {
+    isLoading.value = true;
+
+    try {
+      final response = await apiService.get(
+        'CaseOrders/my-orders-tracking',
+      );
+
+      if (response.statusCode == 200) {
+        print(response.data.toString());
+
+        if (response.data is Map<String, dynamic>) {
+          caseModel.value = CaseModel.fromJson(
+            response.data as Map<String, dynamic>,
+          );
+        } else {
+          print(
+            'Unexpected response format: '
+            '${response.data.runtimeType}',
+          );
+
+          caseModel.value = null;
+        }
+      } else {
+        print(
+          'Failed to fetch cases: ${response.message}',
+        );
+
+        caseModel.value = null;
+      }
+    } catch (e) {
+      print(
+        'Error fetching cases: $e',
+      );
+
+      caseModel.value = null;
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

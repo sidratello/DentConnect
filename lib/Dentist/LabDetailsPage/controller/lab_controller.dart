@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
+import 'package:template/Dentist/CaseDetailsPage/model/case_details_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/appointment_slot_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/compensation_item_model.dart';
-import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
+import 'package:template/Dentist/LabDetailsPage/model/lab_details_model.dart';
 import 'package:template/core/api.dart';
 
 enum ScannerStatus {
@@ -20,20 +21,12 @@ class LabController extends GetxController {
   final Rx<ScannerStatus> scannerStatus = ScannerStatus.available.obs;
   final RxBool isLabAvailable = true.obs;
   final RxBool isLoading = false.obs;
-  LabModel? labmodel;
+  LabDetailsModel? labmodel;
   final int id;
   ApiService apiService = ApiService();
-  LabModel? get labModel => labmodel;
-  final List<CompensationItemModel> compensations = [
-    CompensationItemModel(
-      name: 'CRISTAL EMAX',
-      price: '80\$',
-    ),
-    CompensationItemModel(
-      name: 'VENEER',
-      price: '65\$',
-    ),
-  ];
+  LabDetailsModel? get labModel => labmodel;
+  final RxList<CompensationItemModel> compensations =
+      <CompensationItemModel>[].obs;
 
   LabController(this.id);
 
@@ -45,19 +38,19 @@ class LabController extends GetxController {
 
   String getLabImage() {
     if (labmodel != null &&
-        labmodel!.mainImage != null &&
-        labmodel!.mainImage!.isNotEmpty) {
-      return labmodel!.mainImage!.first;
+        labmodel!.profilePictureUrl != null &&
+        labmodel!.profilePictureUrl!.isNotEmpty) {
+      return labmodel!.profilePictureUrl!;
     } else {
       return 'assets/images/lab_card.png';
     }
   }
 
   final RxList<String> availableDates = [''].obs;
-  // 'الأحد 10:00',
-  // 'الاثنين 12:00',
-  // 'الثلاثاء 03:00',
+
   List<AppointmentSlotModel> availableSlots = [];
+
+  final Rxn<CaseDetailsModel> caseDetails = Rxn<CaseDetailsModel>();
 
   final Rx<FollowStatus> followStatus = FollowStatus.notFollowing.obs;
 
@@ -73,10 +66,11 @@ class LabController extends GetxController {
 
   bool get hasSelectedDate => selectedDate.isNotEmpty;
 
-  void selectDate(String date) {
-    selectedDate.value = date;
+  Future<void> selectDate(AppointmentSlotModel slot) async {
+    selectedDate.value = slot.readableDate;
+    await bookAvailableSlots(id, slot.slotId);
 
-    availableDates.remove(date);
+    availableDates.remove(slot.readableDate);
 
     scannerStatus.value = ScannerStatus.booked;
 
@@ -87,7 +81,7 @@ class LabController extends GetxController {
 
   Future<void> fetchAvailableSlots(int id) async {
     var response = await apiService.get(
-      'scan-visits/available/$id',
+      'scan-visits/available-slots/$id',
     );
     try {
       if (response.statusCode == 200) {
@@ -106,6 +100,40 @@ class LabController extends GetxController {
     }
   }
 
+  Future<void> bookAvailableSlots(int idLab, int idSlot) async {
+    var response = await apiService.post(
+      'scan-visits/book/$idLab/$idSlot',
+    );
+    try {
+      if (response.statusCode == 200) {
+        availableSlots.removeWhere((e) => e.slotId == idSlot);
+
+        availableDates.value =
+            availableSlots.map((e) => e.readableDate).toList();
+
+        scannerStatus.value = availableSlots.isEmpty
+            ? ScannerStatus.unavailable
+            : ScannerStatus.booked;
+        Get.back();
+        Get.snackbar(
+          'تم الحجز',
+          'تم حجز موعد الماسح بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+      );
+    }
+  }
+
   Future<void> fetchLabDetails(int id) async {
     isLoading.value = true;
     var response = await apiService.get(
@@ -114,15 +142,15 @@ class LabController extends GetxController {
     try {
       if (response.statusCode == 200) {
         print(response.data.toString());
-        labmodel = LabModel.fromJson(response.data);
+        labmodel = LabDetailsModel.fromJson(response.data);
         followStatus.value = labmodel!.connectionStatus == 'Accepted'
             ? FollowStatus.following
             : labmodel!.connectionStatus == 'Pending'
                 ? FollowStatus.pending
                 : FollowStatus.notFollowing;
         if (labmodel != null &&
-            labmodel!.hasScan != null &&
-            labmodel!.hasScan!) {
+            labmodel!.hasScanVisitService != null &&
+            labmodel!.hasScanVisitService == true) {
           scannerStatus.value = ScannerStatus.available;
           fetchAvailableSlots(id);
         } else {
@@ -130,16 +158,18 @@ class LabController extends GetxController {
         }
         isLabAvailable.value =
             labmodel != null && labmodel!.availability == 'Available';
-        if (labmodel != null && labmodel!.prices != null) {
-          // TODO: fill the consumption list
-          // compensations.clear();
-          // compensations.addAll(labmodel!.prices!.map((price) {
-          //   return CompensationItemModel(
-          //     name: price.name,
-          //     price: price.price,
-          //   );
-          // }));
+        if (labmodel?.prices != null) {
+          compensations.clear();
+          compensations.addAll(
+            labmodel!.prices!.map(
+              (price) => CompensationItemModel(
+                name: price.type ?? '',
+                price: '\$${price.price?.toStringAsFixed(0) ?? '0'}',
+              ),
+            ),
+          );
         }
+        fetchCaseDetails(id);
       } else {
         print('Failed to fetch labs: ${response.message}');
       }
@@ -147,6 +177,32 @@ class LabController extends GetxController {
       print('Error fetching lab details for ID $id: $e');
     }
     isLoading.value = false;
+  }
+
+  Future<void> fetchCaseDetails(int id) async {
+    isLoading.value = true;
+    var response = await apiService.get(
+      'CaseOrders/lab/$id/orders',
+    );
+
+    try {
+      if (response.statusCode == 200) {
+        print(response.data);
+        final data = response.data as List;
+        if (data.isNotEmpty) {
+          caseDetails.value = CaseDetailsModel.fromJson(data.first);
+        } else {
+          caseDetails.value = null;
+        }
+        // update();
+      } else {
+        print('Failed to fetch case details: ${response.message}');
+      }
+    } catch (e) {
+      print('Error fetching case details for ID $id: $e');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   String getLabName() {

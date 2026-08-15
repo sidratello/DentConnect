@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
-import '../../controller/search_labs_controller.dart';
 
 class SearchLabTextField extends StatelessWidget {
   const SearchLabTextField({
@@ -12,7 +11,7 @@ class SearchLabTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<SearchLabsController>();
+    final controller = Get.find<HomeController>();
 
     return TextField(
       onChanged: (value) {

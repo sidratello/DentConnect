@@ -8,9 +8,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../LabDetailsPage/view/lab_details_page.dart';
 
 class LabsListView extends StatelessWidget {
-  const LabsListView({
-    super.key,
-  });
+  const LabsListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,39 +18,41 @@ class LabsListView extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         horizontal: Static.getwidth(context, 24),
       ),
-      child: appModeController.labsDetails.isEmpty
-          ? Center(
-              child: Text(
-                'لا توجد مخابر متاحة',
-                style: TextStyle(
-                  fontFamily: 'IBM Plex Sans Arabic',
-                  fontWeight: FontWeight.w500,
-                  fontSize: Static.getwidth(context, 14),
-                  color: AppColors.black54,
+      child: Obx(
+        () => appModeController.labsDetails.isEmpty
+            ? Center(
+                child: Text(
+                  'لا توجد مخابر متاحة',
+                  style: TextStyle(
+                    fontFamily: 'IBM Plex Sans Arabic',
+                    fontWeight: FontWeight.w500,
+                    fontSize: Static.getwidth(context, 14),
+                    color: AppColors.black54,
+                  ),
                 ),
+              )
+            : GridView.builder(
+                shrinkWrap: true,
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemCount: appModeController.labsDetails.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: Static.getwidth(context, 12),
+                  mainAxisSpacing: Static.getheight(context, 14),
+                  childAspectRatio: 0.9,
+                ),
+                itemBuilder: (context, index) {
+                  return LabCard(
+                    labId: appModeController.labsDetails[index].id,
+                    isFollowing: index.isEven,
+                    isPreviewMode: appModeController.isPreviewMode.value,
+                    labDetails: appModeController.labsDetails[index],
+                  );
+                },
               ),
-            )
-          : GridView.builder(
-              shrinkWrap: true,
-              primary: false,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              itemCount: appModeController.labsDetails.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: Static.getwidth(context, 12),
-                mainAxisSpacing: Static.getheight(context, 14),
-                childAspectRatio: 0.9,
-              ),
-              itemBuilder: (context, index) {
-                return LabCard(
-                  labId: appModeController.labsDetails[index].id,
-                  isFollowing: index.isEven,
-                  isPreviewMode: appModeController.isPreviewMode.value,
-                  labDetails: appModeController.labsDetails[index],
-                );
-              },
-            ),
+      ),
     );
   }
 }
@@ -74,37 +74,39 @@ class LabCard extends StatelessWidget {
   String? getLabDetailsImage(
     LabModel labDetails,
   ) {
-    if (labDetails.mainImage != null && labDetails.mainImage!.isNotEmpty) {
-      return labDetails.mainImage![0].toString();
+    if (labDetails.profilePictureUrl != null &&
+        labDetails.profilePictureUrl!.isNotEmpty) {
+      return labDetails.profilePictureUrl![0].toString();
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(
-          () => LabDetailsPage(id: labId),
-          arguments: labId,
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.black.withValues(alpha: 0.05),
-              blurRadius: 14,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
+    final homeController = Get.find<HomeController>();
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withValues(alpha: 0.05),
+            blurRadius: 14,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InkWell(
+            onTap: () {
+              Get.to(
+                () => LabDetailsPage(id: labId),
+                arguments: labId,
+              );
+            },
+            child: ClipRRect(
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(18),
               ),
@@ -117,66 +119,71 @@ class LabCard extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: Static.getwidth(context, 10),
-                vertical: Static.getheight(context, 10),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        labDetails.labName.toString(),
-                        textAlign: TextAlign.end,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontFamily: 'IBM Plex Sans Arabic',
-                          fontWeight: FontWeight.w500,
-                          fontSize: Static.getwidth(context, 12),
-                          color: AppColors.black54,
-                        ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Static.getwidth(context, 10),
+              vertical: Static.getheight(context, 10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      labDetails.name.toString(),
+                      textAlign: TextAlign.end,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontFamily: 'IBM Plex Sans Arabic',
+                        fontWeight: FontWeight.w500,
+                        fontSize: Static.getwidth(context, 12),
+                        color: AppColors.black54,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            labDetails.averageRating.toString(),
-                            style: TextStyle(
-                              fontFamily: 'IBM Plex Sans Arabic',
-                              fontWeight: FontWeight.w500,
-                              fontSize: Static.getwidth(context, 13),
-                            ),
-                          ),
-                          SizedBox(
-                            width: Static.getwidth(context, 2),
-                          ),
-                          Icon(
-                            Icons.star_rounded,
-                            color: AppColors.yellowRate,
-                            size: Static.getwidth(context, 18),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  if (!isPreviewMode) ...[
-                    SizedBox(
-                      height: Static.getheight(context, 18),
                     ),
-                    Container(
+                    Row(
+                      children: [
+                        Text(
+                          labDetails.averageRating.toString(),
+                          style: TextStyle(
+                            fontFamily: 'IBM Plex Sans Arabic',
+                            fontWeight: FontWeight.w500,
+                            fontSize: Static.getwidth(context, 13),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Static.getwidth(context, 2),
+                        ),
+                        Icon(
+                          Icons.star_rounded,
+                          color: AppColors.yellowRate,
+                          size: Static.getwidth(context, 18),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                if (!isPreviewMode) ...[
+                  SizedBox(
+                    height: Static.getheight(context, 18),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      homeController.sendFollowRequest(labId);
+                    },
+                    child: Container(
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(
                         vertical: Static.getheight(context, 9),
                       ),
                       decoration: BoxDecoration(
-                        color: labDetails.connectionStatus == 'Accepted'
+                        color: labDetails.isConnected == true
                             ? AppColors.boxGreen
                             : AppColors.boxBlack,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: labDetails.connectionStatus == 'Accepted'
+                          color: labDetails.isConnected == true
                               ? AppColors.success
                               : AppColors.primary,
                         ),
@@ -185,10 +192,10 @@ class LabCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            labDetails.connectionStatus == 'Accepted'
+                            labDetails.isConnected == true
                                 ? Icons.check_rounded
                                 : Icons.person_add_alt_1_rounded,
-                            color: labDetails.connectionStatus == 'Accepted'
+                            color: labDetails.isConnected == true
                                 ? AppColors.success
                                 : AppColors.primary,
                             size: Static.getwidth(context, 18),
@@ -197,14 +204,12 @@ class LabCard extends StatelessWidget {
                             width: Static.getwidth(context, 6),
                           ),
                           Text(
-                            labDetails.connectionStatus == 'Accepted'
-                                ? 'متابع'
-                                : 'متابعة',
+                            labDetails.isConnected == true ? 'متابع' : 'متابعة',
                             style: TextStyle(
                               fontFamily: 'IBM Plex Sans Arabic',
                               fontWeight: FontWeight.w500,
                               fontSize: Static.getwidth(context, 13),
-                              color: labDetails.connectionStatus == 'Accepted'
+                              color: labDetails.isConnected == true
                                   ? AppColors.success
                                   : AppColors.primary,
                             ),
@@ -212,12 +217,12 @@ class LabCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ],
+                  ),
                 ],
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

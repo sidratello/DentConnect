@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/info_badge.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/info_row.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/section_title.dart';
-import 'package:template/core/theme/app_colors.dart';
 import 'package:template/core/utils/static.dart';
 import 'package:template/core/widgets/app_spacing.dart';
 
@@ -10,14 +8,12 @@ class CaseOrderInfoCard extends StatelessWidget {
   final String sentDate;
   final String deliveryDate;
   final String price;
-  final double? rating;
 
   const CaseOrderInfoCard({
     super.key,
     required this.sentDate,
     required this.deliveryDate,
     required this.price,
-    this.rating,
   });
 
   @override
@@ -63,42 +59,6 @@ class CaseOrderInfoCard extends StatelessWidget {
             icon: Icons.payments_outlined,
             title: 'السعر',
             value: price.isEmpty ? 'غير محدد' : '$price \$',
-          ),
-          const Divider(),
-          Row(
-            children: [
-              Icon(
-                Icons.star_rounded,
-                color: AppColors.yellowRate,
-                size: Static.getwidth(context, 24),
-              ),
-              AppSpacing.width(context, 10),
-              Text(
-                'تقييم الطبيب',
-                style: TextStyle(
-                  fontFamily: 'IBM Plex Sans Arabic',
-                  fontWeight: FontWeight.w600,
-                  fontSize: Static.getwidth(
-                    context,
-                    15,
-                  ),
-                ),
-              ),
-              const Spacer(),
-              rating == null
-                  ? const Text(
-                      'لا يوجد',
-                      style: TextStyle(
-                        fontFamily: 'IBM Plex Sans Arabic',
-                        color: AppColors.textSecondary,
-                      ),
-                    )
-                  : InfoBadge(
-                      icon: Icons.star_rounded,
-                      title: rating!.toString(),
-                      color: AppColors.yellowRate,
-                    ),
-            ],
           ),
         ],
       ),

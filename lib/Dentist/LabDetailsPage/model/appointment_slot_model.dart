@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class AppointmentSlotModel {
   final int slotId;
   final DateTime date;
@@ -15,10 +13,10 @@ class AppointmentSlotModel {
 
   factory AppointmentSlotModel.fromJson(Map<String, dynamic> json) {
     return AppointmentSlotModel(
-      slotId: json['slotId'],
-      date: DateTime.parse(json['date']),
-      time: json['time'],
-      period: json['period'],
+      slotId: json['id'],
+      date: DateTime.parse(json['appointmentDate']),
+      time: json['appointmentTime'],
+      period: json['timeFormatted'],
     );
   }
 
@@ -45,23 +43,58 @@ class AppointmentSlotModel {
     );
   }
 
-  String get dayName => DateFormat('EEEE', 'ar').format(date);
+  /// اسم اليوم بالعربي
+  String get dayName => arabicDays[date.weekday - 1];
 
-  String get formattedDate => DateFormat('dd MMMM yyyy', 'ar').format(date);
+  /// 9 أكتوبر 2026
+  String get formattedDate =>
+      '${date.day} ${arabicMonths[date.month - 1]} ${date.year}';
 
-  /// Wednesday
-  // String get dayName => DateFormat('EEEE').format(date);
+  /// 09:30 AM
+  String get formattedTime => period;
 
-  // /// 20 May 2026
-  // String get formattedDate => DateFormat('dd MMM yyyy').format(date);
+  /// الجمعة، 9 أكتوبر 2026
+  String get readableDate => '$dayName، $formattedDate';
 
-  /// 10:30 AM
-  String get formattedTime => '$time $period';
-
-  /// Wednesday, 20 May 2026
-  String get readableDate =>
-      '$dayName, ${DateFormat('dd MMM yyyy').format(date)}';
-
-  /// Wednesday, 20 May 2026 • 10:30 AM
+  /// الجمعة، 9 أكتوبر 2026 • 09:30 AM
   String get fullDisplay => '$readableDate • $formattedTime';
+
+  // String get dayName => DateFormat('EEEE', 'ar').format(date);
+  // String get formattedDate => DateFormat('dd MMMM yyyy', 'ar').format(date);
+  // /// Wednesday
+  // // String get dayName => DateFormat('EEEE').format(date);
+  // // /// 20 May 2026
+  // // String get formattedDate => DateFormat('dd MMM yyyy').format(date);
+  // /// 10:30 AM
+  // String get formattedTime => '$time $period';
+  // /// Wednesday, 20 May 2026
+  // String get readableDate =>
+  //     '$dayName, ${DateFormat('dd MMM yyyy').format(date)}';
+  // /// Wednesday, 20 May 2026 • 10:30 AM
+  // String get fullDisplay => '$readableDate • $formattedTime';
 }
+
+const List<String> arabicDays = [
+  'الاثنين',
+  'الثلاثاء',
+  'الأربعاء',
+  'الخميس',
+  'الجمعة',
+  'السبت',
+  'الأحد',
+];
+
+const List<String> arabicMonths = [
+  'يناير',
+  'فبراير',
+  'مارس',
+  'أبريل',
+  'مايو',
+  'يونيو',
+  'يوليو',
+  'أغسطس',
+  'سبتمبر',
+  'أكتوبر',
+  'نوفمبر',
+  'ديسمبر',
+];

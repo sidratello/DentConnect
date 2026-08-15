@@ -11,7 +11,6 @@ class CaseInfoCard extends StatelessWidget {
   final String color;
   final String impressionType;
   final bool hasAccessory;
-  final String templateName;
 
   const CaseInfoCard({
     super.key,
@@ -21,7 +20,6 @@ class CaseInfoCard extends StatelessWidget {
     required this.color,
     required this.impressionType,
     required this.hasAccessory,
-    required this.templateName,
   });
 
   @override
@@ -79,12 +77,6 @@ class CaseInfoCard extends StatelessWidget {
             icon: Icons.qr_code_scanner_rounded,
             title: 'نوع الطبعة',
             value: impressionType,
-          ),
-          const Divider(),
-          InfoRow(
-            icon: Icons.layers_outlined,
-            title: 'القالب المستخدم',
-            value: templateName.isEmpty ? 'لا يوجد' : templateName,
           ),
           const Divider(),
           InfoRow(

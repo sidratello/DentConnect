@@ -3,8 +3,11 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 
 class TemplatePreviewCard extends StatelessWidget {
+  final String title;
+
   const TemplatePreviewCard({
     super.key,
+    required this.title,
   });
 
   @override
@@ -35,7 +38,7 @@ class TemplatePreviewCard extends StatelessWidget {
               Static.getwidth(context, 16),
             ),
             child: Text(
-              'فيلر صدفي',
+              title,
               style: TextStyle(
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontWeight: FontWeight.w700,

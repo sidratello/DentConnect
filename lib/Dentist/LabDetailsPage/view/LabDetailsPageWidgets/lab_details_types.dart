@@ -22,7 +22,7 @@ class LabDetailsTypes extends StatelessWidget {
           onTap: () {
             showCompensationBottomSheet(
               context,
-              controller.compensations,
+              controller.compensations.toList(),
             );
           },
           child: Text(

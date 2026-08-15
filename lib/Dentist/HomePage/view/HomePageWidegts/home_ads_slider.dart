@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/core/utils/static.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -8,55 +10,117 @@ class HomeAdsSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: Static.getwidth(context, 380),
-          height: Static.getheight(context, 180),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.black.withValues(alpha: 0.12),
-                blurRadius: 18,
-                offset: const Offset(0, 6),
-              ),
-            ],
-            image: const DecorationImage(
-              image: AssetImage(
-                'assets/images/adverstisements.png',
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: Static.getheight(context, 12),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildDot(isActive: true, context),
-            _buildDot(context),
-            _buildDot(context),
-          ],
-        ),
-      ],
-    );
-  }
+    final appModeController = Get.find<HomeController>();
 
-  Widget _buildDot(BuildContext context, {bool isActive = false}) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      width:
-          isActive ? Static.getwidth(context, 10) : Static.getwidth(context, 8),
-      height: isActive
-          ? Static.getheight(context, 10)
-          : Static.getheight(context, 8),
-      decoration: BoxDecoration(
-        color: isActive ? AppColors.primary : AppColors.white,
-        shape: BoxShape.circle,
-      ),
-    );
+    return Obx(() => appModeController.advertisements.isEmpty
+        ? Center(
+            child: Text(
+              'لا توجد إعلانات متاحة',
+              style: TextStyle(
+                fontFamily: 'IBM Plex Sans Arabic',
+                fontWeight: FontWeight.w500,
+                fontSize: Static.getwidth(context, 14),
+                color: AppColors.black54,
+              ),
+            ),
+          )
+        : Column(
+            children: [
+              SizedBox(
+                width: Static.getwidth(context, 380),
+                height: Static.getheight(context, 180),
+                child: PageView.builder(
+                  controller: appModeController.adsPageController,
+                  itemCount: appModeController.advertisements.length,
+                  onPageChanged: (index) {
+                    appModeController.currentAdIndex.value = index;
+                  },
+                  itemBuilder: (_, index) {
+                    final ad = appModeController.advertisements[index];
+
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Image.network(
+                            '${Static.imageBaseUrl}/${ad.images!.first}',
+                            fit: BoxFit.cover,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black.withValues(alpha: .6),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            right: 18,
+                            left: 18,
+                            bottom: 18,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  ad.title ?? '',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: Static.getwidth(context, 18),
+                                    fontFamily: 'IBM Plex Sans Arabic',
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: Static.getheight(context, 4),
+                                ),
+                                Text(
+                                  ad.content ?? '',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: Static.getwidth(context, 13),
+                                    fontFamily: 'IBM Plex Sans Arabic',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height: Static.getheight(context, 12),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  appModeController.advertisements.length,
+                  (index) => AnimatedContainer(
+                    duration: const Duration(milliseconds: 250),
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    width: appModeController.currentAdIndex.value == index
+                        ? 18
+                        : 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: appModeController.currentAdIndex.value == index
+                          ? AppColors.primary
+                          : Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ));
   }
 }

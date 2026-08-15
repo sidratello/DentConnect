@@ -14,10 +14,8 @@ import 'package:template/core/widgets/top_background.dart';
 
 import '../../../core/theme/app_colors.dart';
 
-class HomePage extends GetView<HomeController> {
-  const HomePage({
-    super.key,
-  });
+class HomePageWidget extends GetView<HomeController> {
+  const HomePageWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,5 +86,16 @@ class HomePage extends GetView<HomeController> {
         ),
       ),
     );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const HomePageWidget();
   }
 }

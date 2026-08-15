@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/HomePage/view/HomePageWidegts/DrawerWidgets/app_drawer.dart';
-import 'package:template/Dentist/SearchLabsPage/controller/search_labs_controller.dart';
 import 'package:template/Dentist/SearchLabsPage/view/SearchLabsPageWidgets/search_action_buttons.dart';
 import 'package:template/Dentist/SearchLabsPage/view/SearchLabsPageWidgets/search_lab_textfield.dart';
 import 'package:template/core/utils/static.dart';
 import 'package:template/core/widgets/app_spacing.dart';
 import 'package:template/core/widgets/top_background.dart';
-
 import '../../../core/theme/app_colors.dart';
 
-class SearchLabsPage extends StatelessWidget {
+class SearchLabsPage extends GetView<HomeController> {
   const SearchLabsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SearchLabsController());
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(

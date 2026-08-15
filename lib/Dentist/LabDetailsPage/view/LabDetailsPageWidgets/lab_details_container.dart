@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
+import 'package:template/Dentist/LabDetailsPage/model/lab_details_model.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_availabillity_row.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_description.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_location.dart';
@@ -7,13 +7,14 @@ import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_d
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_phone_number.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_rating_row.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_types.dart';
+import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_materials_and_specializations.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
 import '../../../../core/widgets/app_spacing.dart';
 
 class LabDetailsContainer extends StatelessWidget {
-  final LabModel labModel;
+  final LabDetailsModel labModel;
 
   const LabDetailsContainer({super.key, required this.labModel});
 
@@ -48,9 +49,14 @@ class LabDetailsContainer extends StatelessWidget {
           LabDetailsRatingRow(
               yearsOfExperience: labModel.yearsOfExperience != null
                   ? labModel.yearsOfExperience.toString()
+                  : '-',
+              rating: labModel.ratingSummary!.averageOverall != null
+                  ? labModel.ratingSummary!.averageOverall.toString()
                   : '-'),
           AppSpacing.height(context, 20),
           const LabDetailsAvailabillityRow(),
+          AppSpacing.height(context, 20),
+          const LabMaterialsAndSpecializations(),
           AppSpacing.height(context, 20),
           const LabDetailsTypes(),
         ],
