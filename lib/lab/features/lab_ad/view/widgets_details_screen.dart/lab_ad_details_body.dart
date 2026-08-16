@@ -57,6 +57,8 @@ class LabAdDetailsBody
               controller.formatPrice(
             advertisement.price,
           ),
+            showPrice:
+      advertisement.price > 0,
           createdAt:
               controller.formatDate(
             advertisement.createdAt,

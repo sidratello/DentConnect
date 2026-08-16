@@ -10,7 +10,7 @@ class LabAdDetailsInfoCard
     extends StatelessWidget {
   final bool isActive;
   final bool isPaid;
-
+final bool showPrice;
   final String price;
   final String createdAt;
   final String expiresAt;
@@ -22,6 +22,7 @@ class LabAdDetailsInfoCard
     required this.price,
     required this.createdAt,
     required this.expiresAt,
+    required this.showPrice,
   });
 
   @override
@@ -93,22 +94,23 @@ class LabAdDetailsInfoCard
               expandText: false,
             ),
           ),
+if (showPrice) ...[
+  const _Divider(),
 
-          const _Divider(),
-
-          _InfoItem(
-            title: 'رسوم الإعلان',
-            child: CaseOrderIconText(
-              icon:
-                  Icons.payments_outlined,
-              text: '$price ل.س',
-              iconColor:
-                  AppColors.primaryBlue,
-              textColor:
-                  AppColors.darkBlue,
-              expandText: false,
-            ),
-          ),
+  _InfoItem(
+    title: 'رسوم الإعلان',
+    child: CaseOrderIconText(
+      icon:
+          Icons.payments_outlined,
+      text: '$price ل.س',
+      iconColor:
+          AppColors.primaryBlue,
+      textColor:
+          AppColors.darkBlue,
+      expandText: false,
+    ),
+  ),
+],
 
           const _Divider(),
 

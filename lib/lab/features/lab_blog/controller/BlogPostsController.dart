@@ -222,26 +222,55 @@ Future<void> openEditPost(
     arguments: post,
   );
 
-  debugPrint('Edit result: $result');
-
-  if (result == true) {
-    await fetchPosts(
-      showLoading: false,
-    );
-
-    Get.snackbar(
-      'تم التعديل',
-      'تم تعديل المنشور بنجاح وإعادته للمراجعة.',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.green.shade50,
-      colorText: Colors.green.shade800,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 12,
-      icon: const Icon(
-        Icons.check_circle_outline_rounded,
-        color: Colors.green,
-      ),
-    );
+  if (result is! Map ||
+      result['success'] != true) {
+    return;
   }
+
+  final updatedPost =
+      result['post'];
+
+  if (updatedPost is BlogPostModel) {
+    final index =
+        posts.indexWhere(
+      (item) =>
+          item.postId ==
+          updatedPost.postId,
+    );
+
+    if (index != -1) {
+      posts[index] =
+          updatedPost;
+
+      posts.refresh();
+    }
+  }
+
+  final message =
+      result['message']
+              ?.toString()
+              .trim() ??
+          '';
+
+  Get.snackbar(
+    'تم التعديل',
+    message.isNotEmpty
+        ? message
+        : 'تم تعديل المنشور بنجاح وإعادته للمراجعة.',
+    snackPosition:
+        SnackPosition.BOTTOM,
+    backgroundColor:
+        Colors.green.shade50,
+    colorText:
+        Colors.green.shade800,
+    margin:
+        const EdgeInsets.all(16),
+    borderRadius: 12,
+    icon: const Icon(
+      Icons
+          .check_circle_outline_rounded,
+      color: Colors.green,
+    ),
+  );
 }
 }

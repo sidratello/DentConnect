@@ -457,12 +457,13 @@ class CreateBlogController extends GetxController {
             ? response.data!.reviewMessage
             : 'تم تعديل المنشور وإرساله للمراجعة.';
 
-    Get.back(
-      result: {
-        'success': true,
-        'message': message,
-      },
-    );
+Get.back(
+  result: {
+    'success': true,
+    'message': message,
+    'post': response.data!,
+  },
+);
   } catch (_) {
     _showError(
       'حدث خطأ أثناء تعديل المنشور.',

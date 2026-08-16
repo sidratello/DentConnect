@@ -102,6 +102,38 @@ static String arabicImpressionType(String value) {
         return status;
     }
   }
+
+
+static String arabicCompensationType(
+  String value,
+) {
+  switch (value.trim()) {
+    case 'Veneer':
+      return 'فينير';
+
+    case 'ZirconCrown':
+      return 'تاج زركون';
+
+    case 'ImplantCrown':
+      return 'تاج زرعة';
+
+    case 'Bridge':
+      return 'جسر';
+
+    case 'FullDenture':
+      return 'طقم أسنان كامل';
+
+    case 'PartialDenture':
+      return 'طقم أسنان جزئي';
+
+    case 'Other':
+      return 'أخرى';
+
+    default:
+      return value;
+  }
+}
+
    static IconData getIcon(String status) {
     switch (status) {
 

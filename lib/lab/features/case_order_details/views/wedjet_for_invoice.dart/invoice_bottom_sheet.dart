@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
+
+
 import 'package:template/lab/features/case_order_details/controller/case_order_details_controller.dart';
 import 'package:template/lab/features/case_order_details/views/wedjet_for_invoice.dart/invoice_actions.dart';
 import 'package:template/lab/features/case_order_details/views/wedjet_for_invoice.dart/invoice_final_price_box.dart';
 import 'package:template/lab/features/case_order_details/views/wedjet_for_invoice.dart/invoice_info_box.dart';
-import 'package:template/lab/features/case_order_details/views/wedjet_for_invoice.dart/invoice_table.dart';
 import 'package:template/lab/features/case_order_details/views/widget/notes_section.dart';
+
+import 'package:template/lab/features/order_invoice/model/invoice_table_item.dart';
+import 'package:template/lab/features/order_invoice/views/wedjet/invoice_items_table.dart';
 
 class InvoiceBottomSheet extends StatelessWidget {
   final CaseOrderDetailsController controller;
@@ -49,9 +53,30 @@ class InvoiceBottomSheet extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  InvoiceTable(
-                    controller: controller,
-                  ),
+        InvoiceTable(
+  items: quote.lines.map(
+    (line) {
+      return InvoiceTableItem(
+        compensationType:
+            line.compensationTypeAr.isNotEmpty
+                ? line.compensationTypeAr
+                : line.compensationType,
+        toothNumbers:
+            line.toothNumbers.join('، '),
+        quantity:
+            line.quantity,
+        unitPrice:
+            line.unitPrice,
+        lineTotal:
+            line.lineTotal,
+        priceMissing:
+            !line.priceFound,
+      );
+    },
+  ).toList(),
+  total: quote.estimatedTotal,
+  totalTitle: 'المجموع التقديري',
+),
 
                   const SizedBox(height: 14),
 

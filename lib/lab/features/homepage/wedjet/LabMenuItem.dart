@@ -135,16 +135,16 @@ case LabMenuItem.ads:
   );
   break;
 
-      case LabMenuItem.complaints:
-        // Get.toNamed(
-        //   AppRouter.complaints,
-        // );
-        break;
+case LabMenuItem.complaints:
+  Get.toNamed(
+    AppRouter.labComplaints,
+  );
+  break;
 
       case LabMenuItem.invoices:
-        // Get.toNamed(
-        //   AppRouter.invoices,
-        // );
+        Get.toNamed(
+          AppRouter.labInvoices,
+        );
         break;
 
       case LabMenuItem.subscriptions:

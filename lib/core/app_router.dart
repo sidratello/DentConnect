@@ -49,6 +49,10 @@ import 'package:template/lab/features/lab_blog/view/blog_details_screen.dart';
 import 'package:template/lab/features/lab_blog/view/blog_feed_screen.dart';
 import 'package:template/lab/features/lab_blog/view/create_blog_screen.dart';
 import 'package:template/lab/features/lab_blog/view/pennding_posts_screen.dart';
+import 'package:template/lab/features/lab_complaint/binding/LabComplaintDetailsBinding.dart';
+import 'package:template/lab/features/lab_complaint/binding/LabComplaintsBinding.dart';
+import 'package:template/lab/features/lab_complaint/view/LabComplaintDetailsScreen.dart';
+import 'package:template/lab/features/lab_complaint/view/LabComplaintsScreen.dart';
 import 'package:template/lab/features/monthly_calendar/binding/calendar_day_details_binding.dart';
 import 'package:template/lab/features/monthly_calendar/binding/monthly_calendar_binding.dart';
 import 'package:template/lab/features/monthly_calendar/view/day_details_screen.dart';
@@ -57,6 +61,8 @@ import 'package:template/lab/features/order/binding/order_binding.dart';
 import 'package:template/lab/features/order/binding/order_details_binding.dart';
 import 'package:template/lab/features/order/views/order_details_screen.dart';
 import 'package:template/lab/features/order/views/order_screen.dart';
+import 'package:template/lab/features/order_invoice/binding/LabInvoicesBinding.dart';
+import 'package:template/lab/features/order_invoice/views/LabInvoicesScreen.dart';
 import 'package:template/lab/features/orderconection/binding/doctor_orders_binding.dart';
 
 import 'package:template/lab/features/orderconection/binding/orderconection_binding.dart';
@@ -120,6 +126,15 @@ static const labAdPaymentFailed =
     '/lab-ad-payment-failed';
     static const labAdFeed =
     '/lab-ad-feed';
+
+    static const String labInvoices =
+    '/lab-invoices';
+    static const String labComplaints =
+    '/lab-complaints';
+
+static const String
+    labComplaintDetails =
+    '/lab-complaint-details';
   static final List<GetPage<dynamic>> pages = [
     GetPage(
       name: choseuserpage,
@@ -337,6 +352,33 @@ GetPage(
       const LabAdFeedScreen(),
   binding:
       LabAdFeedBinding(),
+),
+
+GetPage(
+  name: labInvoices,
+  page: () =>
+      const LabInvoicesScreen(),
+  binding:
+      LabInvoicesBinding(),
+),
+
+
+GetPage(
+  name:
+      labComplaints,
+  page: () =>
+      const LabComplaintsScreen(),
+  binding:
+      LabComplaintsBinding(),
+),
+
+GetPage(
+  name:
+      labComplaintDetails,
+  page: () =>
+      const LabComplaintDetailsScreen(),
+  binding:
+      LabComplaintDetailsBinding(),
 ),
   ];
 
