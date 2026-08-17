@@ -88,49 +88,123 @@ class StepOnePage extends GetView<CreateOrderController> {
               ),
             ),
             const SizedBox(height: 10),
-            DropdownButtonFormField<int>(
-              decoration: InputDecoration(
-                hintText: "اختر المريض",
-                hintStyle: const TextStyle(color: Colors.grey),
-                prefixIcon: const Icon(
-                  Icons.people_outline,
-                  color: AppColors.primary,
-                ),
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(
-                    color: AppColors.primary.withOpacity(.2),
+            Obx(
+              () {
+                if (controller.isLoadingPatient.value) {
+                  return Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: AppColors.primary.withOpacity(.2),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Text(
+                          'جاري تحميل المرضى...',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                if (controller.patients.isEmpty) {
+                  return Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.withOpacity(.08),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: Colors.orange.withOpacity(.2),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: Colors.orange,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'لا يوجد مرضى متاحون حاليًا',
+                          style: TextStyle(
+                            color: Colors.orange,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                return DropdownButtonFormField<int>(
+                  initialValue: null,
+                  isExpanded: true,
+                  decoration: InputDecoration(
+                    hintText: "اختر المريض",
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.people_outline,
+                      color: AppColors.primary,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: BorderSide(
+                        color: AppColors.primary.withOpacity(.2),
+                      ),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(14),
+                      ),
+                      borderSide: BorderSide(
+                        color: AppColors.primary,
+                        width: 1.5,
+                      ),
+                    ),
                   ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: const BorderSide(
-                    color: AppColors.primary,
-                    width: 1.5,
-                  ),
-                ),
-              ),
-              items: const [
-                DropdownMenuItem(
-                  value: 1,
-                  child: Text("محمد أحمد  (#1001)"),
-                ),
-                DropdownMenuItem(
-                  value: 2,
-                  child: Text("علي خالد  (#1002)"),
-                ),
-                DropdownMenuItem(
-                  value: 3,
-                  child: Text("سارة محمود  (#1003)"),
-                ),
-              ],
-              onChanged: (value) {},
+                  items: controller.patients.map(
+                    (patient) {
+                      return DropdownMenuItem<int>(
+                        value: patient.patientId,
+                        child: Text(
+                          '${patient.fullName}  (#${patient.patientId})',
+                          style: const TextStyle(
+                            color: Colors.black87,
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList(),
+                  onChanged: (value) {
+                    controller.selectPatient(value);
+                  },
+                );
+              },
             ),
             const SizedBox(height: 18),
             SizedBox(
@@ -170,49 +244,123 @@ class StepOnePage extends GetView<CreateOrderController> {
               ),
             ),
             const SizedBox(height: 10),
-            DropdownButtonFormField<int>(
-              decoration: InputDecoration(
-                hintText: "اختر المخبر",
-                hintStyle: const TextStyle(color: Colors.grey),
-                prefixIcon: const Icon(
-                  Icons.people_outline,
-                  color: AppColors.primary,
-                ),
-                filled: true,
-                fillColor: Colors.white,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(
-                    color: AppColors.primary.withOpacity(.2),
+            Obx(
+              () {
+                if (controller.isLoadingLabs.value) {
+                  return Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: AppColors.primary.withOpacity(.2),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Text(
+                          'جاري تحميل المخابر...',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                if (controller.labsDetails.isEmpty) {
+                  return Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.withOpacity(.08),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: Colors.orange.withOpacity(.2),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: Colors.orange,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'لا يوجد مخابر متاحة حاليًا',
+                          style: TextStyle(
+                            color: Colors.orange,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                return DropdownButtonFormField<int>(
+                  initialValue: null,
+                  isExpanded: true,
+                  decoration: InputDecoration(
+                    hintText: 'اختر المخبر',
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.business_outlined,
+                      color: AppColors.primary,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: BorderSide(
+                        color: AppColors.primary.withOpacity(.2),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: const BorderSide(
+                        color: AppColors.primary,
+                        width: 1.5,
+                      ),
+                    ),
                   ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: const BorderSide(
-                    color: AppColors.primary,
-                    width: 1.5,
-                  ),
-                ),
-              ),
-              items: const [
-                DropdownMenuItem(
-                  value: 1,
-                  child: Text(" Pearly Lab  (#1001)"),
-                ),
-                DropdownMenuItem(
-                  value: 2,
-                  child: Text("Bright Lab   (#1002)"),
-                ),
-                DropdownMenuItem(
-                  value: 3,
-                  child: Text(" Dental Lab  (#1003)"),
-                ),
-              ],
-              onChanged: (value) {},
+                  items: controller.labsDetails.map(
+                    (lab) {
+                      return DropdownMenuItem<int>(
+                        value: lab.id,
+                        child: Text(
+                          '${lab.name}  (#${lab.id})',
+                          style: const TextStyle(
+                            color: Colors.black87,
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList(),
+                  onChanged: (value) {
+                    controller.selectedLabId.value = value;
+                  },
+                );
+              },
             ),
             const SizedBox(height: 18),
             const SectionTitle(
@@ -220,21 +368,39 @@ class StepOnePage extends GetView<CreateOrderController> {
               title: "اختر قالباً",
             ),
             const SizedBox(height: 16),
-            TemplateSelectorCard(
-              templateName: "Zircon Crown",
-              description: "Shade A2 • 5 Days",
-              isSelected: controller.selectedTemplate.value == 1,
-              onTap: () {
-                controller.selectTemplate(1);
-              },
-            ),
-            const SizedBox(height: 12),
-            TemplateSelectorCard(
-              templateName: "E-Max Crown",
-              description: "Shade B1 • 4 Days",
-              isSelected: controller.selectedTemplate.value == 2,
-              onTap: () {
-                controller.selectTemplate(2);
+            // TemplateSelectorCard(
+            //   templateName: "Zircon Crown",
+            //   description: "Shade A2 • 5 Days",
+            //   isSelected: controller.selectedTemplate.value == 1,
+            //   onTap: () {
+            //     controller.selectTemplate(1);
+            //   },
+            // ),
+            Obx(
+              () {
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.templates.length,
+                  separatorBuilder: (_, __) => const SizedBox(
+                    height: 12,
+                  ),
+                  itemBuilder: (context, index) {
+                    final template = controller.templates[index];
+                    final templateId = index + 1;
+
+                    return TemplateSelectorCard(
+                      templateName: template.title,
+                      description:
+                          '${template.defaultShade} • ${template.deliveryDays} Days',
+                      isSelected:
+                          controller.selectedTemplate.value == templateId,
+                      onTap: () {
+                        controller.selectTemplate(templateId);
+                      },
+                    );
+                  },
+                );
               },
             ),
             TextButton(
