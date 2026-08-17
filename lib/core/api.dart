@@ -138,4 +138,65 @@ class ApiService {
       );
     }
   }
+
+  Future<ApiResponse<T>> put<T>(
+    String path, {
+    Map<String, dynamic>? data,
+    File? file,
+    String? fileKey,
+  }) async {
+    final bool hasFile = file != null;
+
+    if (hasFile) {
+      FormData formData;
+
+      if (data != null && data.isNotEmpty) {
+        formData = FormData();
+
+        data.forEach((key, value) {
+          if (value != null) {
+            formData.fields.add(MapEntry(key, value.toString()));
+          }
+        });
+      } else {
+        formData = FormData();
+      }
+
+      final key = fileKey ?? 'file';
+      if (key.isEmpty) {
+        throw ArgumentError("File key must not be empty.");
+      }
+
+      final fileName = file.path.split('/').last;
+      final filePart = await MultipartFile.fromFile(
+        file.path,
+        filename: fileName,
+      );
+      formData.files.add(MapEntry(key, filePart));
+
+      print(
+        '📦 Using FormData with ${formData.fields.length} fields and 1 file',
+      );
+
+      return request<T>(path, method: 'PUT', data: formData);
+    } else {
+      FormData formData = FormData();
+
+      if (data != null) {
+        data.forEach((key, value) {
+          if (value != null) {
+            formData.fields.add(
+              MapEntry(key, value.toString()),
+            );
+          }
+        });
+      }
+
+      return request<T>(
+        path,
+        method: 'PUT',
+        data: formData,
+      );
+    }
+  }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/PatientPage/controller/patient_controller.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/create_patient_button.dart';
 import 'package:template/core/widgets/app_spacing.dart';
 import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/Dentist/PatientPage/model/patient_model.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/patient_card.dart';
 import 'package:template/Dentist/PatientPage/view/patient_details_page.dart';
 import 'package:template/core/widgets/top_background.dart';
@@ -14,37 +14,13 @@ import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/patient_fil
 
 import '../../../core/theme/app_colors.dart';
 
-class PatientsPage extends StatelessWidget {
+class PatientsPage extends GetView<PatientController> {
   const PatientsPage({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final patients = [
-      const PatientModel(
-        name: 'أحمد محمد',
-        clinicalNotes:
-            'يعاني من تآكل متوسط في الأسنان الخلفية مع حساسية بسيطة في الأسنان الأمامية.',
-        xrayImage: 'assets/images/xray.jpg',
-        teethImages: [
-          'assets/images/teeth1.jpg',
-          'assets/images/teeth2.jpg',
-          'assets/images/teeth3.jpg',
-        ],
-      ),
-      const PatientModel(
-        name: 'محمد علي',
-        clinicalNotes:
-            'يوجد فقدان جزئي في الأسنان الخلفية ويحتاج إلى خطة تعويض مستقبلية.',
-        xrayImage: 'assets/images/xray.jpg',
-        teethImages: [
-          'assets/images/teeth1.jpg',
-          'assets/images/teeth2.jpg',
-        ],
-      ),
-    ];
-
     final appModeController = Get.find<HomeController>();
 
     return Scaffold(
@@ -82,19 +58,21 @@ class PatientsPage extends StatelessWidget {
                           child: PatientFilesPreviewCard(),
                         );
                       }
-                      if (patients.isEmpty) {
+                      if (controller.patients.isEmpty) {
                         return const PatientFilesEmptyState();
                       }
                       return ListView.separated(
-                        itemCount: patients.length,
+                        itemCount: controller.patients.length,
                         separatorBuilder: (_, __) => SizedBox(
                           height: Static.getheight(context, 14),
                         ),
                         itemBuilder: (context, index) {
-                          final patient = patients[index];
+                          final patient = controller.patients[index];
                           return PatientCard(
                             patient: patient,
                             onTap: () {
+                              controller
+                                  .fetchCasesPatientList(patient.patientId!);
                               Get.to(
                                 () => PatientDetailsPage(
                                   patient: patient,

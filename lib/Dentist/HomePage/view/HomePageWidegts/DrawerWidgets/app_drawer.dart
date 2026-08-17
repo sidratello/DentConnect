@@ -56,6 +56,15 @@ class AppDrawer extends StatelessWidget {
                   );
                 },
               ),
+              DrawerItem(
+                title: 'الشكاوي',
+                icon: Icons.report_problem,
+                onTap: () {
+                  Get.toNamed(
+                    AppRouter.complaintPage,
+                  );
+                },
+              ),
               const Divider(),
               Material(
                   color: AppColors.surfaceTintColor,

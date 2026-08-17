@@ -1,10 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData;
+import 'package:template/core/api.dart';
 import '../model/create_order_model.dart';
 
 class CreateOrderController extends GetxController {
+  ApiService apiService = ApiService();
+
   final model = CreateOrderModel().obs;
 
   final currentStep = 0.obs;
@@ -93,9 +95,7 @@ class CreateOrderController extends GetxController {
 
   final RxList<File> images = <File>[].obs;
 
-  Future<void> pickImages() async {
-    // لاحقاً سنربط ImagePicker
-  }
+  Future<void> pickImages() async {}
 
   void removeImage(int index) {
     images.removeAt(index);
@@ -103,9 +103,7 @@ class CreateOrderController extends GetxController {
 
   final RxList<File> files = <File>[].obs;
 
-  Future<void> pickFiles() async {
-    // سنربط FilePicker لاحقاً
-  }
+  Future<void> pickFiles() async {}
 
   void removeFile(int index) {
     files.removeAt(index);
@@ -117,24 +115,106 @@ class CreateOrderController extends GetxController {
       m?.images = images as List<String>;
       m?.digitalFiles = files as List<String>;
     });
-
-    print(model.value.toJson());
-
-    // هون لاحقاً رح نستدعي الـ Repository
   }
 
   @override
   void onClose() {
     patientNameController.dispose();
-
     shadeController.dispose();
-
     materialController.dispose();
-
     expectedDaysController.dispose();
-
     notesController.dispose();
-
     super.onClose();
+  }
+
+  Future<void> createOrder1(
+    int labId, {
+    required String title,
+    required String shade,
+    required bool isTemporary,
+    required int impressionType,
+    required bool isUrgent,
+    required bool hasAccessories,
+    required String deliveryDate,
+    required String notes,
+    required List<String> requiredImages,
+    required String impressionStage,
+  }) async {
+    try {
+      final response = await apiService.post(
+        'CaseOrders/initiate/$labId',
+        data: {
+          'Title': title,
+          'Shade': shade,
+          'IsTemporary': isTemporary,
+          'ImpressionType': impressionType,
+          'IsUrgent': isUrgent,
+          'HasAccessories': hasAccessories,
+          'DeliveryDate': deliveryDate,
+          'Notes': notes,
+          'RequiredImages': requiredImages,
+          'ImpressionStage': impressionType,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'تم الإرسال',
+          'تم إرسال الطلبية بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  Future<void> createOrder2(
+    int orderId, {
+    required String compensationType,
+    required List<int> toothNumbers,
+  }) async {
+    try {
+      final Map<String, dynamic> data = {
+        'CompensationType': compensationType,
+      };
+      for (int i = 0; i < toothNumbers.length; i++) {
+        data['ToothNumbers[$i]'] = toothNumbers[i];
+      }
+      final response = await apiService.post(
+        'CaseOrders/$orderId/add-item',
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'تم الإرسال',
+          'تم إرسال الطلبية بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }

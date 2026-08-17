@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/patient_cases_section.dart';
 import 'package:template/core/widgets/appbar_vector_black.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/clinical_notes_card.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/teeth_images_grid.dart';
@@ -53,7 +54,7 @@ class PatientDetailsPage extends StatelessWidget {
                 ),
                 AppSpacing.height(context, 12),
                 Text(
-                  patient.name,
+                  patient.fullName ?? 'لا يوجد اسم',
                   style: TextStyle(
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontWeight: FontWeight.w600,
@@ -62,16 +63,18 @@ class PatientDetailsPage extends StatelessWidget {
                 ),
                 AppSpacing.height(context, 24),
                 ClinicalNotesCard(
-                  notes: patient.clinicalNotes,
+                  notes: patient.clinicalNotes ?? 'لا يوجد ملاحظات',
                 ),
                 AppSpacing.height(context, 20),
-                XrayCard(
-                  imagePath: patient.xrayImage,
-                ),
+                // XrayCard(
+                //   imagePath: patient.xrayImage,
+                // ),
                 AppSpacing.height(context, 20),
                 TeethImagesGrid(
-                  images: patient.teethImages,
+                  images: patient.uploadedFiles ?? [],
                 ),
+                AppSpacing.height(context, 20),
+                const PatientCasesSection(),
               ],
             ),
           ),

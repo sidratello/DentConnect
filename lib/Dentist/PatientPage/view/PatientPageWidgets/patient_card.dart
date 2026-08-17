@@ -49,7 +49,7 @@ class PatientCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    patient.name,
+                    patient.fullName ?? 'لا يوجد اسم',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       fontFamily: 'IBM Plex Sans Arabic',
@@ -60,7 +60,7 @@ class PatientCard extends StatelessWidget {
                   ),
                   AppSpacing.height(context, 6),
                   Text(
-                    patient.clinicalNotes,
+                    patient.clinicalNotes ?? 'لا يوجد ملاحظات',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.right,

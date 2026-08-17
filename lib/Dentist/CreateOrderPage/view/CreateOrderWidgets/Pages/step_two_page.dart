@@ -16,15 +16,6 @@ import '../Upload/upload_images_card.dart';
 class StepTwoPage extends GetView<CreateOrderController> {
   const StepTwoPage({super.key});
 
-  final List<String> restorationTypes = const [
-    "Crown",
-    "Bridge",
-    "Veneer",
-    "Inlay",
-    "Onlay",
-    "Implant",
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -42,36 +33,6 @@ class StepTwoPage extends GetView<CreateOrderController> {
 
             /// الأسنان
             const TeethSelector(),
-
-            const SizedBox(height: 28),
-
-            /// نوع الترميم
-
-            Text(
-              "نوع الترميم",
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-
-            const SizedBox(height: 14),
-
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: restorationTypes.map((type) {
-                return CustomChoiceChip(
-                  title: type,
-                  icon: Icons.medical_services_outlined,
-                  isSelected: controller.model.value.restorationType == type,
-                  onTap: () {
-                    controller.model.update((m) {
-                      m?.restorationType = type;
-                    });
-                  },
-                );
-              }).toList(),
-            ),
-
-            const SizedBox(height: 28),
 
             /// الصور
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/CreateOrderPage/view/create_order_page.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/static.dart';
@@ -43,7 +44,11 @@ class LabCreateRequestButton extends StatelessWidget {
               opacity: isDisabled ? 0.65 : 1,
               child: InkWell(
                 borderRadius: BorderRadius.circular(18),
-                onTap: () {},
+                onTap: () {
+                  Get.to(
+                    const CreateOrderPage(),
+                  );
+                },
                 child: Container(
                   width: double.infinity,
                   height: Static.getheight(context, 50),

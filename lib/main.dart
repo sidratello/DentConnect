@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/CasesPage/controller/case_controller.dart';
 import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
+import 'package:template/Dentist/PatientPage/controller/patient_controller.dart';
 import 'package:template/Dentist/TemplatesPage/controller/template_controller.dart';
 import 'package:template/core/app_router.dart';
 import 'package:template/core/storage_services.dart';
@@ -39,6 +40,7 @@ void main() async {
   Get.put(ThemeController());
   Get.put(TemplateController());
   Get.put(CaseController());
+  Get.put(PatientController());
 
   await GetStorage.init();
 

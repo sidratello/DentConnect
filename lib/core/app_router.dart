@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:template/Dentist/CommunityPage/view/community_page.dart';
+import 'package:template/Dentist/ComplaintPage/view/complaint_page.dart';
 import 'package:template/Dentist/CreateOrderPage/view/create_order_page.dart';
 import 'package:template/Dentist/HomePage/view/view_only.dart';
 import 'package:template/Dentist/LabDetailsPage/view/lab_details_page.dart';
@@ -31,6 +32,7 @@ abstract class AppRouter {
   static const templatesPage = '/templatesPage';
   static const templateDetailsPage = '/templateDetailsPage';
   static const communityPage = '/communityPage';
+  static const complaintPage = '/complaintPage';
   static const notificationPage = '/notificationPage';
   static const loginpage = '/loginpage';
   static const signuppage = '/signuppage';
@@ -47,6 +49,10 @@ abstract class AppRouter {
       name: signuppage,
       page: () => const SignupScreen(),
       binding: SignupBinding(),
+    ),
+    GetPage(
+      name: complaintPage,
+      page: () => ComplaintPage(),
     ),
     GetPage(
       name: loginpage,

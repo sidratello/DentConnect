@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/DoctorProfile/model/doctor_profile_model.dart';
 import 'package:template/Dentist/HomePage/model/advertisement_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
 import 'package:template/Dentist/SearchLabsPage/model/search_lab_model.dart';
@@ -19,11 +20,14 @@ class HomeController extends GetxController {
   final PageController adsPageController = PageController();
   final RxString searchText = ''.obs;
   final RxInt currentAdIndex = 0.obs;
+  final RxnInt selectedLabId = RxnInt();
+  final RxInt selectedType = 0.obs;
 
   @override
   void onInit() {
     fetchAdvertisement();
     fetchLabsLabels();
+    fetchDoctorProfile();
     super.onInit();
   }
 
@@ -287,6 +291,77 @@ class HomeController extends GetxController {
     }
   }
 
+  final Rxn<DoctorProfileModel> doctorProfileModel = Rxn<DoctorProfileModel>();
+
+  Future<void> fetchDoctorProfile() async {
+    isLoading.value = true;
+
+    try {
+      final response = await apiService.get(
+        'CaseOrders/dentist-personal-profile',
+      );
+
+      if (response.statusCode == 200) {
+        print(response.data.toString());
+
+        doctorProfileModel.value = DoctorProfileModel.fromJson(
+          response.data as Map<String, dynamic>,
+        );
+      } else {
+        print(
+          'Failed to fetch doctor profile: ${response.message}',
+        );
+      }
+    } catch (e) {
+      print('Error fetching doctor profile: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> updateDoctorProfile({
+    String? email,
+    String? phone,
+    String? cityPlace,
+  }) async {
+    isLoading.value = true;
+
+    try {
+      final response = await apiService.put(
+        'CaseOrders/edit-personal-profile',
+        data: {
+          if (email != null) 'email': email,
+          if (phone != null) 'phone': phone,
+          if (cityPlace != null) 'cityPlace': cityPlace,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        await fetchDoctorProfile();
+
+        Get.snackbar(
+          'تم الحفظ',
+          'تم تحديث بيانات الملف الشخصي بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        'حدث خطأ أثناء تحديث بيانات الملف الشخصي',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   final Rxn<SearchLabModel> searchResult = Rxn<SearchLabModel>();
   RxList<Labs> searchLab = <Labs>[].obs;
 
@@ -319,6 +394,77 @@ class HomeController extends GetxController {
       return false;
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> sendComplaintAdminRequest({
+    required String title,
+    required String description,
+  }) async {
+    try {
+      final response = await apiService.post(
+        'Complaints',
+        data: {
+          'Title': title,
+          'Text': description,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'تم الإرسال',
+          'تم إرسال الشكوى بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  Future<void> sendComplaintLabRequest(
+    int labId, {
+    required String title,
+    required String description,
+  }) async {
+    try {
+      final response = await apiService.post(
+        'Complaints/create/$labId',
+        data: {
+          'Title': title,
+          'Text': description,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'تم الإرسال',
+          'تم إرسال الشكوى بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }
