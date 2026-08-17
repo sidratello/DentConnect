@@ -294,17 +294,21 @@ debugPrint(
   'adId=${advertisement.id}, '
   'url=$paymentLink',
 );
-      final result =
-          await Get.toNamed(
-        AppRouter.labAdPayment,
-        arguments: {
-          'url': response
-              .data!
-              .paymentLink,
-          'advertisementId':
-              advertisement.id,
-        },
-      );
+ final result =
+    await Get.toNamed(
+  AppRouter.labAdPayment,
+  arguments: {
+    'url':
+        response.data!
+            .paymentLink,
+
+    'advertisementId':
+        advertisement.id,
+
+    'paymentType':
+        'advertisement',
+  },
+);
 
       if (result ==
           'paymentSuccess') {

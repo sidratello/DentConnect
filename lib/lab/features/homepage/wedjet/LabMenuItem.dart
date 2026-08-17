@@ -148,9 +148,9 @@ case LabMenuItem.complaints:
         break;
 
       case LabMenuItem.subscriptions:
-        // Get.toNamed(
-        //   AppRouter.subscriptions,
-        // );
+   Get.toNamed(
+  AppRouter.labSubscription,
+);
         break;
     }
   }

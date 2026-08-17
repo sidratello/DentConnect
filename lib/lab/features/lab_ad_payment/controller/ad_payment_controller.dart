@@ -1,14 +1,28 @@
 import 'package:get/get.dart';
 
 import 'package:template/core/app_router.dart';
+enum LabPaymentType {
+  advertisement,
+  subscription,
+}
 
 class LabAdPaymentController
     extends GetxController {
   late final String paymentUrl;
-  late final int advertisementId;
+int? advertisementId;
 
   final isPageLoading = true.obs;
+  late final LabPaymentType
+      paymentType;
 
+
+  bool get isAdvertisementPayment =>
+      paymentType ==
+      LabPaymentType.advertisement;
+
+  bool get isSubscriptionPayment =>
+      paymentType ==
+      LabPaymentType.subscription;
   @override
   void onInit() {
     super.onInit();
@@ -27,25 +41,37 @@ class LabAdPaymentController
                 ?.toString() ??
             '';
 
-    advertisementId =
-        arguments[
-                    'advertisementId']
-                as int? ??
-            0;
-
+    final paymentTypeValue =
+        arguments['paymentType']
+                ?.toString() ??
+            'advertisement';
+                paymentType =
+        paymentTypeValue ==
+                'subscription'
+            ? LabPaymentType
+                .subscription
+            : LabPaymentType
+                .advertisement;
     if (paymentUrl.isEmpty) {
       throw ArgumentError(
         'Payment URL is missing.',
       );
     }
 
-    if (advertisementId <= 0) {
-      throw ArgumentError(
-        'Advertisement ID is missing.',
-      );
+
+    if (isAdvertisementPayment) {
+      advertisementId =
+          arguments['advertisementId']
+              as int?;
+
+      if (advertisementId == null ||
+          advertisementId! <= 0) {
+        throw ArgumentError(
+          'Advertisement ID is missing.',
+        );
+      }
     }
   }
-
   void setLoading(
     bool value,
   ) {
@@ -64,15 +90,21 @@ class LabAdPaymentController
         uri?.queryParameters[
             'paymentId'];
 
+
     final result =
         await Get.toNamed(
       AppRouter
           .labAdPaymentSuccess,
       arguments: {
-        'advertisementId':
-            advertisementId,
+        'paymentType':
+            paymentType.name,
+
         'paymentId':
             paymentId,
+
+        if (advertisementId != null)
+          'advertisementId':
+              advertisementId,
       },
     );
 
@@ -96,14 +128,19 @@ class LabAdPaymentController
         uri?.queryParameters[
             'paymentId'];
 
-    await Get.toNamed(
+  await Get.toNamed(
       AppRouter
           .labAdPaymentFailed,
       arguments: {
-        'advertisementId':
-            advertisementId,
+        'paymentType':
+            paymentType.name,
+
         'paymentId':
             paymentId,
+
+        if (advertisementId != null)
+          'advertisementId':
+              advertisementId,
       },
     );
   }

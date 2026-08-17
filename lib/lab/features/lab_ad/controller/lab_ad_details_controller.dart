@@ -117,16 +117,20 @@ debugPrint(
   'url=${response.data!.paymentLink}',
 );
       final result =
-          await Get.toNamed(
-        AppRouter.labAdPayment,
-        arguments: {
-          'url': response
-              .data!
-              .paymentLink,
-          'advertisementId':
-              advertisement.id,
-        },
-      );
+    await Get.toNamed(
+  AppRouter.labAdPayment,
+  arguments: {
+    'url':
+        response.data!
+            .paymentLink,
+
+    'advertisementId':
+        advertisement.id,
+
+    'paymentType':
+        'advertisement',
+  },
+);
 
       if (result ==
           'paymentSuccess') {

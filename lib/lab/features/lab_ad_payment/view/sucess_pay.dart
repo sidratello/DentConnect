@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:template/core/app_colors.dart';
+import 'package:template/core/app_router.dart';
 import 'package:template/core/app_text_styles.dart';
 import 'package:template/core/widgets/app_button.dart';
 
@@ -13,7 +14,26 @@ class LabAdPaymentSuccessScreen
     super.key,
   });
 
-  void _goBackWithSuccess() {
+  bool get isSubscriptionPayment {
+    final arguments = Get.arguments;
+
+    if (arguments is! Map) {
+      return false;
+    }
+
+    return arguments['paymentType']
+            ?.toString() ==
+        'subscription';
+  }
+
+  void _handleSuccess() {
+    if (isSubscriptionPayment) {
+      Get.offAllNamed(
+        AppRouter.homepage,
+      );
+      return;
+    }
+
     Get.back(
       result: 'paymentSuccess',
     );
@@ -21,6 +41,9 @@ class LabAdPaymentSuccessScreen
 
   @override
   Widget build(BuildContext context) {
+    final subscriptionPayment =
+        isSubscriptionPayment;
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (
@@ -31,7 +54,7 @@ class LabAdPaymentSuccessScreen
           return;
         }
 
-        _goBackWithSuccess();
+        _handleSuccess();
       },
       child: LabBackgroundLayout(
         child: Center(
@@ -45,10 +68,12 @@ class LabAdPaymentSuccessScreen
                 Container(
                   width: 90,
                   height: 90,
-                  decoration: BoxDecoration(
+                  decoration:
+                      BoxDecoration(
                     color: AppColors.green
                         .withOpacity(.12),
-                    shape: BoxShape.circle,
+                    shape:
+                        BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons
@@ -80,7 +105,9 @@ class LabAdPaymentSuccessScreen
                 ),
 
                 Text(
-                  'تم استلام دفع الإعلان بنجاح.',
+                  subscriptionPayment
+                      ? 'تم دفع الاشتراك بنجاح.'
+                      : 'تم استلام دفع الإعلان بنجاح.',
                   textAlign:
                       TextAlign.center,
                   style: AppTextStyles
@@ -97,11 +124,13 @@ class LabAdPaymentSuccessScreen
 
                 AppButton(
                   title:
-                      'العودة إلى إعلاناتي',
+                      subscriptionPayment
+                          ? 'العودة إلى الصفحة الرئيسية'
+                          : 'العودة إلى إعلاناتي',
                   type:
                       AppButtonType.gradient,
                   onTap:
-                      _goBackWithSuccess,
+                      _handleSuccess,
                 ),
               ],
             ),

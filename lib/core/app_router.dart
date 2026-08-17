@@ -72,6 +72,10 @@ import 'package:template/lab/features/profile/binding/edit_profile_binding.dart'
 import 'package:template/lab/features/profile/binding/profile_binding.dart';
 import 'package:template/lab/features/profile/views/edit_profile_screen.dart';
 import 'package:template/lab/features/profile/views/profile.dart';
+import 'package:template/lab/features/subscription/binding/LabSubscriptionBinding.dart';
+import 'package:template/lab/features/subscription/binding/SubscriptionPlansBinding.dart';
+import 'package:template/lab/features/subscription/view/lab_subscription_screen.dart';
+import 'package:template/lab/features/subscription/view/subscription_plans_screen.dart';
 import 'package:template/lab/features/update_order_satatus/binding/update_order_status_binding.dart';
 import 'package:template/lab/features/update_order_satatus/views/update_order_status_screen.dart';
 
@@ -135,6 +139,13 @@ static const labAdPaymentFailed =
 static const String
     labComplaintDetails =
     '/lab-complaint-details';
+
+static const String labSubscription =
+    '/lab-subscription';
+
+static const String subscriptionPlans =
+    '/subscription-plans';
+
   static final List<GetPage<dynamic>> pages = [
     GetPage(
       name: choseuserpage,
@@ -379,6 +390,23 @@ GetPage(
       const LabComplaintDetailsScreen(),
   binding:
       LabComplaintDetailsBinding(),
+),
+
+
+GetPage(
+  name: labSubscription,
+  page: () =>
+      const LabSubscriptionScreen(),
+  binding:
+      LabSubscriptionBinding(),
+),
+
+GetPage(
+  name: subscriptionPlans,
+  page: () =>
+      const SubscriptionPlansScreen(),
+  binding:
+      SubscriptionPlansBinding(),
 ),
   ];
 
