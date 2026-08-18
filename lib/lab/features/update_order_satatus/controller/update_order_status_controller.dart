@@ -94,10 +94,18 @@ class UpdateOrderStatusController extends GetxController {
 
     isLoading.value = false;
 
-    if (response.success && response.data != null) {
-      Get.back(result: response.data);
-      Get.snackbar('نجاح', response.message ?? 'تم تحديث حالة الطلب بنجاح');
-    } else {
+if (response.success && response.data != null) {
+  Get.back(
+    result: response.data,
+  );
+
+  Get.snackbar(
+    'نجاح',
+    'تم تحديث حالة الطلب',
+    snackPosition:
+        SnackPosition.BOTTOM,
+  );
+}else {
       Get.snackbar('خطأ', response.message);
     }
   }

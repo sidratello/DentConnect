@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:template/auth/local_notification_service.dart';
 
 
 import 'package:template/core/app_router.dart';
@@ -17,7 +18,8 @@ void main() async {
   );
 
 
-
+  await LocalNotificationService()
+      .initialize();
 
 
   runApp(const MyApp());

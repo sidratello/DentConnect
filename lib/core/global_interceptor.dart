@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import 'package:template/core/app_helper.dart';
+import 'package:template/core/app_router.dart';
 import 'package:template/core/storage_services.dart';
+import 'package:template/lab/features/subscription/view/wedjet_subscription/subscription_required_dialog.dart';
 
 class GlobalInterceptor extends dio.Interceptor {
     GlobalInterceptor() {
@@ -17,7 +20,7 @@ class GlobalInterceptor extends dio.Interceptor {
       '----------------------------------------------------------------------';
 
   static final JsonEncoder _encoder = JsonEncoder.withIndent('  ');
-
+  static bool _isHandling401 = false;
   @override
   void onRequest(
     dio.RequestOptions options,
@@ -108,17 +111,92 @@ class GlobalInterceptor extends dio.Interceptor {
       debugPrint(_divider);
     }
 
-    if (statusCode == 401) {
-      AppHelper.clear();
-
-      if (Get.isRegistered<StorageService>()) {
-        await StorageService.to.clearAll();
-      }
-
-      // Get.offAllNamed('/login');
+  if (statusCode == 401) {
+      await _handle401();
     }
 
     handler.next(err);
+  }
+    Future<void> _handle401() async {
+    if (_isHandling401) {
+      return;
+    }
+
+    if (!Get.isRegistered<StorageService>()) {
+      return;
+    }
+
+    final role =
+        StorageService.to.read<String>(
+      'role',
+    );
+
+    final userId =
+        StorageService.to.read<int>(
+      'userId',
+    );
+
+    final labId =
+        StorageService.to.read<int>(
+      'labId',
+    );
+
+    debugPrint(
+      '401 USER INFO: '
+      'role=$role, '
+      'userId=$userId, '
+      'labId=$labId',
+    );
+
+    // هذا الـ Dialog خاص بالمخبر
+    if (role == 'Lab' &&
+        userId != null &&
+        labId != null) {
+      _isHandling401 = true;
+
+      // نعتبر الحساب بحاجة إلى دفع
+      await StorageService.to.write(
+        'status',
+        'PendingPayment',
+      );
+
+  
+      await StorageService.to.remove(
+        'token',
+      );
+
+      await StorageService.to.remove(
+        'refreshToken',
+      );
+
+      WidgetsBinding.instance
+          .addPostFrameCallback(
+        (_) {
+          SubscriptionRequiredDialog.show(
+            onRenew: () {
+              Get.back();
+
+              _isHandling401 = false;
+
+              Get.toNamed(
+                AppRouter.subscriptionPlans,
+                arguments: {
+                  'isPendingPayment': true,
+                },
+              );
+            },
+          ).whenComplete(
+            () {
+              _isHandling401 = false;
+            },
+          );
+        },
+      );
+
+      return;
+    }
+
+
   }
 
   static String _pretty(dynamic data) {

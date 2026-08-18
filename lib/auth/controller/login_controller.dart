@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/auth/notification_service.dart';
 
 
 import 'package:template/auth/repository/login_repo.dart';
 import 'package:template/core/app_router.dart';
 import 'package:template/core/storage_services.dart';
+import 'package:template/lab/features/subscription/view/wedjet_subscription/subscription_required_dialog.dart';
 class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final isPasswordVisible = false.obs;
@@ -73,7 +75,10 @@ void onInit() {
         user.accessMode == 'Full' &&
         user.accessToken != null) {
       await _saveFullUser(user);
-
+  await NotificationService()
+      .startConnection(
+    user.accessToken!,
+  );
       Get.snackbar(
         'تم بنجاح',
         'تم تسجيل الدخول بنجاح',
@@ -89,59 +94,129 @@ void onInit() {
     }
 
     /// ================= PENDING VERIFICATION =================
-    if (user.status == 'PendingVerification') {
-      Get.defaultDialog(
-        title: 'البريد غير مؤكد',
-        middleText:
-            'يمكنك تأكيد البريد الإلكتروني الآن أو المتابعة بوضع الاطلاع فقط.',
+if (user.status == 'PendingVerification') {
+  if (user.role == 'Lab') {
+    Get.defaultDialog(
+      title: 'البريد غير مؤكد',
+      middleText:
+          'يجب تأكيد البريد الإلكتروني قبل استخدام حساب المخبر.',
 
-        textConfirm: 'تأكيد البريد',
-        textCancel: 'وضع الاطلاع',
+      textConfirm:
+          'تأكيد البريد',
 
-        confirmTextColor: Colors.white,
+      confirmTextColor:
+          Colors.white,
 
-        onConfirm: () {
-          Get.back();
+      barrierDismissible:
+          false,
+
+      onConfirm: () {
+        Get.back();
+
+        Get.toNamed(
+          AppRouter.OTPpage,
+          arguments: {
+            'email':
+                emailController.text.trim(),
+            'role':
+                role,
+          },
+        );
+      },
+    );
+
+    return;
+  }
+
+  // Dentist فقط
+  Get.defaultDialog(
+    title:
+        'البريد غير مؤكد',
+    middleText:
+        'يمكنك تأكيد البريد الإلكتروني الآن أو المتابعة بوضع الاطلاع فقط.',
+
+    textConfirm:
+        'تأكيد البريد',
+    textCancel:
+        'وضع الاطلاع',
+
+    confirmTextColor:
+        Colors.white,
+
+    onConfirm: () {
+      Get.back();
 
       Get.toNamed(
-  AppRouter.OTPpage,
-  arguments: {
-    'email': emailController.text.trim(),
-    'role': role,
+        AppRouter.OTPpage,
+        arguments: {
+          'email':
+              emailController.text.trim(),
+          'role':
+              role,
+        },
+      );
+    },
+
+    onCancel: () async {
+      await _saveReadOnlyUser(
+        user,
+      );
+
+      _goToHomeByRole(
+        user.role,
+      );
+    },
+  );
+
+  return;
+}
+
+  /// ================= PendingPayment=================
+
+if (user.role == 'Lab' &&
+    user.status == 'PendingPayment') {
+  await _saveLimitedUserInfo(
+    user,
+  );
+SubscriptionRequiredDialog.show(
+  onRenew: () {
+    Get.back();
+
+  Get.toNamed(
+        AppRouter.subscriptionPlans,
+        arguments: {
+          'isPendingPayment': true,
+        },
+      );
   },
 );
-        },
 
-        onCancel: () async {
-          await _saveReadOnlyUser(user);
+  return;
+}
 
-          Get.snackbar(
-            'وضع الاطلاع',
-            'تم الدخول بوضع الاطلاع فقط.',
-            snackPosition: SnackPosition.BOTTOM,
-          );
-
-          _goToHomeByRole(user.role);
-        },
-      );
-
-      return;
-    }
 
     /// ================= READ ONLY =================
-    if (user.accessMode == 'ReadOnly') {
-      await _saveReadOnlyUser(user);
+  if (user.role == 'Dentist' &&
+    user.accessMode == 'ReadOnly') {
+  await _saveReadOnlyUser(
+    user,
+  );
 
-      Get.snackbar(
-        'وضع الاطلاع',
-        _getReadOnlyMessage(user.status),
-        snackPosition: SnackPosition.BOTTOM,
-      );
+  Get.snackbar(
+    'وضع الاطلاع',
+    _getReadOnlyMessage(
+      user.status,
+    ),
+    snackPosition:
+        SnackPosition.BOTTOM,
+  );
 
-      _goToHomeByRole(user.role);
+  _goToHomeByRole(
+    user.role,
+  );
 
-      return;
-    }
+  return;
+}
 
     /// ================= FALLBACK =================
     Get.snackbar(
@@ -175,6 +250,49 @@ void onInit() {
       user.accessMode,
     );
   }
+
+
+/// ================= SAVE LIMITED USER =================
+Future<void> _saveLimitedUserInfo(
+  dynamic user,
+) async {
+  await StorageService.to.write(
+    'userId',
+    user.userId,
+  );
+
+  await StorageService.to.write(
+    'labId',
+    user.labId,
+  );
+
+  await StorageService.to.write(
+    'role',
+    user.role,
+  );
+
+  await StorageService.to.write(
+    'status',
+    user.status,
+  );
+
+  await StorageService.to.write(
+    'accessMode',
+    user.accessMode,
+  );
+
+  // PendingPayment has no access token.
+  await StorageService.to.remove(
+    'token',
+  );
+
+  await StorageService.to.remove(
+    'refreshToken',
+  );
+}
+
+
+
 
   /// ================= SAVE READ ONLY =================
   Future<void> _saveReadOnlyUser(dynamic user) async {

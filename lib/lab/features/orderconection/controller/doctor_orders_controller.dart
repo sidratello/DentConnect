@@ -57,8 +57,30 @@ class DoctorOrdersController extends GetxController {
     arguments: order,
   );
 
-  if (result is LabOrderModel) {
-    handleUpdatedOrder(result);
+ if (result is LabOrderModel) {
+    handleUpdatedOrder(
+      result,
+    );
+
+    return;
+  }
+  if (result is Map &&
+      result['success'] == true) {
+    await getDoctorOrders();
+
+    final message =
+        result['message']
+            ?.toString();
+
+    if (message != null &&
+        message.isNotEmpty) {
+      Get.snackbar(
+        'تم بنجاح',
+        message,
+        snackPosition:
+            SnackPosition.BOTTOM,
+      );
+    }
   }
 }
 
@@ -76,5 +98,6 @@ void handleUpdatedOrder(
   }
 
   orders[index] = updatedOrder;
+   orders.refresh();
 }
 }

@@ -18,7 +18,7 @@ class ApiService {
       BaseOptions(
         baseUrl: 'http://192.168.1.3:44334/api/',
         connectTimeout: const Duration(seconds: 20),
-        receiveTimeout: const Duration(seconds: 20),
+        receiveTimeout: const Duration(seconds: 60),
         headers: {'Accept': 'application/json'},
       ),
     );

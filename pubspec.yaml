@@ -57,6 +57,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   webview_flutter: ^4.14.1
+  signalr_core: ^1.1.2
+  flutter_local_notifications: ^21.0.0
 
 dev_dependencies:
   flutter_test:

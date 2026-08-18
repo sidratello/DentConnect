@@ -23,6 +23,8 @@ int? advertisementId;
   bool get isSubscriptionPayment =>
       paymentType ==
       LabPaymentType.subscription;
+
+      late final bool isPendingPayment;
   @override
   void onInit() {
     super.onInit();
@@ -71,6 +73,11 @@ int? advertisementId;
         );
       }
     }
+
+
+    isPendingPayment =
+    arguments['isPendingPayment'] ==
+        true;
   }
   void setLoading(
     bool value,
@@ -98,6 +105,8 @@ int? advertisementId;
       arguments: {
         'paymentType':
             paymentType.name,
+            'isPendingPayment':
+        isPendingPayment,
 
         'paymentId':
             paymentId,

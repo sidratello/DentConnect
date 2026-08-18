@@ -59,7 +59,7 @@ class SubscriptionPlansBody
                 child:
                     EmptyStateCard(
                   title:
-                      'تعذر تحميل الباقات',
+                      'تعذر تحميل الخطط',
                   subtitle:
                       'يرجى المحاولة مرة أخرى.',
                   icon: Icons

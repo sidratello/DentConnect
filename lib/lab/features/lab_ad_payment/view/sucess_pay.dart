@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_router.dart';
 import 'package:template/core/app_text_styles.dart';
+import 'package:template/core/storage_services.dart';
 import 'package:template/core/widgets/app_button.dart';
 
 import 'package:template/lab/features/orderconection/views/wedjet/lab_background_layout.dart';
@@ -26,7 +27,83 @@ class LabAdPaymentSuccessScreen
         'subscription';
   }
 
-  void _handleSuccess() {
+
+bool get isPendingSubscriptionPayment {
+    final arguments =
+        Get.arguments;
+
+    if (arguments is! Map) {
+      return false;
+    }
+
+    return isSubscriptionPayment &&
+        arguments[
+                'isPendingPayment'] ==
+            true;
+  }
+
+
+  String get buttonTitle {
+    if (isPendingSubscriptionPayment) {
+      return 'العودة إلى تسجيل الدخول';
+    }
+
+    if (isSubscriptionPayment) {
+      return 'العودة إلى الصفحة الرئيسية';
+    }
+
+    return 'العودة إلى إعلاناتي';
+  }
+
+  String get successMessage {
+    if (isPendingSubscriptionPayment) {
+      return 'تم دفع الاشتراك بنجاح. يمكنك الآن تسجيل الدخول لتفعيل حسابك.';
+    }
+
+    if (isSubscriptionPayment) {
+      return 'تم تجديد الاشتراك بنجاح.';
+    }
+
+    return 'تم استلام دفع الإعلان بنجاح.';
+  }
+
+
+  void _handleSuccess()async {
+
+ if (isPendingSubscriptionPayment) {
+      // المستخدم كان بدون Token
+      // نحذف بيانات الحالة القديمة قبل إعادة تسجيل الدخول.
+      await StorageService.to.remove(
+        'token',
+      );
+
+      await StorageService.to.remove(
+        'refreshToken',
+      );
+
+      await StorageService.to.remove(
+        'status',
+      );
+
+      await StorageService.to.remove(
+        'accessMode',
+      );
+
+      Get.offAllNamed(
+        AppRouter.loginpage,
+        arguments: 'Lab',
+      );
+
+      return;
+    }
+
+
+
+
+
+
+
+
     if (isSubscriptionPayment) {
       Get.offAllNamed(
         AppRouter.homepage,
@@ -104,10 +181,8 @@ class LabAdPaymentSuccessScreen
                   height: 8,
                 ),
 
-                Text(
-                  subscriptionPayment
-                      ? 'تم دفع الاشتراك بنجاح.'
-                      : 'تم استلام دفع الإعلان بنجاح.',
+       Text(
+                  successMessage,
                   textAlign:
                       TextAlign.center,
                   style: AppTextStyles
@@ -115,6 +190,8 @@ class LabAdPaymentSuccessScreen
                       .copyWith(
                     color:
                         AppColors.normalText,
+                    height:
+                        1.6,
                   ),
                 ),
 
@@ -124,9 +201,8 @@ class LabAdPaymentSuccessScreen
 
                 AppButton(
                   title:
-                      subscriptionPayment
-                          ? 'العودة إلى الصفحة الرئيسية'
-                          : 'العودة إلى إعلاناتي',
+                       buttonTitle,
+                     
                   type:
                       AppButtonType.gradient,
                   onTap:

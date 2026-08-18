@@ -207,10 +207,41 @@ onEdit: (slot) async {
             }),
           ),
 
-     ScanSlotsAddAction(
-  onTap:(){
-    Get.toNamed(AppRouter.addScanSlot);
-  }
+ScanSlotsAddAction(
+  onTap: () async {
+    final result = await Get.toNamed(
+      AppRouter.addScanSlot,
+    );
+
+    if (result is! Map) {
+      return;
+    }
+
+    final newSlot = result['slot'];
+
+    if (result['success'] == true &&
+        newSlot is ScanSlotModel) {
+await controller.loadData();
+      if (newSlot.date != null) {
+        controller.selectedDate.value =
+            controller.normalizeDate(
+          newSlot.date!,
+        );
+      }
+      final message =
+          result['message']?.toString();
+
+      if (message != null &&
+          message.isNotEmpty) {
+        Get.snackbar(
+          'تمت الإضافة',
+          message,
+          snackPosition:
+              SnackPosition.BOTTOM,
+        );
+      }
+    }
+  },
 ),
         ],
       ),

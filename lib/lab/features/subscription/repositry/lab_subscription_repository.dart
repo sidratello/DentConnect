@@ -131,4 +131,85 @@ class LabSubscriptionRepository {
     );
   }
 }
+
+
+Future<ApiResponse<SubscriptionPriceInfoModel>>
+    getPendingPriceInfo({
+  required int labId,
+  required int userId,
+}) async {
+  final response =
+      await _apiService.get<Map<String, dynamic>>(
+    'lab-subscription-online/pending-price-info'
+    '?labId=$labId&userId=$userId',
+  );
+
+  if (!response.success ||
+      response.data == null) {
+    return ApiResponse.error(
+      response.message,
+      statusCode: response.statusCode,
+    );
+  }
+
+  try {
+    return ApiResponse.success(
+      data: SubscriptionPriceInfoModel.fromJson(
+        Map<String, dynamic>.from(
+          response.data!,
+        ),
+      ),
+      message: response.message,
+      statusCode: response.statusCode,
+    );
+  } catch (e) {
+    return ApiResponse.error(
+      'تعذر قراءة بيانات الاشتراك.',
+    );
+  }
+}
+
+
+
+Future<ApiResponse<SubscriptionPaymentModel>>
+    createPendingSubscriptionPayment({
+  required int labId,
+  required int userId,
+  required int months,
+}) async {
+  final response =
+      await _apiService.post<Map<String, dynamic>>(
+    'lab-subscription-online/pending-pay',
+    data: {
+      'LabId': labId,
+      'UserId': userId,
+      'Months': months,
+    },
+  );
+
+  if (!response.success ||
+      response.data == null) {
+    return ApiResponse.error(
+      response.message,
+      statusCode: response.statusCode,
+    );
+  }
+
+  try {
+    return ApiResponse.success(
+      data: SubscriptionPaymentModel.fromJson(
+        Map<String, dynamic>.from(
+          response.data!,
+        ),
+      ),
+      message: response.message,
+      statusCode: response.statusCode,
+    );
+  } catch (e) {
+    return ApiResponse.error(
+      'تعذر قراءة بيانات الدفع.',
+    );
+  }
+}
+
 }

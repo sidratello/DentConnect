@@ -165,14 +165,7 @@ final deletingPostId = RxnInt();
             ? response.message
             : 'تم حذف المنشور بنجاح.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green.shade50,
-        colorText: Colors.green.shade800,
-        margin: const EdgeInsets.all(16),
-        borderRadius: 12,
-        icon: const Icon(
-          Icons.check_circle_outline_rounded,
-          color: Colors.green,
-        ),
+     
       );
     } catch (_) {
       _showError(
@@ -259,18 +252,7 @@ Future<void> openEditPost(
         : 'تم تعديل المنشور بنجاح وإعادته للمراجعة.',
     snackPosition:
         SnackPosition.BOTTOM,
-    backgroundColor:
-        Colors.green.shade50,
-    colorText:
-        Colors.green.shade800,
-    margin:
-        const EdgeInsets.all(16),
-    borderRadius: 12,
-    icon: const Icon(
-      Icons
-          .check_circle_outline_rounded,
-      color: Colors.green,
-    ),
+  
   );
 }
 }

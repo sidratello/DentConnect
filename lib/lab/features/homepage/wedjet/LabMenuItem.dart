@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:template/auth/controller/logout_controller.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_router.dart';
@@ -11,6 +12,7 @@ enum LabMenuItem {
   complaints,
   invoices,
   subscriptions,
+  logout,
 }
 
 class LabHomeMenu extends StatelessWidget {
@@ -76,8 +78,16 @@ class LabHomeMenu extends StatelessWidget {
               Icons.workspace_premium_outlined,
           title: 'الاشتراكات',
           subtitle:
-              'خطط الاشتراك والفترة',
+              'خطط الاشتراك ',
         ),
+        const PopupMenuDivider(),
+
+LabMenuItemWidget<LabMenuItem>(
+  value: LabMenuItem.logout,
+  icon: Icons.logout_rounded,
+  title: 'تسجيل الخروج',
+  subtitle: 'الخروج من الحساب',
+),
       ],
 
       child: Container(
@@ -151,6 +161,11 @@ case LabMenuItem.complaints:
    Get.toNamed(
   AppRouter.labSubscription,
 );
+
+case LabMenuItem.logout:
+  Get.find<LogoutController>()
+      .confirmLogout();
+  break;
         break;
     }
   }
