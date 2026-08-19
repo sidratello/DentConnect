@@ -54,8 +54,8 @@ class LabController extends GetxController {
 
   final Rx<FollowStatus> followStatus = FollowStatus.notFollowing.obs;
 
-  void sendFollowRequest() {
-    followStatus.value = FollowStatus.following;
+  void sendFollowRequestStatus() {
+    followStatus.value = FollowStatus.pending;
   }
 
   void acceptFollowRequest() {
@@ -210,6 +210,42 @@ class LabController extends GetxController {
       return labmodel!.labName!;
     } else {
       return 'اسم المخبر';
+    }
+  }
+
+  int getLabId() {
+    if (labmodel != null && labmodel!.id != null) {
+      return labmodel!.id!;
+    } else {
+      return 0;
+    }
+  }
+
+  Future<void> sendFollowRequest(int labId) async {
+    try {
+      var response = await apiService.post(
+        'Connections/follow/$labId',
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'تم الإرسال',
+          'تم إرسال طلب المتابعة بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }

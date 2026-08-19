@@ -243,34 +243,6 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> sendFollowRequest(int labId) async {
-    try {
-      var response = await apiService.post(
-        'Connections/follow/$labId',
-      );
-
-      if (response.statusCode == 200) {
-        Get.snackbar(
-          'تم الإرسال',
-          'تم إرسال طلب المتابعة بنجاح',
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      } else {
-        Get.snackbar(
-          'خطأ',
-          response.message,
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
-    } catch (e) {
-      Get.snackbar(
-        'خطأ',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    }
-  }
-
   RxList<AdvertisementModel> advertisements = <AdvertisementModel>[].obs;
   Future<void> fetchAdvertisement() async {
     isLoading.value = true;

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class Static {
   // static String ipconfig = "192.168.1.7:7149";
-  static String ipconfig = "https://10.171.193.26:3283/api/";
-  static String imageBaseUrl = "https://10.171.193.26:3283";
+  static String ipconfig = "https://192.168.21.142:3283/api/";
+  static String imageBaseUrl = "https://192.168.21.142:3283";
   static String token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwiZW1haWwiOiJnaGFsaWFoYXplbTIwMDNAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRGVudGlzdCIsImV4cCI6MTc4NzA2MDk4MywiaXNzIjoiRGVudGFsTGFiLkFwaSIsImF1ZCI6IkRlbnRhbExhYi5BcGkifQ.SjfSEemsNRZPen74RhYaORxb2XFSokK2H38P1RJNELw";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwiZW1haWwiOiJnaGFsaWFoYXplbTIwMDNAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiRGVudGlzdCIsImV4cCI6MTc4NzIzODUwNSwiaXNzIjoiRGVudGFsTGFiLkFwaSIsImF1ZCI6IkRlbnRhbExhYi5BcGkifQ.HylW2tKOQvspAJkoACH5Df-EtAxRAdOwe67cQ0bwums";
   static double getheight(BuildContext context, double size) {
     return (MediaQuery.of(context).size.height / 932) * size;
   }

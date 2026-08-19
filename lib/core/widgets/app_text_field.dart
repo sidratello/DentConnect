@@ -6,17 +6,24 @@ import '../utils/static.dart';
 class AppTextField extends StatelessWidget {
   final String hint;
   final int maxLines;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
 
   const AppTextField({
     super.key,
     required this.hint,
     this.maxLines = 1,
+    this.controller,
+    this.keyboardType,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
+      keyboardType: keyboardType,
       textAlign: TextAlign.right,
+      textDirection: TextDirection.rtl,
       maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hint,

@@ -85,9 +85,9 @@ class PatientsPage extends GetView<PatientController> {
                     },
                   ),
                 ),
-                AppSpacing.height(context, 16),
-                if (!appModeController.isPreviewMode.value)
-                  const CreatePatientButton(),
+                // AppSpacing.height(context, 16),
+                // if (!appModeController.isPreviewMode.value)
+                //   const CreatePatientButton(),
                 AppSpacing.height(context, 16),
               ],
             ),

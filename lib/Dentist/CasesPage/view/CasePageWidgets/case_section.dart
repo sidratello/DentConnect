@@ -74,7 +74,7 @@ class CaseSection extends StatelessWidget {
                     if (cases.length > visibleCount)
                       Padding(
                         padding: EdgeInsets.only(
-                          top: Static.getheight(context, 12),
+                          top: Static.getheight(context, 10),
                         ),
                         child: TextButton(
                           onPressed: () {

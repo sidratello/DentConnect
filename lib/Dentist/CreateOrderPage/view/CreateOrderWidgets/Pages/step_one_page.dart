@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
 import 'package:template/core/theme/app_colors.dart';
+
 import '../Cards/order_type_card.dart';
 import '../Cards/patient_info_card.dart';
 import '../Cards/template_selector_card.dart';
@@ -21,229 +22,163 @@ class StepOnePage extends GetView<CreateOrderController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ==================================================
+            // Title
+            // ==================================================
+
+            const SectionTitle(
+              icon: Icons.title_rounded,
+              title: 'عنوان الطلب',
+            ),
+
+            const SizedBox(height: 10),
+
+            TextField(
+              controller: controller.titleController,
+              textDirection: TextDirection.rtl,
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                fontFamily: 'IBM Plex Sans Arabic',
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
+              decoration: InputDecoration(
+                hintText: 'أدخل عنوان الطلب',
+                hintStyle: const TextStyle(
+                  fontFamily: 'IBM Plex Sans Arabic',
+                  fontSize: 12,
+                  color: Colors.grey,
+                ),
+                prefixIcon: const Icon(
+                  Icons.title_rounded,
+                  color: AppColors.primary,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(
+                    color: AppColors.primary.withValues(
+                      alpha: .2,
+                    ),
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(
+                    color: AppColors.primary,
+                    width: 1.5,
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 28),
+
+            // ==================================================
+            // Progress
+            // ==================================================
+
             const ProgressHeader(
               currentStep: 1,
               totalSteps: 2,
             ),
+
             const SizedBox(height: 28),
+
+            // ==================================================
+            // Impression Type
+            // ==================================================
+
             const SectionTitle(
               icon: Icons.print,
-              title: "نوع الطبعة",
+              title: 'نوع الطبعة',
             ),
+
             const SizedBox(height: 4),
+
             OrderTypeCard(
-              title: "طبعة عادية",
-              subtitle: "Traditional Impression",
+              title: 'طبعة عادية',
+              subtitle: 'Traditional Impression',
               icon: Icons.medical_information_outlined,
-              isSelected: controller.model.value.impressionType == "normal",
+              isSelected: controller.model.value.impressionType == 'normal',
               onTap: () {
-                controller.selectImpression("normal");
+                controller.selectImpression('normal');
               },
             ),
+
             const SizedBox(height: 12),
+
             OrderTypeCard(
-              title: "طبعة رقمية",
-              subtitle: "Digital Scan",
+              title: 'طبعة رقمية',
+              subtitle: 'Digital Scan',
               icon: Icons.document_scanner_outlined,
-              isSelected: controller.model.value.impressionType == "digital",
+              isSelected: controller.model.value.impressionType == 'digital',
               onTap: () {
-                controller.selectImpression("digital");
+                controller.selectImpression('digital');
               },
             ),
+
             const SizedBox(height: 30),
+
+            // ==================================================
+            // Case Type
+            // ==================================================
+
             const SectionTitle(
               icon: Icons.category_outlined,
-              title: "نوع الحالة",
+              title: 'نوع الحالة',
             ),
+
             const SizedBox(height: 4),
+
             OrderTypeCard(
-              title: "تجريبية",
-              subtitle: "Trial",
+              title: 'تجريبية',
+              subtitle: 'Trial',
               icon: Icons.science_outlined,
-              isSelected: controller.model.value.caseType == "trial",
+              isSelected: controller.model.value.caseType == 'trial',
               onTap: () {
-                controller.selectCaseType("trial");
+                controller.selectCaseType('trial');
               },
             ),
+
             const SizedBox(height: 12),
+
             OrderTypeCard(
-              title: "نهائية",
-              subtitle: "Final",
+              title: 'نهائية',
+              subtitle: 'Final',
               icon: Icons.check_circle_outline,
-              isSelected: controller.model.value.caseType == "final",
+              isSelected: controller.model.value.caseType == 'final',
               onTap: () {
-                controller.selectCaseType("final");
+                controller.selectCaseType('final');
               },
             ),
+
             const SizedBox(height: 30),
+
+            // ==================================================
+            // Lab
+            // ==================================================
+
             const SectionTitle(
               icon: Icons.person_outline,
-              title: "المريض",
+              title: 'مخبر',
             ),
+
             const Text(
-              "اختر مريضاً موجوداً أو أنشئ ملفاً جديداً",
+              'اختر مخبراً من القائمة',
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 13,
               ),
             ),
+
             const SizedBox(height: 10),
-            Obx(
-              () {
-                if (controller.isLoadingPatient.value) {
-                  return Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: AppColors.primary.withOpacity(.2),
-                      ),
-                    ),
-                    child: const Row(
-                      children: [
-                        SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                        SizedBox(width: 12),
-                        Text(
-                          'جاري تحميل المرضى...',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                if (controller.patients.isEmpty) {
-                  return Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.orange.withOpacity(.08),
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: Colors.orange.withOpacity(.2),
-                      ),
-                    ),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.info_outline,
-                          color: Colors.orange,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'لا يوجد مرضى متاحون حاليًا',
-                          style: TextStyle(
-                            color: Colors.orange,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                return DropdownButtonFormField<int>(
-                  initialValue: null,
-                  isExpanded: true,
-                  decoration: InputDecoration(
-                    hintText: "اختر المريض",
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.people_outline,
-                      color: AppColors.primary,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      borderSide: BorderSide(
-                        color: AppColors.primary.withOpacity(.2),
-                      ),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(14),
-                      ),
-                      borderSide: BorderSide(
-                        color: AppColors.primary,
-                        width: 1.5,
-                      ),
-                    ),
-                  ),
-                  items: controller.patients.map(
-                    (patient) {
-                      return DropdownMenuItem<int>(
-                        value: patient.patientId,
-                        child: Text(
-                          '${patient.fullName}  (#${patient.patientId})',
-                          style: const TextStyle(
-                            color: Colors.black87,
-                          ),
-                        ),
-                      );
-                    },
-                  ).toList(),
-                  onChanged: (value) {
-                    controller.selectPatient(value);
-                  },
-                );
-              },
-            ),
-            const SizedBox(height: 18),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: OutlinedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.person_add_alt_1),
-                label: const Text(
-                  "إنشاء ملف مريض جديد",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.primary,
-                  side: BorderSide(
-                    color: AppColors.primary.withOpacity(.4),
-                  ),
-                  backgroundColor: AppColors.primary.withOpacity(.05),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-            const SectionTitle(
-              icon: Icons.person_outline,
-              title: "مخبر",
-            ),
-            const Text(
-              "اختر مخبراً من القائمة",
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 13,
-              ),
-            ),
-            const SizedBox(height: 10),
+
             Obx(
               () {
                 if (controller.isLoadingLabs.value) {
@@ -257,7 +192,7 @@ class StepOnePage extends GetView<CreateOrderController> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
-                        color: AppColors.primary.withOpacity(.2),
+                        color: AppColors.primary.withValues(alpha: .2),
                       ),
                     ),
                     child: const Row(
@@ -287,10 +222,14 @@ class StepOnePage extends GetView<CreateOrderController> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.orange.withOpacity(.08),
+                      color: Colors.orange.withValues(
+                        alpha: .08,
+                      ),
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
-                        color: Colors.orange.withOpacity(.2),
+                        color: Colors.orange.withValues(
+                          alpha: .2,
+                        ),
                       ),
                     ),
                     child: const Row(
@@ -332,7 +271,7 @@ class StepOnePage extends GetView<CreateOrderController> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(
-                        color: AppColors.primary.withOpacity(.2),
+                        color: AppColors.primary.withValues(alpha: .2),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -362,59 +301,80 @@ class StepOnePage extends GetView<CreateOrderController> {
                 );
               },
             ),
+
             const SizedBox(height: 18),
+
+            // ==================================================
+            // Templates
+            // ==================================================
+
             const SectionTitle(
               icon: Icons.description_outlined,
-              title: "اختر قالباً",
+              title: 'اختر قالباً',
             ),
+
             const SizedBox(height: 16),
-            // TemplateSelectorCard(
-            //   templateName: "Zircon Crown",
-            //   description: "Shade A2 • 5 Days",
-            //   isSelected: controller.selectedTemplate.value == 1,
-            //   onTap: () {
-            //     controller.selectTemplate(1);
-            //   },
-            // ),
+
             Obx(
               () {
                 return ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.templates.length,
-                  separatorBuilder: (_, __) => const SizedBox(
-                    height: 12,
-                  ),
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
                   itemBuilder: (context, index) {
                     final template = controller.templates[index];
+
                     final templateId = index + 1;
 
                     return TemplateSelectorCard(
                       templateName: template.title,
-                      description:
-                          '${template.defaultShade} • ${template.deliveryDays} Days',
+                      description: '${template.defaultShade} • '
+                          '${template.deliveryDays} Days',
                       isSelected:
                           controller.selectedTemplate.value == templateId,
                       onTap: () {
-                        controller.selectTemplate(templateId);
+                        controller.selectTemplate(
+                          templateId,
+                        );
                       },
                     );
                   },
                 );
               },
             ),
+
             TextButton(
               onPressed: controller.skipTemplate,
-              child: const Text("تخطي"),
+              child: const Text(
+                'تخطي',
+                style: TextStyle(
+                  fontFamily: 'IBM Plex Sans Arabic',
+                ),
+              ),
             ),
+
             const SizedBox(height: 10),
+
+            // ==================================================
+            // Order Information
+            // ==================================================
+
             const SectionTitle(
               icon: Icons.assignment_outlined,
-              title: "معلومات الطلب",
+              title: 'معلومات الطلب',
             ),
+
             const SizedBox(height: 10),
+
             const PatientInfoCard(),
+
             const SizedBox(height: 30),
+
+            // ==================================================
+            // Navigation
+            // ==================================================
+
             Row(
               children: [
                 Expanded(
@@ -430,6 +390,7 @@ class StepOnePage extends GetView<CreateOrderController> {
                 ),
               ],
             ),
+
             const SizedBox(height: 30),
           ],
         ),

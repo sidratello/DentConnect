@@ -87,7 +87,6 @@ abstract class AppRouter {
     ),
     GetPage(
       name: labDetailsPage,
-      // TODO: Update this to pass the correct lab ID when navigating to the LabDetailsPage
       page: () => LabDetailsPage(id: Get.arguments),
     ),
     GetPage(

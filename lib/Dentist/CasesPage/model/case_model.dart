@@ -26,9 +26,9 @@ class CaseModel {
   CaseModel.fromJson(Map<String, dynamic> json) {
     pending = _parseCaseItems(json['Pennding']);
     accepted = _parseCaseItems(json['Accepted']);
-    requestInfo = _parseCaseItems(json['RequestInfo']);
+    requestInfo = _parseCaseItems(json['RequestInfo']); //
     inDesign = _parseCaseItems(json['InDesign']);
-    inProduction = _parseCaseItems(json['InProduction']);
+    inProduction = _parseCaseItems(json['InProduction']); //
     inColoring = _parseCaseItems(json['InColoring']);
     ready = _parseCaseItems(json['Ready']);
     delivered = _parseCaseItems(json['Delivered']);
@@ -85,11 +85,10 @@ class CaseItem {
   double? finalPrice;
   double? totalPriceToPay;
   bool? isPaid;
-
   Patient? patient;
   AssignedLab? assignedLab;
   List<OrderItems>? orderItems;
-  List<dynamic>? files;
+  List<CaseFile>? files;
 
   CaseItem({
     this.id,
@@ -127,7 +126,7 @@ class CaseItem {
     hasAccessories = json['hasAccessories'];
     notes = json['notes'];
 
-    if (json['requiredImages'] != null) {
+    if (json['requiredImages'] != null && json['requiredImages'] is List) {
       requiredImages = List<String>.from(
         json['requiredImages'],
       );
@@ -136,9 +135,17 @@ class CaseItem {
     deliveryDate = json['deliveryDate'];
     createdAt = json['createdAt'];
 
-    estimatedPrice = _toDouble(json['estimatedPrice']);
-    finalPrice = _toDouble(json['finalPrice']);
-    totalPriceToPay = _toDouble(json['totalPriceToPay']);
+    estimatedPrice = _toDouble(
+      json['estimatedPrice'],
+    );
+
+    finalPrice = _toDouble(
+      json['finalPrice'],
+    );
+
+    totalPriceToPay = _toDouble(
+      json['totalPriceToPay'],
+    );
 
     isPaid = json['isPaid'];
 
@@ -169,9 +176,13 @@ class CaseItem {
 
     // Files
     if (json['files'] != null && json['files'] is List) {
-      files = List<dynamic>.from(
-        json['files'],
-      );
+      files = (json['files'] as List)
+          .map(
+            (file) => CaseFile.fromJson(
+              file as Map<String, dynamic>,
+            ),
+          )
+          .toList();
     }
   }
 
@@ -184,7 +195,9 @@ class CaseItem {
       return value.toDouble();
     }
 
-    return double.tryParse(value.toString());
+    return double.tryParse(
+      value.toString(),
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -209,7 +222,29 @@ class CaseItem {
       'patient': patient?.toJson(),
       'assignedLab': assignedLab?.toJson(),
       'orderItems': orderItems?.map((e) => e.toJson()).toList(),
-      'files': files,
+      'files': files?.map((e) => e.toJson()).toList(),
+    };
+  }
+}
+
+class CaseFile {
+  int? id;
+  String? url;
+
+  CaseFile({
+    this.id,
+    this.url,
+  });
+
+  CaseFile.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    url = json['url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'url': url,
     };
   }
 }

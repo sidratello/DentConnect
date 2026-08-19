@@ -49,7 +49,12 @@ class LabDetailsPage extends GetView<LabController> {
                       const LabCreateRequestButton(),
                       const LabDetailsWorksHeader(),
                       LabCaseList(
-                          images: labController.labModel!.galleryImages ?? []),
+                        images: labController.labModel?.galleryImages
+                                ?.map((image) => image.url ?? '')
+                                .where((url) => url.isNotEmpty)
+                                .toList() ??
+                            [],
+                      ),
                       Obx(
                         () {
                           final controller = Get.find<LabController>();

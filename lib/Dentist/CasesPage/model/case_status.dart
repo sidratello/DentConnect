@@ -43,11 +43,11 @@ enum CaseStatus {
         return CaseStatus.waitingApproval;
       case 'Accepted':
         return CaseStatus.accepted;
-      case 'NeedInfo':
+      case 'RequestInfo':
         return CaseStatus.needInfo;
       case 'InDesign':
         return CaseStatus.inDesign;
-      case 'InProgress':
+      case 'InProduction':
         return CaseStatus.inProgress;
       case 'Ready':
         return CaseStatus.ready;
@@ -60,7 +60,7 @@ enum CaseStatus {
       case 'WaitingForClarification':
         return CaseStatus.waitingForClarification;
       default:
-        throw ArgumentError('Invalid status: $status');
+        throw ArgumentError('Invalid hoooooon status: $status');
     }
   }
 }

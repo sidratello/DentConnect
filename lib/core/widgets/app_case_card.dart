@@ -22,7 +22,7 @@ class AppCaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: Static.getheight(context, 130),
+      height: Static.getheight(context, 140),
       decoration: BoxDecoration(
         color: const Color.fromRGBO(232, 232, 232, 0.6),
         borderRadius: BorderRadius.circular(12),

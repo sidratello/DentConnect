@@ -169,9 +169,9 @@ class LabCard extends StatelessWidget {
                     height: Static.getheight(context, 18),
                   ),
                   InkWell(
-                    onTap: () {
-                      homeController.sendFollowRequest(labId);
-                    },
+                    // onTap: () {
+                    //   homeController.sendFollowRequest(labId);
+                    // },
                     child: Container(
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(

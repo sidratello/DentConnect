@@ -18,96 +18,140 @@ class UploadImagesCard extends GetView<CreateOrderController> {
       children: [
         const SectionTitle(
           icon: Icons.photo_library_outlined,
-          title: "صور الحالة",
+          title: 'صور الحالة',
         ),
-        SizedBox(height: Static.getheight(context, 16)),
+        SizedBox(
+          height: Static.getheight(context, 16),
+        ),
         OrderDetailsCard(
           child: Obx(
-            () => Column(
-              children: [
-                GestureDetector(
-                  onTap: controller.pickImages,
-                  child: DottedBorderWidget(
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.cloud_upload_outlined,
-                          size: 42,
-                          color: AppColors.primary,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          "اضغط لاختيار الصور",
-                          style: TextStyle(
-                            fontFamily: "IBM Plex Sans Arabic",
-                            fontWeight: FontWeight.w600,
-                            fontSize: Static.getwidth(context, 15),
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          "PNG • JPG • JPEG",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontFamily: "IBM Plex Sans Arabic",
-                            fontSize: Static.getwidth(context, 12),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                if (controller.images.isNotEmpty) ...[
-                  const SizedBox(height: 20),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: controller.images.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
-                    itemBuilder: (_, index) {
-                      final File image = controller.images[index];
-
-                      return Stack(
+            () {
+              return Column(
+                children: [
+                  GestureDetector(
+                    onTap: controller.pickImages,
+                    child: DottedBorderWidget(
+                      child: Column(
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(14),
-                            child: Image.file(
-                              image,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: double.infinity,
+                          const Icon(
+                            Icons.cloud_upload_outlined,
+                            size: 42,
+                            color: AppColors.primary,
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            'اضغط لاختيار الصور',
+                            style: TextStyle(
+                              fontFamily: 'IBM Plex Sans Arabic',
+                              fontWeight: FontWeight.w600,
+                              fontSize: Static.getwidth(context, 15),
                             ),
                           ),
-                          Positioned(
-                            top: 5,
-                            right: 5,
-                            child: GestureDetector(
-                              onTap: () => controller.removeImage(index),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.circle,
-                                ),
-                                padding: const EdgeInsets.all(4),
-                                child: const Icon(
-                                  Icons.close,
-                                  size: 16,
-                                  color: Colors.white,
-                                ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'PNG • JPG • JPEG',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontFamily: 'IBM Plex Sans Arabic',
+                              fontSize: Static.getwidth(context, 12),
+                            ),
+                          ),
+                          if (controller.images.isNotEmpty) ...[
+                            const SizedBox(height: 4),
+                            Text(
+                              '${controller.images.length} صورة محددة',
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontFamily: 'IBM Plex Sans Arabic',
+                                fontSize: Static.getwidth(context, 11),
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                          ),
+                          ],
                         ],
-                      );
-                    },
+                      ),
+                    ),
                   ),
-                ]
-              ],
+                  if (controller.images.isNotEmpty) ...[
+                    const SizedBox(height: 20),
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.images.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 1,
+                      ),
+                      itemBuilder: (context, index) {
+                        final File image = controller.images[index];
+
+                        return _ImagePreview(
+                          image: image,
+                          onDelete: () {
+                            controller.removeImage(index);
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ],
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ImagePreview extends StatelessWidget {
+  const _ImagePreview({
+    required this.image,
+    required this.onDelete,
+  });
+
+  final File image;
+  final VoidCallback onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(14),
+          child: Image.file(
+            image,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Positioned(
+          top: 6,
+          right: 6,
+          child: GestureDetector(
+            onTap: onDelete,
+            child: Container(
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(.9),
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(.15),
+                    blurRadius: 5,
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.close_rounded,
+                size: 17,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

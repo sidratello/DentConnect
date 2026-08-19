@@ -82,7 +82,8 @@ class LabDetailsNameRow extends StatelessWidget {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
                   onTap: () {
-                    labController.sendFollowRequest();
+                    labController.sendFollowRequestStatus();
+                    labController.sendFollowRequest(labController.getLabId());
                   },
                   child: Container(
                     width: Static.getwidth(context, 120),

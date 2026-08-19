@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
+import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Pages/select_patient_page.dart';
 import '../Shared/back_button.dart';
-import '../Shared/custom_choice_chip.dart';
 import '../Shared/custom_date_field.dart';
 import '../Shared/custom_switch_tile.dart';
 import '../Shared/next_button.dart';
 import '../Shared/progress_header.dart';
-
-import '../Teeth/teeth_selector.dart';
-
-import '../Upload/upload_files_card.dart';
 import '../Upload/upload_images_card.dart';
 
 class StepTwoPage extends GetView<CreateOrderController> {
@@ -29,20 +25,9 @@ class StepTwoPage extends GetView<CreateOrderController> {
               totalSteps: 2,
             ),
 
-            const SizedBox(height: 30),
-
-            /// الأسنان
-            const TeethSelector(),
-
             /// الصور
 
             const UploadImagesCard(),
-
-            const SizedBox(height: 28),
-
-            /// ملفات الطبعة
-
-            const UploadFilesCard(),
 
             const SizedBox(height: 28),
 
@@ -118,9 +103,10 @@ class StepTwoPage extends GetView<CreateOrderController> {
                 const SizedBox(width: 14),
                 Expanded(
                   child: NextButton(
-                    text: "إرسال الطلب",
-                    onPressed: controller.submitOrder,
-                  ),
+                      text: "إرسال الطلب",
+                      onPressed: () {
+                        controller.submitOrder();
+                      }),
                 ),
               ],
             ),
