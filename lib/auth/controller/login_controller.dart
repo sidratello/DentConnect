@@ -170,7 +170,19 @@ if (user.status == 'PendingVerification') {
 
   return;
 }
+/// ================= PENDING ADMIN APPROVAL =================
+if (user.role == 'Lab' &&
+    user.status == 'PendingAdminApproval') {
+  await _saveLimitedUserInfo(user);
 
+  Get.snackbar(
+    'بانتظار الموافقة',
+    'حسابك بانتظار موافقة الإدارة',
+    snackPosition: SnackPosition.BOTTOM,
+  );
+
+  return;
+}
   /// ================= PendingPayment=================
 
 if (user.role == 'Lab' &&

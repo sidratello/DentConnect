@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:signalr_core/signalr_core.dart';
 
 import 'package:template/auth/local_notification_service.dart';
-import 'package:template/core/widgets/app_notification.dart';
 
 class NotificationService {
   static final NotificationService
@@ -98,17 +97,12 @@ class NotificationService {
     // Backend:
     // SendAsync("ReceiveNotification", ...)
     // =====================================================
-
     _hubConnection!.on(
       'ReceiveNotification',
       (arguments) {
-        _handleNotification(
-          eventName:
-              'ReceiveNotification',
-          arguments:
-              arguments,
+        _handleGeneralNotification(
+          arguments,
         );
-        
       },
     );
 
@@ -122,18 +116,14 @@ class NotificationService {
     // SendAsync("ReceiveOrderNotification", ...)
     // =====================================================
 
-    _hubConnection!.on(
-      'ReceiveOrderNotification',
-      (arguments) {
-        _handleNotification(
-          eventName:
-              'ReceiveOrderNotification',
-          arguments:
-              arguments,
-        );
-      },
+_hubConnection!.on(
+  'ReceiveOrderNotification',
+  (arguments) {
+    _handleReceiveOrderNotification(
+      arguments,
     );
-
+  },
+);
     // =====================================================
     // Start connection
     // =====================================================
@@ -167,121 +157,361 @@ class NotificationService {
   // =====================================================
   // Common handler for both events
   // =====================================================
+void _handleGeneralNotification(
+  List<Object?>? arguments,
+) {
+  if (arguments == null ||
+      arguments.isEmpty) {
+    debugPrint(
+      '⚠️ ReceiveNotification without data',
+    );
+    return;
+  }
 
-  void _handleNotification({
-    required String eventName,
-    required List<Object?>? arguments,
-  }) {
-    if (arguments == null ||
-        arguments.isEmpty) {
+  try {
+    final rawData =
+        arguments.first;
+
+    debugPrint(
+      '================ GENERAL NOTIFICATION =================',
+    );
+
+    debugPrint(
+      'Raw data: $rawData',
+    );
+
+    if (rawData is! Map) {
       debugPrint(
-        '⚠️ $eventName received '
-        'without data.',
+        '❌ Invalid notification format',
       );
-
       return;
     }
 
-    try {
-      debugPrint(
-        '🔔 Event: $eventName',
+    final data =
+        Map<String, dynamic>.from(
+      rawData,
+    );
+
+    final notificationData =
+        data['data'] ??
+        data['Data'];
+
+    final backendMessage =
+        data['message'] ??
+        data['Message'];
+
+    String title =
+        'إشعار جديد';
+
+    String message =
+        backendMessage
+                ?.toString() ??
+            'لديك إشعار جديد';
+
+    if (notificationData is Map) {
+      final payload =
+          Map<String, dynamic>.from(
+        notificationData,
       );
 
       debugPrint(
-        '🔔 Raw SignalR arguments: '
-        '$arguments',
+        'Notification Data: $payload',
       );
 
-      final rawData =
-          arguments.first;
+      // Complaint
+      final dentistId =
+          payload['dentistId'] ??
+          payload['DentistId'];
 
-      final notification =
-          AppNotification
-              .fromSignalR(
-        rawData,
-      );
+      final complaintTitle =
+          payload['title'] ??
+          payload['Title'];
 
-      debugPrint(
-        '---------------- SIGNALR NOTIFICATION ----------------',
-      );
+      if (dentistId != null) {
+        title =
+            'شكوى جديدة';
 
-      debugPrint(
-        'Event: $eventName',
-      );
+        if (backendMessage == null &&
+            complaintTitle != null) {
+          message =
+              'شكوى جديدة: $complaintTitle';
+        }
+      }
 
-      debugPrint(
-        'ID: ${notification.id}',
-      );
+      // Advertisement
+      final advertisementId =
+          payload['advertisementId'] ??
+          payload['AdvertisementId'];
 
-      debugPrint(
-        'Type: ${notification.type}',
-      );
+      if (advertisementId != null) {
+        title =
+            'تحديث الإعلان';
 
-      debugPrint(
-        'Message: '
-        '${notification.message}',
-      );
-
-      debugPrint(
-        'OrderId: '
-        '${notification.orderId}',
-      );
-
-      debugPrint(
-        'LabId: '
-        '${notification.labId}',
-      );
-
-      debugPrint(
-        'CreatedAt: '
-        '${notification.createdAt}',
-      );
-
-      debugPrint(
-        '--------------------------------------------------------',
-      );
-
-      _showLocalNotification(
-        notification,
-      );
-    } catch (
-      error,
-      stackTrace
-    ) {
-      debugPrint(
-        '❌ Notification parse '
-        'error: $error',
-      );
-
-      debugPrint(
-        '$stackTrace',
-      );
+        if (backendMessage == null &&
+            complaintTitle != null) {
+          message =
+              'تم تحديث حالة إعلانك: $complaintTitle';
+        }
+      }
     }
+
+    debugPrint(
+      'Notification Id: '
+      '${data['id'] ?? data['Id']}',
+    );
+
+    debugPrint(
+      'Notification Type: '
+      '${data['type'] ?? data['Type']}',
+    );
+
+    debugPrint(
+      'Message: $message',
+    );
+
+    debugPrint(
+      '=======================================================',
+    );
+
+    _showLocalNotification(
+      title: title,
+      body: message,
+    );
+  } catch (
+    error,
+    stackTrace
+  ) {
+    debugPrint(
+      '❌ General notification error: '
+      '$error',
+    );
+
+    debugPrint(
+      '$stackTrace',
+    );
+  }
+}
+
+
+  // =====================================================
+  // ReceiveOrderNotification
+  // Doctor sends order
+  // =====================================================
+void _handleReceiveOrderNotification(
+  List<Object?>? arguments,
+) {
+  if (arguments == null ||
+      arguments.isEmpty) {
+    debugPrint(
+      '⚠️ ReceiveOrderNotification without data',
+    );
+    return;
   }
 
+  try {
+    final rawData =
+        arguments.first;
+
+    debugPrint(
+      '================ SIGNALR NOTIFICATION =================',
+    );
+
+    debugPrint(
+      'Raw data: $rawData',
+    );
+
+    if (rawData is! Map) {
+      debugPrint(
+        '❌ Invalid notification format',
+      );
+      return;
+    }
+
+    final data =
+        Map<String, dynamic>.from(
+      rawData,
+    );
+
+    final notificationData =
+        data['data'] ??
+        data['Data'];
+
+    final backendMessage =
+        data['message'] ??
+        data['Message'];
+
+    String title =
+        'إشعار جديد';
+
+    String message =
+        backendMessage
+                ?.toString() ??
+            'لديك إشعار جديد';
+
+    // =====================================================
+    // Detect notification type from Data
+    // =====================================================
+
+    if (notificationData is Map) {
+      final payload =
+          Map<String, dynamic>.from(
+        notificationData,
+      );
+
+      debugPrint(
+        'Notification Data: $payload',
+      );
+
+      // ---------------------------------------------
+      // Blog / Post notification
+      // ---------------------------------------------
+
+      final postId =
+          payload['postId'] ??
+          payload['PostId'];
+
+      if (postId != null) {
+        title =
+            'تحديث المنشور';
+
+        final postTitle =
+            payload['title'] ??
+            payload['Title'];
+
+        final status =
+            payload['status'] ??
+            payload['Status'];
+
+        debugPrint(
+          'PostId: $postId',
+        );
+
+        debugPrint(
+          'Post title: $postTitle',
+        );
+
+        debugPrint(
+          'Post status: $status',
+        );
+      }
+
+      // ---------------------------------------------
+      // Order notification
+      // ---------------------------------------------
+
+      final orderId =
+          payload['orderId'] ??
+          payload['OrderId'];
+
+      if (orderId != null) {
+        title =
+            'طلب جديد';
+
+        if (backendMessage == null ||
+            backendMessage
+                .toString()
+                .trim()
+                .isEmpty) {
+          message =
+              'تم إرسال طلب جديد رقم $orderId';
+        }
+
+        debugPrint(
+          'OrderId: $orderId',
+        );
+      }
+
+      // ---------------------------------------------
+      // Advertisement notification
+      // ---------------------------------------------
+
+      final advertisementId =
+          payload['advertisementId'] ??
+          payload['AdvertisementId'];
+
+      if (advertisementId != null) {
+        title =
+            'تحديث الإعلان';
+
+        final advertisementTitle =
+            payload['title'] ??
+            payload['Title'];
+
+        if (backendMessage == null ||
+            backendMessage
+                .toString()
+                .trim()
+                .isEmpty) {
+          if (advertisementTitle != null) {
+            message =
+                'تم تحديث حالة إعلانك: $advertisementTitle';
+          }
+        }
+
+        debugPrint(
+          'AdvertisementId: '
+          '$advertisementId',
+        );
+      }
+    }
+
+    debugPrint(
+      'Notification Id: '
+      '${data['id'] ?? data['Id']}',
+    );
+
+    debugPrint(
+      'Notification Type: '
+      '${data['type'] ?? data['Type']}',
+    );
+
+    debugPrint(
+      'Message: $message',
+    );
+
+    debugPrint(
+      '=========================================================',
+    );
+
+    _showLocalNotification(
+      title: title,
+      body: message,
+    );
+  } catch (
+    error,
+    stackTrace
+  ) {
+    debugPrint(
+      '❌ ReceiveOrderNotification error: '
+      '$error',
+    );
+
+    debugPrint(
+      '$stackTrace',
+    );
+  }
+}
+
   // =====================================================
-  // Show Android notification
+  // Android local notification
   // =====================================================
 
-  Future<void>
-      _showLocalNotification(
-    AppNotification notification,
-  ) async {
-    if (notification.message
-        .trim()
-        .isEmpty) {
+  Future<void> _showLocalNotification({
+    required String title,
+    required String body,
+  }) async {
+    if (body.trim().isEmpty) {
       return;
     }
 
     await LocalNotificationService()
         .showNotification(
-      // أنت تريد العنوان ثابتاً
-      title: 'إشعار جديد',
-
-      body:
-          notification.message,
+      title: title,
+      body: body,
     );
   }
+
+ 
 
   // =====================================================
   // Stop SignalR
