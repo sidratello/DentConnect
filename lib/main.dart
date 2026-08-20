@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/CasesPage/controller/case_controller.dart';
@@ -13,7 +14,11 @@ import 'package:template/core_dentist/storage_services.dart';
 import 'package:template/core_dentist/theme/app_theme.dart';
 import 'package:template/core_dentist/theme/theme_controller.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:template/auth/local_notification_service.dart';
 
+
+import 'package:template/core/app_router.dart';
+import 'package:template/core/storage_services.dart';
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -31,7 +36,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Get.putAsync<StorageService>(
+ await Get.putAsync<StorageService>(
     () async => await StorageService().init(),
   );
 
@@ -43,6 +48,9 @@ void main() async {
   Get.put(PatientController());
 
   await GetStorage.init();
+  await LocalNotificationService()
+      .initialize();
+
 
   runApp(const MyApp());
 }
@@ -69,6 +77,14 @@ class MyApp extends StatelessWidget {
             locale: const Locale(
               'ar',
             ),
+            supportedLocales: const [
+              Locale('ar'),
+              Locale('en'),
+            ],         localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeController.isDarkMode.value
