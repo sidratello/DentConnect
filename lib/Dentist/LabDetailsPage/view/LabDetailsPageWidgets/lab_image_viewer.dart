@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
 
 class LabImageViewer extends StatelessWidget {
   final String imagePath;

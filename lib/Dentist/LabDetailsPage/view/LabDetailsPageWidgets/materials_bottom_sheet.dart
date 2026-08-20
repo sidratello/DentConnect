@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/app_spacing.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
 
 void showLabInfoBottomSheet(
   BuildContext context, {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class ProfileHeader extends GetView<HomeController> {
   const ProfileHeader({super.key});

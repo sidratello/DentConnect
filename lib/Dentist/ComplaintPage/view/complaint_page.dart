@@ -7,11 +7,11 @@ import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_s
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_text_field.dart';
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_type_selector.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/static.dart';
+import '../../../core_dentist/theme/app_colors.dart';
+import '../../../core_dentist/utils/static.dart';
 
 class ComplaintPageController extends GetxController {
   final HomeController homeController = Get.find<HomeController>();

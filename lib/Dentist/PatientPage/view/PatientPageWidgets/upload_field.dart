@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:template/core/utils/static.dart' show Static;
+import 'package:template/core_dentist/utils/static.dart' show Static;
 
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
 
 class UploadField extends StatelessWidget {
   final String title;

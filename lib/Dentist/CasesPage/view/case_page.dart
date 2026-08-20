@@ -4,9 +4,9 @@ import 'package:template/Dentist/CasesPage/view/CasePageWidgets/case_section.dar
 import 'package:template/Dentist/CasesPage/view/CasePageWidgets/cases_preview_card.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/HomePage/view/HomePageWidegts/DrawerWidgets/app_drawer.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
 import '../controller/case_controller.dart';
 import '../model/case_status.dart';

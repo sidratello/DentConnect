@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/TemplatesPage/controller/template_controller.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/add_template_page.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_card.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
 class TemplatesPage extends GetView<TemplateController> {
   const TemplatesPage({super.key});

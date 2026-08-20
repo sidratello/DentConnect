@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/Dentist/CasesPage/model/case_status.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class StatusBadge extends StatelessWidget {
   final String status;

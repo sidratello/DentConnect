@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/CaseDetailsPage/model/case_details_model.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/case_details_page.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/static.dart';
-import '../../../../core/widgets/app_case_card.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
+import '../../../../core_dentist/utils/static.dart';
+import '../../../../core_dentist/widgets/app_case_card.dart';
 
 class LabCaseWithDoctorItem extends StatelessWidget {
   final Orders? order;

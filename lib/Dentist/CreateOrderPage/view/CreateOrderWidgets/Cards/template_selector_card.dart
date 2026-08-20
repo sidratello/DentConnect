@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class TemplateSelectorCard extends StatelessWidget {
   final String templateName;

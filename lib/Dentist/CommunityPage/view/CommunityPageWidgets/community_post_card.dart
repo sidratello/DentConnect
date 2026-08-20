@@ -3,9 +3,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:template/Dentist/CommunityPage/view/CommunityPageWidgets/community_post_status_badge.dart';
 import 'package:template/Dentist/CommunityPage/view/CommunityPageWidgets/post_details_page.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import '../../../../core/utils/static.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import '../../../../core_dentist/utils/static.dart';
 import '../../model/community_post_model.dart';
 
 class CommunityPostCard extends StatelessWidget {

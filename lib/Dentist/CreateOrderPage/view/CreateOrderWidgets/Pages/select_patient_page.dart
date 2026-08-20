@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/section_title.dart';
 import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
 import 'package:template/Dentist/PatientPage/view/create_new_patient_profile.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
 class SelectPatientPage extends GetView<CreateOrderController> {
   const SelectPatientPage({super.key});

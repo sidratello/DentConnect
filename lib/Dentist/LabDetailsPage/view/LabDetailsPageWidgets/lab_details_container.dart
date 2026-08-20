@@ -9,9 +9,9 @@ import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_d
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_types.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_materials_and_specializations.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/static.dart';
-import '../../../../core/widgets/app_spacing.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
+import '../../../../core_dentist/utils/static.dart';
+import '../../../../core_dentist/widgets/app_spacing.dart';
 
 class LabDetailsContainer extends StatelessWidget {
   final LabDetailsModel labModel;

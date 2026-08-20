@@ -4,17 +4,17 @@ import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/templat
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_options_card.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_required_images_card.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_work_type_card.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_color_card.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_duration_card.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_materials_card.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_notes_card.dart';
 import 'package:template/Dentist/TemplatesPage/view/TemplatesPageWidgets/template_preview_card.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
-import '../../../core/theme/app_colors.dart';
+import '../../../core_dentist/theme/app_colors.dart';
 
 class TemplateDetailsPage extends StatelessWidget {
   final CaseTemplate template;

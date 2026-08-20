@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/SearchLabsPage/view/SearchLabsPageWidgets/search_labs_results_page.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
+import '../../../../core_dentist/utils/static.dart';
 
 class SearchActionButtons extends StatelessWidget {
   const SearchActionButtons({

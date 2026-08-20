@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/image_item.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/section_title.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/app_spacing.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
 
 class CaseImagesCard extends StatelessWidget {
   final List<String> images;

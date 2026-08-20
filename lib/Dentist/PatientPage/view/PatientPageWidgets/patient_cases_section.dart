@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/patient_case_card.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/static.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
+import '../../../../core_dentist/utils/static.dart';
 import '../../controller/patient_controller.dart';
 
 class PatientCasesSection extends GetView<PatientController> {

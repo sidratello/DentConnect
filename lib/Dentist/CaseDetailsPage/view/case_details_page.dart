@@ -5,11 +5,11 @@ import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/cas
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/case_notes_card.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/case_order_info_card.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/case_status_card.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
 class CaseDetailsPage extends StatelessWidget {
   final Orders? orders;

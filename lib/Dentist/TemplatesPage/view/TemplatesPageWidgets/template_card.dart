@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:template/Dentist/TemplatesPage/view/template_details_page.dart';
-import 'package:template/core/app_router.dart';
+import 'package:template/core_dentist/app_router.dart';
 import 'package:template/Dentist/TemplatesPage/model/template_model.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/static.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
+import '../../../../core_dentist/utils/static.dart';
 
 class TemplateCard extends StatelessWidget {
   final CaseTemplate template;

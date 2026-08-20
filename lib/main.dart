@@ -8,10 +8,10 @@ import 'package:template/Dentist/CreateOrderPage/controller/create_order_control
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/PatientPage/controller/patient_controller.dart';
 import 'package:template/Dentist/TemplatesPage/controller/template_controller.dart';
-import 'package:template/core/app_router.dart';
-import 'package:template/core/storage_services.dart';
-import 'package:template/core/theme/app_theme.dart';
-import 'package:template/core/theme/theme_controller.dart';
+import 'package:template/core_dentist/app_router.dart';
+import 'package:template/core_dentist/storage_services.dart';
+import 'package:template/core_dentist/theme/app_theme.dart';
+import 'package:template/core_dentist/theme/theme_controller.dart';
 import 'package:get_storage/get_storage.dart';
 
 class MyHttpOverrides extends HttpOverrides {

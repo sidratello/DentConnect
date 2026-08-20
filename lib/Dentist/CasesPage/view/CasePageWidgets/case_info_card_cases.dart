@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/info_row.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/section_title.dart';
 import 'package:template/Dentist/CasesPage/model/case_model.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/app_spacing.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
 
 class CaseInfoCard extends StatelessWidget {
   final String patientName;

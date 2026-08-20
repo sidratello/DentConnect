@@ -7,10 +7,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:template/Dentist/PatientPage/controller/patient_controller.dart';
 import 'package:template/Dentist/PatientPage/model/patient_model.dart';
 
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
 class EditPatientPage extends StatefulWidget {
   final PatientModel patient;

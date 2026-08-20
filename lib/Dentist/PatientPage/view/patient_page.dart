@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/PatientPage/controller/patient_controller.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/patient_card.dart';
 import 'package:template/Dentist/PatientPage/view/patient_details_page.dart';
-import 'package:template/core/widgets/top_background.dart';
-import '../../../../core/utils/static.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
+import '../../../core_dentist/utils/static.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/patient_files_empty_state.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/patient_files_preview_card.dart';
 
-import '../../../core/theme/app_colors.dart';
+import '../../../core_dentist/theme/app_colors.dart';
 
 class PatientsPage extends GetView<PatientController> {
   const PatientsPage({

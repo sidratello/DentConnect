@@ -3,7 +3,7 @@ import 'package:template/Dentist/CaseDetailsPage/model/case_details_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/appointment_slot_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/compensation_item_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_details_model.dart';
-import 'package:template/core/api.dart';
+import 'package:template/core_dentist/api.dart';
 
 enum ScannerStatus {
   available,

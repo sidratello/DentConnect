@@ -5,8 +5,8 @@ import 'package:template/Dentist/CasesPage/view/CasePageWidgets/case_footer_buil
 import 'package:template/Dentist/CasesPage/view/CasePageWidgets/case_details_page.dart';
 import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Teeth/teeth_selector.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/app_case_card.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
+import '../../../../core_dentist/widgets/app_case_card.dart';
 
 import '../../model/case_model.dart';
 import '../../model/case_status.dart';

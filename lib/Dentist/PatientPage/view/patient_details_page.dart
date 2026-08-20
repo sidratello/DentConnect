@@ -8,11 +8,11 @@ import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/patient_cas
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/clinical_notes_card.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/teeth_images_grid.dart';
 
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
 class PatientDetailsPage extends StatelessWidget {
   final PatientModel patient;

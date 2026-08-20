@@ -10,8 +10,8 @@ import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_d
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_works_header.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_works_with_doctor_header.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/labs_backgroung_image.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/widgets/app_spacing.dart';
+import '../../../core_dentist/theme/app_colors.dart';
+import '../../../core_dentist/widgets/app_spacing.dart';
 
 class LabDetailsPage extends GetView<LabController> {
   final int id;

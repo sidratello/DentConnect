@@ -10,11 +10,11 @@ import 'package:template/Dentist/CommunityPage/view/CommunityPageWidgets/communi
 import 'package:template/Dentist/CommunityPage/view/CommunityPageWidgets/community_tabs.dart';
 import 'package:template/Dentist/CommunityPage/view/CommunityPageWidgets/create_post_button.dart';
 import 'package:template/Dentist/CommunityPage/view/CommunityPageWidgets/create_post_page.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
 import '../../HomePage/controller/home_controller.dart';
 

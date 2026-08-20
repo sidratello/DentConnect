@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_type_card.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class ComplaintTypeSelector extends StatelessWidget {
   const ComplaintTypeSelector({

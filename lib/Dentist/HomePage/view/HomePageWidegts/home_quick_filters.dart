@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/HomePage/view/HomePageWidegts/quick_filter_chip.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class HomeQuickFilters extends StatelessWidget {
   const HomeQuickFilters({

@@ -7,12 +7,12 @@ import 'package:template/Dentist/HomePage/view/HomePageWidegts/home_ads_slider.d
 import 'package:template/Dentist/HomePage/view/HomePageWidegts/home_quick_filters.dart';
 import 'package:template/Dentist/HomePage/view/HomePageWidegts/labs_list_view.dart';
 import 'package:template/Dentist/HomePage/view/HomePageWidegts/labs_section_header%20.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/appBar_notification_icon.dart';
-import 'package:template/core/widgets/appBar_profile_image.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/appBar_notification_icon.dart';
+import 'package:template/core_dentist/widgets/appBar_profile_image.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
-import '../../../core/theme/app_colors.dart';
+import '../../../core_dentist/theme/app_colors.dart';
 
 class HomePageWidget extends GetView<HomeController> {
   const HomePageWidget({super.key});

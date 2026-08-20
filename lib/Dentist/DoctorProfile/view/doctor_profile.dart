@@ -5,9 +5,9 @@ import 'package:template/Dentist/DoctorProfile/view/DoctorProfileWidegts/preview
 import 'package:template/Dentist/DoctorProfile/view/DoctorProfileWidegts/profile_header.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/HomePage/view/HomePageWidegts/DrawerWidgets/app_drawer.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
 class DoctorProfilePage extends GetView<HomeController> {
   const DoctorProfilePage({super.key});

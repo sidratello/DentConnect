@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class ComplaintTextField extends StatelessWidget {
   const ComplaintTextField({

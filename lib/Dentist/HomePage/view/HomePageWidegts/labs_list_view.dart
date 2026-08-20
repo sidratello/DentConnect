@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
 import '../../../LabDetailsPage/view/lab_details_page.dart';
 
 class LabsListView extends StatelessWidget {

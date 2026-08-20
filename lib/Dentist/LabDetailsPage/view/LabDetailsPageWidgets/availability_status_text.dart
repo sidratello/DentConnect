@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/static.dart';
+import '../../../../core_dentist/utils/static.dart';
 
 class AvailabilityStatusText extends StatelessWidget {
   final String text;

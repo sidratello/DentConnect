@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/static.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
+import '../../../../core_dentist/utils/static.dart';
 import '../../../HomePage/controller/home_controller.dart';
 import '../../controller/lab_controller.dart';
 import 'availability_status_text.dart';

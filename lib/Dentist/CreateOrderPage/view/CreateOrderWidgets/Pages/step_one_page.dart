@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
-import 'package:template/core/theme/app_colors.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
 
 import '../Cards/order_type_card.dart';
 import '../Cards/patient_info_card.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/core/theme/app_colors.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
 
-import '../../../../core/utils/static.dart';
+import '../../../../core_dentist/utils/static.dart';
 import '../../controller/community_controller.dart';
 
 class CommunityTabs extends StatelessWidget {

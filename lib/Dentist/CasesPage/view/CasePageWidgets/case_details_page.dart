@@ -9,11 +9,11 @@ import 'package:template/Dentist/CasesPage/controller/case_controller.dart';
 import 'package:template/Dentist/CasesPage/model/case_model.dart';
 import 'package:template/Dentist/CasesPage/view/CasePageWidgets/case_info_card_cases.dart';
 
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
 class CaseDetailsForDoctorPage extends StatelessWidget {
   final CaseItem? item;

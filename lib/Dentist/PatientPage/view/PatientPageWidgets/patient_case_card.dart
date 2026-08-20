@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:template/Dentist/PatientPage/model/cases_patient_model.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/info_item.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/status_badge.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class PatientCaseCard extends StatelessWidget {
   final Data caseItem;

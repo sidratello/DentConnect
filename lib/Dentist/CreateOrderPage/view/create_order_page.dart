@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Pages/step_one_page.dart';
 import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Pages/step_two_page.dart';
 import 'package:template/Dentist/HomePage/view/HomePageWidegts/DrawerWidgets/app_drawer.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 import '../controller/create_order_controller.dart';
 
 class CreateOrderPage extends GetView<CreateOrderController> {

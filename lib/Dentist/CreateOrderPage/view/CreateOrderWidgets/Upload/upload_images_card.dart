@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/section_title.dart';
 import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
 import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Cards/order_details_card.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class UploadImagesCard extends GetView<CreateOrderController> {
   const UploadImagesCard({super.key});

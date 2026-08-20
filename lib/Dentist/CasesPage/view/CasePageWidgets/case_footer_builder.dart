@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:template/Dentist/CasesPage/model/case_model.dart';
 import 'package:template/Dentist/CasesPage/model/case_status.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class CaseFooterBuilder extends StatelessWidget {
   final CaseItem item;

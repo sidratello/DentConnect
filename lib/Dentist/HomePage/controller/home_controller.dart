@@ -4,7 +4,7 @@ import 'package:template/Dentist/DoctorProfile/model/doctor_profile_model.dart';
 import 'package:template/Dentist/HomePage/model/advertisement_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
 import 'package:template/Dentist/SearchLabsPage/model/search_lab_model.dart';
-import 'package:template/core/api.dart';
+import 'package:template/core_dentist/api.dart';
 
 class HomeController extends GetxController {
   ApiService apiService = ApiService();

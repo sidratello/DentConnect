@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:template/core/api.dart';
+import 'package:template/core_dentist/api.dart';
 import '../model/case_model.dart';
 import '../model/case_status.dart';
 

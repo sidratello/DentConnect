@@ -5,10 +5,10 @@ import 'package:template/Dentist/CreateOrderPage/controller/create_order_control
 import 'package:template/Dentist/CreateOrderPage/model/compensation_data.dart';
 import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Upload/upload_files_card.dart';
 import 'package:template/Dentist/MainPage/view/main_page.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
 import '../Cards/order_details_card.dart';
 import '../Shared/section_title.dart';

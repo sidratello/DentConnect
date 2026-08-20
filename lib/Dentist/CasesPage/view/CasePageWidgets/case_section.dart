@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/utils/static.dart';
+import '../../../../core_dentist/utils/static.dart';
 import '../../controller/case_controller.dart';
 import '../../model/case_model.dart';
 import '../../model/case_status.dart';

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/LabDetailsPage/controller/lab_controller.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_case_with_doctor_item.dart';
-import 'package:template/core/widgets/app_spacing.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
 
-import '../../../../core/utils/static.dart';
+import '../../../../core_dentist/utils/static.dart';
 
 class LabCaseWithDoctorList extends StatelessWidget {
   final LabController controller;

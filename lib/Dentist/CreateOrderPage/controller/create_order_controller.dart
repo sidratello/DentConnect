@@ -11,8 +11,8 @@ import 'package:template/Dentist/MainPage/view/main_page.dart';
 import 'package:template/Dentist/PatientPage/model/patient_model.dart';
 import 'package:template/Dentist/TemplatesPage/model/template_data.dart';
 import 'package:template/Dentist/TemplatesPage/model/template_model.dart';
-import 'package:template/core/api.dart';
-import 'package:template/core/theme/app_colors.dart';
+import 'package:template/core_dentist/api.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
 import '../model/create_order_model.dart';
 import 'package:file_picker/file_picker.dart';
 

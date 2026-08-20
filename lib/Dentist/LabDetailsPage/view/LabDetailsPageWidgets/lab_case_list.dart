@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/static.dart';
+import '../../../../core_dentist/utils/static.dart';
 import 'lab_image_item.dart';
 
 class LabCaseList extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:template/Dentist/CommunityPage/model/community_post_model.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
-import '../../../../core/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
+import '../../../../core_dentist/utils/static.dart';
 
 class PostDetailsPage extends StatelessWidget {
   final CommunityPostModel post;

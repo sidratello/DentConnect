@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:template/Dentist/PatientPage/model/cases_patient_model.dart';
 import 'package:template/Dentist/PatientPage/model/patient_model.dart';
-import 'package:template/core/api.dart';
+import 'package:template/core_dentist/api.dart';
 
 class PatientController extends GetxController {
   final ApiService apiService = ApiService();

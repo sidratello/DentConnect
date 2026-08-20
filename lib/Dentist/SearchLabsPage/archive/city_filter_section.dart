@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/app_colors.dart';
+import '../../../core_dentist/theme/app_colors.dart';
 import '../controller/search_labs_controller.dart';
 
 class CityFilterSection extends StatelessWidget {

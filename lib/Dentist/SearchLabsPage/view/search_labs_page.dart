@@ -4,10 +4,10 @@ import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/HomePage/view/HomePageWidegts/DrawerWidgets/app_drawer.dart';
 import 'package:template/Dentist/SearchLabsPage/view/SearchLabsPageWidgets/search_action_buttons.dart';
 import 'package:template/Dentist/SearchLabsPage/view/SearchLabsPageWidgets/search_lab_textfield.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import 'package:template/core/widgets/top_background.dart';
-import '../../../core/theme/app_colors.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
+import '../../../core_dentist/theme/app_colors.dart';
 
 class SearchLabsPage extends GetView<HomeController> {
   const SearchLabsPage({super.key});

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/core/app_router.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/app_router.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/theme_controller.dart';
+import '../../../../../core_dentist/theme/app_colors.dart';
+import '../../../../../core_dentist/theme/theme_controller.dart';
 import 'drawer_header.dart';
 import 'drawer_item.dart';
 

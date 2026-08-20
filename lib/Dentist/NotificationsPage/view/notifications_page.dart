@@ -4,12 +4,12 @@ import 'package:template/Dentist/NotificationsPage/model/app_notification_model.
 import 'package:template/Dentist/NotificationsPage/view/NotificationsPageWidgets/notification_card.dart';
 import 'package:template/Dentist/NotificationsPage/view/NotificationsPageWidgets/notification_empty_card.dart';
 import 'package:template/Dentist/NotificationsPage/view/NotificationsPageWidgets/notifications_preview_card.dart';
-import 'package:template/core/utils/static.dart';
-import 'package:template/core/widgets/app_spacing.dart';
-import 'package:template/core/widgets/appbar_vector_black.dart';
-import 'package:template/core/widgets/top_background.dart';
+import 'package:template/core_dentist/utils/static.dart';
+import 'package:template/core_dentist/widgets/app_spacing.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
+import 'package:template/core_dentist/widgets/top_background.dart';
 
-import '../../../core/theme/app_colors.dart';
+import '../../../core_dentist/theme/app_colors.dart';
 import '../../HomePage/controller/home_controller.dart';
 
 class NotificationsPage extends StatelessWidget {

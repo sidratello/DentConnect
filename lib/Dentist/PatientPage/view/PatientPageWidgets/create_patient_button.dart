@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/core/app_router.dart';
+import 'package:template/core_dentist/app_router.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/static.dart';
+import '../../../../core_dentist/theme/app_colors.dart';
+import '../../../../core_dentist/utils/static.dart';
 
 class CreatePatientButton extends StatelessWidget {
   const CreatePatientButton({super.key});
