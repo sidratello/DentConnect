@@ -1,7 +1,7 @@
 class CreateOrderModel {
   // Step 1
 
-  String? impressionType; // normal | digital
+  String? impressionType; // traditional | digital
 
   String? caseType; // trial | final
 

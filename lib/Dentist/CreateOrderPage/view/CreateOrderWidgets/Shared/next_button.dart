@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NextButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String text;
 
   const NextButton({

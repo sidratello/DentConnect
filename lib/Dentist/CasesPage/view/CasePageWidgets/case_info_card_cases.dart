@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:template/Dentist/CaseDetailsPage/model/case_details_model.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/info_row.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/section_title.dart';
 import 'package:template/Dentist/CasesPage/model/case_model.dart';
@@ -9,7 +8,7 @@ import 'package:template/core/widgets/app_spacing.dart';
 
 class CaseInfoCard extends StatelessWidget {
   final String patientName;
-  final List<Items> orderItems;
+  final List<OrderItems> orderItems;
   final String color;
   final String impressionType;
   final bool hasAccessory;
@@ -162,7 +161,7 @@ class CaseInfoCard extends StatelessWidget {
           ...orderItems.asMap().entries.map(
             (entry) {
               final int index = entry.key;
-              final Items orderItem = entry.value;
+              final OrderItems orderItem = entry.value;
 
               return _buildOrderItem(
                 context,
@@ -182,7 +181,7 @@ class CaseInfoCard extends StatelessWidget {
 
   Widget _buildOrderItem(
     BuildContext context,
-    Items orderItem,
+    OrderItems orderItem,
     int index,
   ) {
     final String compensationType = orderItem.compensationType ?? 'غير محدد';

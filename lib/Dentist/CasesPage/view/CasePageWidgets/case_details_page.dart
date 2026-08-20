@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/case_images_card.dart';
-import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/case_info_card.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/case_notes_card.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/case_order_info_card.dart';
 import 'package:template/Dentist/CaseDetailsPage/view/CaseDetailsPageWidgets/case_status_card.dart';
+import 'package:template/Dentist/CasesPage/controller/case_controller.dart';
 import 'package:template/Dentist/CasesPage/model/case_model.dart';
+import 'package:template/Dentist/CasesPage/view/CasePageWidgets/case_info_card_cases.dart';
+
 import 'package:template/core/theme/app_colors.dart';
 import 'package:template/core/utils/static.dart';
 import 'package:template/core/widgets/app_spacing.dart';
 import 'package:template/core/widgets/appbar_vector_black.dart';
 import 'package:template/core/widgets/top_background.dart';
 
-class CaseDetailsForDoctorPage extends StatefulWidget {
+class CaseDetailsForDoctorPage extends StatelessWidget {
   final CaseItem? item;
 
   const CaseDetailsForDoctorPage({
@@ -20,37 +24,16 @@ class CaseDetailsForDoctorPage extends StatefulWidget {
   });
 
   @override
-  State<CaseDetailsForDoctorPage> createState() =>
-      _CaseDetailsForDoctorPageState();
-}
-
-class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
-  late final TextEditingController clarificationController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    clarificationController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    clarificationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final CaseItem? item = widget.item;
+    final controller = Get.find<CaseController>();
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       extendBodyBehindAppBar: true,
 
-      // ==========================================================
-      // APP BAR
-      // ==========================================================
+      // --------------------------------------------------
+      // App Bar
+      // --------------------------------------------------
 
       appBar: AppBar(
         backgroundColor: AppColors.surfaceTintColor,
@@ -66,29 +49,38 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
             style: TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
               fontWeight: FontWeight.w700,
-              fontSize: Static.getwidth(context, 22),
+              fontSize: Static.getwidth(
+                context,
+                22,
+              ),
             ),
           ),
         ),
       ),
 
-      // ==========================================================
-      // BODY
-      // ==========================================================
+      // --------------------------------------------------
+      // Body
+      // --------------------------------------------------
 
       body: TopBackground(
         body: SafeArea(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(
-              horizontal: Static.getwidth(context, 16),
+              horizontal: Static.getwidth(
+                context,
+                16,
+              ),
             ),
             child: Column(
               children: [
-                AppSpacing.height(context, 24),
+                AppSpacing.height(
+                  context,
+                  24,
+                ),
 
-                // ==================================================
-                // CASE STATUS
-                // ==================================================
+                // --------------------------------------------------
+                // Status
+                // --------------------------------------------------
 
                 CaseStatusCard(
                   patientName: item?.patient?.fullName ?? '',
@@ -97,54 +89,58 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
                   isUrgent: item?.isUrgent ?? false,
                 ),
 
-                AppSpacing.height(context, 18),
+                AppSpacing.height(
+                  context,
+                  18,
+                ),
 
-                // ==================================================
-                // CASE IMAGES
-                // ==================================================
+                // --------------------------------------------------
+                // Images
+                // --------------------------------------------------
 
                 CaseImagesCard(
                   images: item?.requiredImages ?? [],
                 ),
 
-                AppSpacing.height(context, 18),
+                AppSpacing.height(
+                  context,
+                  18,
+                ),
 
-                // ==================================================
-                // CASE INFO
-                // ==================================================
+                // --------------------------------------------------
+                // Case Information
+                // --------------------------------------------------
 
                 CaseInfoCard(
                   patientName: item?.patient?.fullName ?? '',
-                  teethNumbers: item?.orderItems
-                          ?.map(
-                            (orderItem) => orderItem.toothNumbers,
-                          )
-                          .join(', ') ??
-                      '',
-                  restorationType: item?.orderItems?.isNotEmpty == true
-                      ? item!.orderItems!.first.compensationType ?? ''
-                      : '',
+                  orderItems: item?.orderItems ?? [],
                   color: item?.shade ?? '',
                   impressionType: item?.impressionType ?? '',
                   hasAccessory: item?.hasAccessories ?? false,
                 ),
 
-                AppSpacing.height(context, 18),
+                AppSpacing.height(
+                  context,
+                  18,
+                ),
 
-                // ==================================================
-                // NOTES
-                // ==================================================
+                // --------------------------------------------------
+                // Notes
+                // --------------------------------------------------
 
                 CaseNotesCard(
                   description: item?.title ?? '',
                   notes: item?.notes ?? '',
                 ),
 
-                AppSpacing.height(context, 18),
+                AppSpacing.height(
+                  context,
+                  18,
+                ),
 
-                // ==================================================
-                // ORDER INFO
-                // ==================================================
+                // --------------------------------------------------
+                // Order Information
+                // --------------------------------------------------
 
                 CaseOrderInfoCard(
                   sentDate: item?.createdAt?.split('T').first ?? '',
@@ -154,25 +150,39 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
                       : item!.estimatedPrice!.toStringAsFixed(0),
                 ),
 
-                // ==================================================
-                // REQUEST INFO
-                // ==================================================
+                // --------------------------------------------------
+                // Request Info
+                // --------------------------------------------------
 
                 if (item?.status == 'RequestInfo') ...[
-                  AppSpacing.height(context, 18),
-                  _buildRequestInfoSection(context),
+                  AppSpacing.height(
+                    context,
+                    18,
+                  ),
+                  _buildRequestInfoSection(
+                    context,
+                    controller,
+                  ),
                 ],
 
-                // ==================================================
-                // PAYMENT
-                // ==================================================
+                // --------------------------------------------------
+                // Ready / Payment
+                // --------------------------------------------------
 
                 if (item?.status == 'Ready') ...[
-                  AppSpacing.height(context, 18),
-                  _buildPaymentButton(context),
+                  AppSpacing.height(
+                    context,
+                    18,
+                  ),
+                  _buildPaymentButton(
+                    context,
+                  ),
                 ],
 
-                AppSpacing.height(context, 30),
+                AppSpacing.height(
+                  context,
+                  30,
+                ),
               ],
             ),
           ),
@@ -181,21 +191,27 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
     );
   }
 
-  // ==============================================================
-  // REQUEST INFO SECTION
-  // ==============================================================
+  // ============================================================
+  // Request Info
+  // ============================================================
 
   Widget _buildRequestInfoSection(
     BuildContext context,
+    CaseController controller,
   ) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(
-        Static.getwidth(context, 18),
+        Static.getwidth(
+          context,
+          18,
+        ),
       ),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(
+          18,
+        ),
         border: Border.all(
           color: AppColors.primary.withValues(
             alpha: 0.15,
@@ -207,17 +223,17 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
               alpha: 0.04,
             ),
             blurRadius: 12,
-            offset: const Offset(0, 4),
+            offset: const Offset(
+              0,
+              4,
+            ),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // --------------------------------------------------------
           // Header
-          // --------------------------------------------------------
-
           Row(
             children: [
               Container(
@@ -227,14 +243,18 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
                   color: AppColors.primary.withValues(
                     alpha: 0.08,
                   ),
-                  borderRadius: BorderRadius.circular(13),
+                  borderRadius: BorderRadius.circular(
+                    13,
+                  ),
                 ),
                 child: const Icon(
                   Icons.info_outline_rounded,
                   color: AppColors.primary,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(
+                width: 12,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,7 +268,9 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(
+                      height: 4,
+                    ),
                     Text(
                       'يرجى إضافة المعلومات المطلوبة لإرسالها إلى المخبر',
                       style: TextStyle(
@@ -263,14 +285,13 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
             ],
           ),
 
-          const SizedBox(height: 18),
+          const SizedBox(
+            height: 18,
+          ),
 
-          // --------------------------------------------------------
           // Text Field
-          // --------------------------------------------------------
-
           TextField(
-            controller: clarificationController,
+            onChanged: controller.setClarificationText,
             minLines: 4,
             maxLines: 6,
             textDirection: TextDirection.rtl,
@@ -294,7 +315,9 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
                 vertical: 14,
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(
+                  14,
+                ),
                 borderSide: BorderSide(
                   color: AppColors.primary.withValues(
                     alpha: 0.12,
@@ -302,7 +325,9 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
                 ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(
+                  14,
+                ),
                 borderSide: const BorderSide(
                   color: AppColors.primary,
                   width: 1.4,
@@ -311,35 +336,47 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
             ),
           ),
 
-          const SizedBox(height: 14),
+          const SizedBox(
+            height: 14,
+          ),
 
-          // --------------------------------------------------------
           // Send Button
-          // --------------------------------------------------------
-
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: ElevatedButton.icon(
-              onPressed: _sendClarification,
-              icon: const Icon(
-                Icons.send_rounded,
-                size: 19,
-              ),
-              label: const Text(
-                'إرسال المعلومات',
-                style: TextStyle(
-                  fontFamily: 'IBM Plex Sans Arabic',
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+          Obx(
+            () => SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton.icon(
+                onPressed: controller.clarificationText.value.trim().isEmpty
+                    ? null
+                    : () => _sendClarification(
+                          controller,
+                          item?.id,
+                        ),
+                icon: const Icon(
+                  Icons.send_rounded,
+                  size: 19,
                 ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+                label: const Text(
+                  'إرسال المعلومات',
+                  style: TextStyle(
+                    fontFamily: 'IBM Plex Sans Arabic',
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  disabledBackgroundColor: AppColors.primary.withValues(
+                    alpha: .3,
+                  ),
+                  foregroundColor: Colors.white,
+                  disabledForegroundColor: Colors.white70,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      14,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -349,9 +386,9 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
     );
   }
 
-  // ==============================================================
-  // PAYMENT BUTTON
-  // ==============================================================
+  // ============================================================
+  // Payment
+  // ============================================================
 
   Widget _buildPaymentButton(
     BuildContext context,
@@ -359,7 +396,10 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(
-        Static.getwidth(context, 16),
+        Static.getwidth(
+          context,
+          16,
+        ),
       ),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -375,7 +415,10 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
               alpha: 0.04,
             ),
             blurRadius: 12,
-            offset: const Offset(0, 4),
+            offset: const Offset(
+              0,
+              4,
+            ),
           ),
         ],
       ),
@@ -390,14 +433,18 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
                   color: AppColors.primary.withValues(
                     alpha: 0.08,
                   ),
-                  borderRadius: BorderRadius.circular(13),
+                  borderRadius: BorderRadius.circular(
+                    13,
+                  ),
                 ),
                 child: const Icon(
                   Icons.check_circle_outline_rounded,
                   color: AppColors.primary,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(
+                width: 12,
+              ),
               const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -411,7 +458,9 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(
+                      height: 4,
+                    ),
                     Text(
                       'يمكنك الآن الانتقال إلى الدفع',
                       style: TextStyle(
@@ -425,7 +474,9 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(
+            height: 14,
+          ),
           SizedBox(
             width: double.infinity,
             height: 50,
@@ -448,7 +499,9 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(
+                    14,
+                  ),
                 ),
               ),
             ),
@@ -458,60 +511,59 @@ class _CaseDetailsForDoctorPageState extends State<CaseDetailsForDoctorPage> {
     );
   }
 
-  // ==============================================================
-  // SEND CLARIFICATION
-  // ==============================================================
+  // ============================================================
+  // Send Clarification
+  // ============================================================
 
-  void _sendClarification() {
-    final String text = clarificationController.text.trim();
-
-    if (text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'يرجى كتابة المعلومات المطلوبة أولاً',
-            style: TextStyle(
-              fontFamily: 'IBM Plex Sans Arabic',
-            ),
-          ),
-        ),
+  Future<void> _sendClarification(
+    CaseController controller,
+    int? orderId,
+  ) async {
+    if (orderId == null) {
+      Get.snackbar(
+        'خطأ',
+        'تعذر تحديد رقم الحالة',
+        snackPosition: SnackPosition.BOTTOM,
       );
-
       return;
     }
 
-    // TODO:
-    // استدعاء API إرسال المعلومات للمخبر
-    //
-    // مثال:
-    //
-    // controller.sendClarification(
-    //   widget.item!.id!,
-    //   text,
-    // );
+    final String text = controller.clarificationText.value.trim();
 
-    FocusScope.of(context).unfocus();
+    if (text.isEmpty) {
+      Get.snackbar(
+        'تنبيه',
+        'يرجى كتابة المعلومات المطلوبة أولاً',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'تم إرسال المعلومات بنجاح',
-          style: TextStyle(
-            fontFamily: 'IBM Plex Sans Arabic',
-          ),
-        ),
-      ),
+    final bool success = await controller.createNotes(
+      orderId,
+      text: text,
     );
+
+    if (success) {
+      controller.clarificationText.value = '';
+
+      await controller.fetchCases();
+
+      Get.back();
+    }
   }
 
-  // ==============================================================
-  // GO TO PAYMENT
-  // ==============================================================
+  // ============================================================
+  // Payment Navigation
+  // ============================================================
 
   void _goToPayment() {
-    // Get.toNamed(
-    //   AppRouter.paymentPage,
-    //   arguments: widget.item,
+    // ضعي هنا واجهة الدفع لاحقاً
+    //
+    // Get.to(
+    //   () => PaymentPage(
+    //     orderId: item?.id,
+    //   ),
     // );
   }
 }

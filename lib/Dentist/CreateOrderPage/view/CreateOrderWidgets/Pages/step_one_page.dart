@@ -105,9 +105,10 @@ class StepOnePage extends GetView<CreateOrderController> {
               title: 'طبعة عادية',
               subtitle: 'Traditional Impression',
               icon: Icons.medical_information_outlined,
-              isSelected: controller.model.value.impressionType == 'normal',
+              isSelected:
+                  controller.model.value.impressionType == 'traditional',
               onTap: () {
-                controller.selectImpression('normal');
+                controller.selectImpression('traditional');
               },
             ),
 

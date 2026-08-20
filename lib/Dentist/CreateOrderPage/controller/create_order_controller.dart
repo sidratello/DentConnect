@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:template/Dentist/CasesPage/controller/case_controller.dart';
 import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Pages/select_patient_page.dart';
 import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Teeth/teeth_selector.dart';
-import 'package:template/Dentist/HomePage/view/home_page.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
+import 'package:template/Dentist/MainPage/view/main_page.dart';
 import 'package:template/Dentist/PatientPage/model/patient_model.dart';
 import 'package:template/Dentist/TemplatesPage/model/template_data.dart';
 import 'package:template/Dentist/TemplatesPage/model/template_model.dart';
@@ -252,9 +253,90 @@ class CreateOrderController extends GetxController {
     selectedFile.value = null;
   }
 
-  Future<void> pickFiles() async {}
+  bool validateOrder() {
+    if (selectedLabId.value == null) {
+      _showValidationError('يرجى اختيار المخبر');
+      return false;
+    }
+
+    final String title = titleController.text.trim();
+
+    if (title.isEmpty) {
+      _showValidationError('يرجى إدخال عنوان الطلب');
+      return false;
+    }
+
+    if (title.length < 3) {
+      _showValidationError(
+        'عنوان الطلب يجب أن يحتوي على 3 أحرف على الأقل',
+      );
+      return false;
+    }
+
+    if (model.value.impressionType == null ||
+        model.value.impressionType!.trim().isEmpty) {
+      _showValidationError('يرجى اختيار نوع الطبعة');
+      return false;
+    }
+
+    if (model.value.caseType == null || model.value.caseType!.trim().isEmpty) {
+      _showValidationError('يرجى اختيار نوع الحالة');
+      return false;
+    }
+
+    if (shadeController.text.trim().isEmpty) {
+      _showValidationError('يرجى إدخال لون التعويض');
+      return false;
+    }
+
+    if (materialController.text.trim().isEmpty) {
+      _showValidationError('يرجى إدخال مادة التعويض');
+      return false;
+    }
+
+    final String expectedDays = expectedDaysController.text.trim();
+
+    if (expectedDays.isEmpty) {
+      _showValidationError('يرجى إدخال عدد أيام التسليم المتوقعة');
+      return false;
+    }
+
+    final int? days = int.tryParse(expectedDays);
+
+    if (days == null || days <= 0) {
+      _showValidationError(
+        'يرجى إدخال عدد أيام صحيح وأكبر من الصفر',
+      );
+      return false;
+    }
+
+    if (images.isEmpty) {
+      _showValidationError('يرجى إضافة صورة واحدة على الأقل للحالة');
+      return false;
+    }
+
+    return true;
+  }
+
+  void _showValidationError(String message) {
+    Get.snackbar(
+      'بيانات ناقصة',
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
 
   Future<void> submitOrder() async {
+    if (!validateOrder()) {
+      return;
+    }
+    model.update((m) {
+      m?.shade = shadeController.text.trim();
+      m?.material = materialController.text.trim();
+      m?.expectedDays = int.tryParse(expectedDaysController.text.trim()) ?? 0;
+      m?.notes = notesController.text.trim();
+    });
+
     try {
       Get.dialog(
         const Center(
@@ -320,6 +402,41 @@ class CreateOrderController extends GetxController {
     }
   }
 
+  void resetOrder() {
+    model.value = CreateOrderModel();
+
+    selectedPatientId = null;
+    selectedLabId.value = null;
+    createdOrderId.value = null;
+
+    currentStep.value = 0;
+
+    selectedTemplate.value = null;
+
+    selectedCompensationType = null;
+    selectedCompensationTeeth.clear();
+    addedCompensation = false;
+
+    images.clear();
+    files.clear();
+    selectedFile.value = null;
+
+    patientNameController.clear();
+    patientAgeController.clear();
+    patientClinicalNotesController.clear();
+
+    titleController.clear();
+
+    shadeController.clear();
+    materialController.clear();
+    expectedDaysController.clear();
+    notesController.clear();
+
+    compensationTypeController.clear();
+
+    patientImages.clear();
+  }
+
   @override
   void onClose() {
     patientNameController.dispose();
@@ -331,58 +448,6 @@ class CreateOrderController extends GetxController {
     titleController.dispose();
 
     super.onClose();
-  }
-
-  Future<void> createOrder1(
-    int labId, {
-    required String title,
-    required String shade,
-    required bool isTemporary,
-    required int impressionType,
-    required bool isUrgent,
-    required bool hasAccessories,
-    required String deliveryDate,
-    required String notes,
-    required List<String> requiredImages,
-    required String impressionStage,
-  }) async {
-    try {
-      final response = await apiService.post(
-        'CaseOrders/initiate/$labId',
-        data: {
-          'Title': title,
-          'Shade': shade,
-          'IsTemporary': isTemporary,
-          'ImpressionType': impressionType,
-          'IsUrgent': isUrgent,
-          'HasAccessories': hasAccessories,
-          'DeliveryDate': deliveryDate,
-          'Notes': notes,
-          'RequiredImages': requiredImages,
-          'ImpressionStage': impressionType,
-        },
-      );
-
-      if (response.statusCode == 200) {
-        Get.snackbar(
-          'تم الإرسال',
-          'تم إرسال الطلبية بنجاح',
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      } else {
-        Get.snackbar(
-          'خطأ',
-          response.message,
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
-    } catch (e) {
-      Get.snackbar(
-        'خطأ',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    }
   }
 
   Future<bool> createOrder2(
@@ -426,23 +491,27 @@ class CreateOrderController extends GetxController {
     }
   }
 
-  Future<void> addCompensation() async {
-    if (createdOrderId.value == null) {
+  Future<bool> addCompensation({
+    int? orderId,
+  }) async {
+    final int? targetOrderId = orderId ?? createdOrderId.value;
+
+    if (targetOrderId == null) {
       Get.snackbar(
         'تنبيه',
         'لم يتم إنشاء الطلب بعد',
         snackPosition: SnackPosition.BOTTOM,
       );
-      return;
+      return false;
     }
 
     if (selectedCompensationType == null) {
       Get.snackbar(
         'تنبيه',
-        'يرجى إدخال نوع التعويض',
+        'يرجى اختيار نوع التعويض',
         snackPosition: SnackPosition.BOTTOM,
       );
-      return;
+      return false;
     }
 
     if (selectedCompensationTeeth.isEmpty) {
@@ -451,11 +520,11 @@ class CreateOrderController extends GetxController {
         'يرجى اختيار سن واحد على الأقل',
         snackPosition: SnackPosition.BOTTOM,
       );
-      return;
+      return false;
     }
 
     final success = await createOrder2(
-      createdOrderId.value!,
+      targetOrderId,
       compensationType: selectedCompensationType!,
       toothNumbers: selectedCompensationTeeth.map(int.parse).toList(),
     );
@@ -468,8 +537,13 @@ class CreateOrderController extends GetxController {
       );
 
       clearCompensationSelection();
+
       addedCompensation = true;
+
+      return true;
     }
+
+    return false;
   }
 
   Future<void> fetchPatientList() async {
@@ -567,9 +641,46 @@ class CreateOrderController extends GetxController {
   }
 
   Future<void> uploadFile() async {
+    final file = selectedFile.value;
+    if (file == null) {
+      Get.snackbar(
+        'تنبيه',
+        'يرجى اختيار ملف أولاً',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    final fileName = file.path.split(Platform.pathSeparator).last;
+    final extension = fileName.split('.').last.toLowerCase();
+
+    if (extension != 'stl') {
+      Get.snackbar(
+        'نوع ملف غير صالح',
+        'يرجى اختيار ملف STL فقط',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
     try {
-      final response = await apiService.post('files/upload-stl/$createdOrderId',
-          file: selectedFile.value, fileKey: 'file');
+      Get.dialog(
+        const Center(
+          child: CircularProgressIndicator(
+            color: AppColors.primary,
+          ),
+        ),
+        barrierDismissible: false,
+      );
+
+      final response = await apiService.post(
+        'files/upload-stl/$createdOrderId',
+        file: file,
+        fileKey: 'file',
+      );
+
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
 
       if (response.statusCode == 200) {
         Get.snackbar(
@@ -577,7 +688,14 @@ class CreateOrderController extends GetxController {
           'تم إرسال الملف بنجاح',
           snackPosition: SnackPosition.BOTTOM,
         );
-        Get.to(() => const HomePage());
+        resetOrder();
+
+        Get.offAll(
+          () => MainPage(),
+        );
+
+        final caseController = Get.find<CaseController>();
+        await caseController.fetchCases();
       } else {
         Get.snackbar(
           'خطأ',
@@ -586,6 +704,10 @@ class CreateOrderController extends GetxController {
         );
       }
     } catch (e) {
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+
       Get.snackbar(
         'خطأ',
         e.toString(),

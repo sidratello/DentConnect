@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
-import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Pages/select_patient_page.dart';
+import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import '../Shared/back_button.dart';
 import '../Shared/custom_date_field.dart';
 import '../Shared/custom_switch_tile.dart';
@@ -14,6 +14,8 @@ class StepTwoPage extends GetView<CreateOrderController> {
 
   @override
   Widget build(BuildContext context) {
+    final appModeController = Get.find<HomeController>();
+
     return Obx(
       () => SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -103,10 +105,13 @@ class StepTwoPage extends GetView<CreateOrderController> {
                 const SizedBox(width: 14),
                 Expanded(
                   child: NextButton(
-                      text: "إرسال الطلب",
-                      onPressed: () {
-                        controller.submitOrder();
-                      }),
+                    text: "إرسال الطلب",
+                    onPressed: appModeController.isPreviewMode.value
+                        ? null
+                        : () {
+                            controller.submitOrder();
+                          },
+                  ),
                 ),
               ],
             ),

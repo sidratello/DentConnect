@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/PatientPage/controller/patient_controller.dart';
-import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/create_patient_button.dart';
 import 'package:template/core/widgets/app_spacing.dart';
 import 'package:template/core/widgets/appbar_vector_black.dart';
 import 'package:template/Dentist/PatientPage/view/PatientPageWidgets/patient_card.dart';
