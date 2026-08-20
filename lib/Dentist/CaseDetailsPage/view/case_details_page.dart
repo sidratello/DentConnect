@@ -60,13 +60,7 @@ class CaseDetailsPage extends StatelessWidget {
                 AppSpacing.height(context, 18),
                 CaseInfoCard(
                   patientName: orders?.patientName ?? '',
-                  teethNumbers: orders?.items
-                          ?.map((item) => item.toothNumbers)
-                          .join(', ') ??
-                      '',
-                  restorationType: orders?.items?.first != null
-                      ? orders?.items?.first.compensationType ?? ''
-                      : '',
+                  orderItems: orders?.items ?? [],
                   color: orders?.shade ?? '',
                   impressionType: orders?.impressionType ?? '',
                   hasAccessory: orders?.hasAccessories ?? false,

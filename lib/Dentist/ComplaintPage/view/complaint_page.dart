@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_header.dart';
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_lab_selector.dart';
+import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_preview_card.dart';
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_submit_button.dart';
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_text_field.dart';
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_type_selector.dart';
@@ -90,6 +91,8 @@ class ComplaintPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appModeController = Get.find<HomeController>();
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -115,65 +118,75 @@ class ComplaintPage extends StatelessWidget {
         ),
         body: TopBackground(
           body: SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                horizontal: Static.getwidth(context, 20),
-                vertical: Static.getheight(context, 20),
-              ),
-              child: Obx(
-                () => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const ComplaintHeader(),
-                    SizedBox(
-                      height: Static.getheight(context, 24),
-                    ),
-                    ComplaintTypeSelector(
-                      selectedType: controller.selectedType.value,
-                      onTypeChanged: controller.changeType,
-                    ),
-                    SizedBox(
-                      height: Static.getheight(context, 24),
-                    ),
-                    AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 250),
-                      child: controller.selectedType.value == 0
-                          ? const SizedBox.shrink()
-                          : ComplaintLabSelector(
-                              homeController: controller.homeController,
-                            ),
-                    ),
-                    if (controller.selectedType.value == 1)
+            child: Obx(
+              () {
+                if (appModeController.isPreviewMode.value) {
+                  return const Center(
+                    child: ComplaintPreviewCard(),
+                  );
+                }
+
+                return SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Static.getwidth(context, 20),
+                    vertical: Static.getheight(context, 20),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const ComplaintHeader(),
+                      SizedBox(
+                        height: Static.getheight(context, 24),
+                      ),
+                      ComplaintTypeSelector(
+                        selectedType: controller.selectedType.value,
+                        onTypeChanged: controller.changeType,
+                      ),
+                      SizedBox(
+                        height: Static.getheight(context, 24),
+                      ),
+                      AnimatedSwitcher(
+                        duration: const Duration(
+                          milliseconds: 250,
+                        ),
+                        child: controller.selectedType.value == 0
+                            ? const SizedBox.shrink()
+                            : ComplaintLabSelector(
+                                homeController: controller.homeController,
+                              ),
+                      ),
+                      if (controller.selectedType.value == 1)
+                        SizedBox(
+                          height: Static.getheight(context, 20),
+                        ),
+                      ComplaintTextField(
+                        controller: controller.titleController,
+                        label: 'عنوان الشكوى',
+                        hintText: 'اكتب عنوانًا مختصرًا للشكوى',
+                        icon: Icons.title_rounded,
+                      ),
                       SizedBox(
                         height: Static.getheight(context, 20),
                       ),
-                    ComplaintTextField(
-                      controller: controller.titleController,
-                      label: 'عنوان الشكوى',
-                      hintText: 'اكتب عنوانًا مختصرًا للشكوى',
-                      icon: Icons.title_rounded,
-                    ),
-                    SizedBox(
-                      height: Static.getheight(context, 20),
-                    ),
-                    ComplaintTextField(
-                      controller: controller.descriptionController,
-                      label: 'تفاصيل الشكوى',
-                      hintText: 'اكتب تفاصيل الشكوى هنا...',
-                      icon: Icons.description_outlined,
-                      maxLines: 6,
-                      minLines: 5,
-                      alignLabelWithHint: true,
-                    ),
-                    SizedBox(
-                      height: Static.getheight(context, 30),
-                    ),
-                    ComplaintSubmitButton(
-                      onPressed: () => controller.submitComplaint(context),
-                    ),
-                  ],
-                ),
-              ),
+                      ComplaintTextField(
+                        controller: controller.descriptionController,
+                        label: 'تفاصيل الشكوى',
+                        hintText: 'اكتب تفاصيل الشكوى هنا...',
+                        icon: Icons.description_outlined,
+                        maxLines: 6,
+                        minLines: 5,
+                        alignLabelWithHint: true,
+                      ),
+                      SizedBox(
+                        height: Static.getheight(context, 30),
+                      ),
+                      ComplaintSubmitButton(
+                        onPressed: () => controller.submitComplaint(context),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ),

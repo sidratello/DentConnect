@@ -92,7 +92,7 @@ class CaseNotesCard extends StatelessWidget {
           AppSpacing.height(context, 20),
           _buildTextBox(
             context,
-            title: 'ملاحظات الطبيب',
+            title: 'ملاحظات الطلبية',
             value: notes,
           ),
         ],

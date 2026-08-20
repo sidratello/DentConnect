@@ -7,7 +7,7 @@ class CaseController extends GetxController {
   final ApiService apiService = ApiService();
 
   final RxBool isLoading = false.obs;
-
+  final RxString clarificationText = ''.obs;
   final Rxn<CaseModel> caseModel = Rxn<CaseModel>();
 
   @override
@@ -158,6 +158,54 @@ class CaseController extends GetxController {
       caseModel.value = null;
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  void setClarificationText(String value) {
+    clarificationText.value = value;
+  }
+
+  Future<bool> createNotes(
+    int orderId, {
+    required String text,
+  }) async {
+    try {
+      final Map<String, dynamic> data = {
+        'Notes': text,
+      };
+      final response = await apiService.post(
+        'CaseOrders/$orderId/reply-to-lab',
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'نجاح',
+          'تم إرسال الملاحظة بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        clarificationText.value = '';
+        await fetchCases();
+        Get.back();
+
+        return true;
+      }
+
+      Get.snackbar(
+        'خطأ',
+        response.message,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+      return false;
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+      return false;
     }
   }
 }

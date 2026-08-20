@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/CasesPage/controller/case_controller.dart';
 import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
 import 'package:template/Dentist/CreateOrderPage/model/compensation_data.dart';
 import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Upload/upload_files_card.dart';
-import 'package:template/Dentist/HomePage/view/home_page.dart';
+import 'package:template/Dentist/MainPage/view/main_page.dart';
 import 'package:template/core/theme/app_colors.dart';
 import 'package:template/core/utils/static.dart';
 import 'package:template/core/widgets/appbar_vector_black.dart';
@@ -17,9 +18,13 @@ class TeethSelector extends GetView<CreateOrderController> {
   const TeethSelector({
     super.key,
     this.onNext,
+    this.isEditMode = false,
+    this.orderId,
   });
 
   final VoidCallback? onNext;
+  final bool isEditMode;
+  final int? orderId;
 
   static const List<String> upperRight = [
     '18',
@@ -436,7 +441,11 @@ class TeethSelector extends GetView<CreateOrderController> {
           // Add Compensation
           Expanded(
             child: ElevatedButton.icon(
-              onPressed: controller.addCompensation,
+              onPressed: () {
+                controller.addCompensation(
+                  orderId: isEditMode ? orderId : null,
+                );
+              },
               icon: const Icon(
                 Icons.add_rounded,
                 color: Colors.white,
@@ -470,19 +479,39 @@ class TeethSelector extends GetView<CreateOrderController> {
           // Next
           Expanded(
             child: OutlinedButton.icon(
-              onPressed: () {
+              onPressed: () async {
                 if (!controller.addedCompensation) {
                   Get.snackbar(
-                    'خطأ',
-                    'يرجى إضافة تعويضة مرة على الأقل',
+                    'تنبيه',
+                    'يرجى إضافة تعويض واحد على الأقل',
                     snackPosition: SnackPosition.BOTTOM,
                   );
                   return;
                 }
-                if (controller.model.value.impressionType != "digital") {
-                  Get.to(() => const HomePage());
+
+                if (isEditMode) {
+                  controller.clearCompensationSelection();
+
+                  Get.offAll(
+                    () => MainPage(),
+                  );
+
+                  return;
+                }
+
+                // إنشاء طلب جديد
+                if (controller.model.value.impressionType != 'digital') {
+                  controller.resetOrder();
+
+                  Get.offAll(
+                    () => MainPage(),
+                  );
+                  final caseController = Get.find<CaseController>();
+                  await caseController.fetchCases();
                 } else {
-                  Get.to(() => const UploadFilesCard());
+                  Get.to(
+                    () => const UploadFilesCard(),
+                  );
                 }
               },
               icon: const Icon(

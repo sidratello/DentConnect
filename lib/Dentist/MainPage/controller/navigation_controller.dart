@@ -6,4 +6,8 @@ class NavigationController extends GetxController {
   void changePage(int index) {
     currentIndex.value = index;
   }
+
+  void goToHome() {
+    currentIndex.value = 0;
+  }
 }
