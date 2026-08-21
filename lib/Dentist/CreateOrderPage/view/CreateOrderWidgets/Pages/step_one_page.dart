@@ -335,9 +335,8 @@ class StepOnePage extends GetView<CreateOrderController> {
                       isSelected:
                           controller.selectedTemplate.value == templateId,
                       onTap: () {
-                        controller.selectTemplate(
-                          templateId,
-                        );
+                        controller.selectTemplate(templateId);
+                        controller.selectedTemplateData.value = template;
                       },
                     );
                   },
@@ -369,6 +368,21 @@ class StepOnePage extends GetView<CreateOrderController> {
             const SizedBox(height: 10),
 
             const PatientInfoCard(),
+            const SizedBox(height: 20),
+
+            Obx(
+              () {
+                final template = controller.selectedTemplateData.value;
+
+                if (template == null) {
+                  return const SizedBox.shrink();
+                }
+
+                return SelectedTemplateInfoCard(
+                  template: template,
+                );
+              },
+            ),
 
             const SizedBox(height: 30),
 

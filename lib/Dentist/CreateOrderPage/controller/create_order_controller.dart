@@ -61,6 +61,8 @@ class CreateOrderController extends GetxController {
 
   final TextEditingController titleController = TextEditingController();
 
+  final Rxn<CaseTemplate> selectedTemplateData = Rxn<CaseTemplate>();
+
   //=============================
   // Step One
   //=============================
@@ -113,6 +115,7 @@ class CreateOrderController extends GetxController {
 
   void skipTemplate() {
     selectedTemplate.value = null;
+    selectedTemplateData.value = null;
 
     model.update((m) {
       m!.templateId = null;
@@ -358,7 +361,6 @@ class CreateOrderController extends GetxController {
           'IsUrgent': model.value.isUrgent,
           'HasAccessories': model.value.hasAccessory,
           'DeliveryDate': model.value.deliveryDate,
-          'Notes': model.value.notes,
           'ImpressionStage': model.value.caseType != 'final'
               ? 'PlasticImpression'
               : 'FinalImpression',
@@ -438,19 +440,6 @@ class CreateOrderController extends GetxController {
     patientImages.clear();
   }
 
-  @override
-  void onClose() {
-    patientNameController.dispose();
-    shadeController.dispose();
-    materialController.dispose();
-    expectedDaysController.dispose();
-    notesController.dispose();
-    compensationTypeController.dispose();
-    titleController.dispose();
-
-    super.onClose();
-  }
-
   Future<bool> createOrder2(
     int orderId, {
     required int compensationType,
@@ -459,6 +448,7 @@ class CreateOrderController extends GetxController {
     try {
       final Map<String, dynamic> data = {
         'CompensationType': compensationType,
+        'notes': notesController.text.trim(),
       };
 
       for (int i = 0; i < toothNumbers.length; i++) {
@@ -689,6 +679,7 @@ class CreateOrderController extends GetxController {
           'تم إرسال الملف بنجاح',
           snackPosition: SnackPosition.BOTTOM,
         );
+        sendNotification();
         resetOrder();
 
         Get.offAll(
@@ -823,6 +814,43 @@ class CreateOrderController extends GetxController {
 
         Get.back();
         fetchPatientList();
+      } else {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  Future<void> sendNotification() async {
+    try {
+      Get.dialog(
+        const Center(
+          child: CircularProgressIndicator(
+            color: AppColors.primary,
+          ),
+        ),
+        barrierDismissible: false,
+      );
+      final response = await apiService.post(
+        'CaseOrders/$createdOrderId/send-notification-to-lab/$selectedLabId',
+        data: {},
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'تم الإرسال',
+          'تم إرسال الإشعار إلى المختبر بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
       } else {
         Get.snackbar(
           'خطأ',
