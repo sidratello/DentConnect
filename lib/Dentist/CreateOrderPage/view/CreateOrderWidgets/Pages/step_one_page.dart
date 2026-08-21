@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
+import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Cards/select_template_info_card.dart';
 import 'package:template/core/theme/app_colors.dart';
 
 import '../Cards/order_type_card.dart';
@@ -335,9 +336,8 @@ class StepOnePage extends GetView<CreateOrderController> {
                       isSelected:
                           controller.selectedTemplate.value == templateId,
                       onTap: () {
-                        controller.selectTemplate(
-                          templateId,
-                        );
+                        controller.selectTemplate(templateId);
+                        controller.selectedTemplateData.value = template;
                       },
                     );
                   },
@@ -369,6 +369,21 @@ class StepOnePage extends GetView<CreateOrderController> {
             const SizedBox(height: 10),
 
             const PatientInfoCard(),
+            const SizedBox(height: 20),
+
+            Obx(
+              () {
+                final template = controller.selectedTemplateData.value;
+
+                if (template == null) {
+                  return const SizedBox.shrink();
+                }
+
+                return SelectedTemplateInfoCard(
+                  template: template,
+                );
+              },
+            ),
 
             const SizedBox(height: 30),
 

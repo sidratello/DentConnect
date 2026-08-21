@@ -215,6 +215,9 @@ class TeethSelector extends GetView<CreateOrderController> {
                         ),
 
                         const SizedBox(height: 20),
+                        _buildNoteField(context),
+
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -411,6 +414,69 @@ class TeethSelector extends GetView<CreateOrderController> {
     );
   }
 
+  Widget _buildNoteField(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SectionTitle(
+          icon: Icons.notes_outlined,
+          title: 'ملاحظة',
+        ),
+        const SizedBox(height: 14),
+        TextField(
+          controller: controller.notesController,
+          minLines: 3,
+          maxLines: 5,
+          textDirection: TextDirection.rtl,
+          textAlign: TextAlign.right,
+          style: const TextStyle(
+            fontFamily: 'IBM Plex Sans Arabic',
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+          ),
+          decoration: InputDecoration(
+            hintText: 'أضف ملاحظة حول التعويض أو الأسنان المطلوبة...',
+            hintStyle: const TextStyle(
+              fontFamily: 'IBM Plex Sans Arabic',
+              fontSize: 12,
+              color: Colors.grey,
+            ),
+            prefixIcon: const Padding(
+              padding: EdgeInsets.only(
+                bottom: 45,
+              ),
+              child: Icon(
+                Icons.edit_note_rounded,
+                color: AppColors.primary,
+              ),
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 14,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: BorderSide(
+                color: AppColors.primary.withValues(
+                  alpha: .15,
+                ),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: const BorderSide(
+                color: AppColors.primary,
+                width: 1.5,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildBottomActions(
     BuildContext context,
   ) {
@@ -499,8 +565,9 @@ class TeethSelector extends GetView<CreateOrderController> {
                   return;
                 }
 
-                // إنشاء طلب جديد
                 if (controller.model.value.impressionType != 'digital') {
+                  controller.sendNotification();
+
                   controller.resetOrder();
 
                   Get.offAll(

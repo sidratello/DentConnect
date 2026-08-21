@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/InvoicesPage/controller/invoice_controller.dart';
 import 'package:template/core/app_router.dart';
 import 'package:template/core/utils/static.dart';
 
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/theme_controller.dart';
+import '../../../../InvoicesPage/view/invoice_page.dart';
 import 'drawer_header.dart';
 import 'drawer_item.dart';
 
@@ -62,6 +64,18 @@ class AppDrawer extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(
                     AppRouter.complaintPage,
+                  );
+                },
+              ),
+              DrawerItem(
+                title: 'الفواتير',
+                icon: Icons.receipt_long,
+                onTap: () {
+                  Get.to(
+                    () {
+                      Get.put(InvoiceController());
+                      return const InvoicesPage();
+                    },
                   );
                 },
               ),
