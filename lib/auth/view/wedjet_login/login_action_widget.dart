@@ -14,33 +14,27 @@ class LoginActionWidget extends StatelessWidget {
 
     return Column(
       children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: GestureDetector(
+            onTap: () {
+              print('Forget Password Clicked');
 
-Align(
-  alignment: Alignment.centerRight,
-  child: GestureDetector(
-    onTap: () {
-      print('Forget Password Clicked');
-
-   Get.toNamed(
-  AppRouter.forgetpasswordpage,
-  arguments: controller.role,
-);
-    },
-    child: const Text(
-      'نسيت كلمة المرور؟',
-      style: TextStyle(
-        color: Colors.blue,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-  ),
-),
-
-
+              Get.toNamed(
+                AppRouter.forgetpasswordpage,
+                arguments: controller.role,
+              );
+            },
+            child: const Text(
+              'نسيت كلمة المرور؟',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
         const SizedBox(height: 10),
-
-
-
         Obx(
           () => AppButton(
             title: controller.isLoading.value
@@ -50,25 +44,23 @@ Align(
             height: 39,
             type: AppButtonType.filled,
             onTap: () {
-              if (!controller.isLoading.value&&
-      controller.formKey.currentState!.validate()) {
+              if (!controller.isLoading.value &&
+                  controller.formKey.currentState!.validate()) {
                 controller.loginDentist();
               }
             },
           ),
         ),
-
         const SizedBox(height: 3),
-
         ClickableTextRow(
           text: 'لبس لديك حساب؟  قم بانشاء حساب من ',
           buttonText: ' هنا  ',
           mainAxisAlignment: MainAxisAlignment.center,
           onTap: () {
-        Get.offNamed(
-  AppRouter.signuppage,
-    arguments: controller.role,
-);
+            Get.offNamed(
+              AppRouter.signuppage,
+              arguments: controller.role,
+            );
           },
         ),
       ],

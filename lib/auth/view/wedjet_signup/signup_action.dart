@@ -8,7 +8,6 @@ import 'package:template/core/widgets/app_button.dart';
 
 /// ================= ACTION WIDGET =================
 
-
 class SignupActionWidget extends StatelessWidget {
   const SignupActionWidget({super.key});
 
@@ -20,50 +19,46 @@ class SignupActionWidget extends StatelessWidget {
       children: [
         Obx(
           () => AppButton(
-            title: controller.isLoading.value
-                ? '  ..جاري الإنشاء'
-                : 'إنشاء حساب',
+            title:
+                controller.isLoading.value ? '  ..جاري الإنشاء' : 'إنشاء حساب',
             width: double.infinity,
             height: 39,
             type: AppButtonType.filled,
             onTap: () {
               if (!controller.isLoading.value &&
                   controller.formKey.currentState!.validate()) {
-        controller.signup();
+                controller.signup();
               }
             },
           ),
         ),
-
         const SizedBox(height: 10),
-
-       if (controller.isDentist) ...[
-      const SizedBox(height: 10),
-      AppButton(
-        title: 'المتابعة بوضع الاطلاع',
-        width: double.infinity,
-        height: 39,
-        type: AppButtonType.outlined,
-        onTap: () {
-          // Get.offAllNamed(
-          //   AppRouter.homepage,
-          //   arguments: controller.role,
-          // );
-        },
-        backgroundColor: Colors.transparent,
-      ),
-    ],
-
+        if (controller.isDentist) ...[
+          const SizedBox(height: 10),
+          AppButton(
+            title: 'المتابعة بوضع الاطلاع',
+            width: double.infinity,
+            height: 39,
+            type: AppButtonType.outlined,
+            onTap: () {
+              Get.offAllNamed(
+                AppRouter.dentistHomePage,
+                arguments: controller.role,
+              );
+            },
+            backgroundColor: Colors.transparent,
+          ),
+        ],
         const SizedBox(height: 3),
-
         ClickableTextRow(
           text: 'لديك حساب؟ سجل دخول من ',
           buttonText: ' هنا  ',
           mainAxisAlignment: MainAxisAlignment.center,
           onTap: () {
-         Get.offNamed(AppRouter.loginpage,
-             arguments: controller.role,
-         );
+            Get.offNamed(
+              AppRouter.loginpage,
+              arguments: controller.role,
+            );
           },
         ),
       ],

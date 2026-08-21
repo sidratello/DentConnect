@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/InvoicesPage/controller/invoice_controller.dart';
 import 'package:template/Dentist/InvoicesPage/view/InvoicePageWidgets/empty_invoices.dart';
 import 'package:template/Dentist/InvoicesPage/view/InvoicePageWidgets/invoice_card.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/utils/static.dart';
+
+import '../../../../core_dentist/theme/app_colors.dart';
 
 class PaidInvoicesView extends StatelessWidget {
   final InvoiceController controller;

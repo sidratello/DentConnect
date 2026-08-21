@@ -1,20 +1,24 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:template/core/storage_services.dart';
 
 import 'package:template/core_dentist/theme/app_colors.dart';
-import 'package:template/core_dentist/utils/static.dart';
 
 class AppHelper {
-  static String token = Static.token;
+  // static String token
 
-  static void clear() {
-    token = '';
+  Future<String> getToken() async {
+    return await StorageService.to.getToken() ?? '';
   }
 
-  static Future<void> saveUserInfo(String token) async {
-    AppHelper.token = token;
-  }
+  // static void clear() {
+  //   token = '';
+  // }
+
+  // static Future<void> saveUserInfo(String token) async {
+  //   AppHelper.token = token;
+  // }
 
   static double get screenWidth {
     final view = PlatformDispatcher.instance.views.first;
@@ -94,7 +98,7 @@ class AppHelper {
           child: child!,
         );
       },
-    )?.then((value) => value);
+    ).then((value) => value);
 
     if (picked != null) {
       final formattedDate = "${picked.year}-${picked.month}-${picked.day}";

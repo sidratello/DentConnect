@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:template/Dentist/MainPage/view/main_page.dart';
 import 'package:template/auth/binding/forpa_binding.dart';
 import 'package:template/auth/binding/login_binding.dart';
 import 'package:template/auth/binding/otp_binding.dart';
@@ -11,13 +12,11 @@ import 'package:template/auth/view/reset_password_screen.dart';
 import 'package:template/Dentist/CommunityPage/view/community_page.dart';
 import 'package:template/Dentist/ComplaintPage/view/complaint_page.dart';
 import 'package:template/Dentist/CreateOrderPage/view/create_order_page.dart';
-import 'package:template/Dentist/HomePage/view/view_only.dart';
 import 'package:template/Dentist/LabDetailsPage/view/lab_details_page.dart';
 import 'package:template/Dentist/NotificationsPage/view/notifications_page.dart';
 import 'package:template/Dentist/PatientPage/view/create_new_patient_profile.dart';
 import 'package:template/Dentist/PatientPage/view/patient_page.dart';
 import 'package:template/Dentist/TemplatesPage/view/templates_page.dart';
-
 import 'package:template/auth/view/signup_screen.dart';
 
 import 'package:template/choose_user_type/view/choose_user_type.dart';
@@ -87,8 +86,7 @@ import 'package:template/lab/features/update_order_satatus/binding/update_order_
 import 'package:template/lab/features/update_order_satatus/views/update_order_status_screen.dart';
 
 abstract class AppRouter {
-  //  static const choseuserpage = '/';
-  static const choseuserpage = '/blabla';
+  static const choseuserpage = '/';
   static const loginpage = '/loginpage';
   static const signuppage = '/signuppage';
   static const OTPpage = '/OTPpage';
@@ -132,8 +130,7 @@ abstract class AppRouter {
   static const String labSubscription = '/lab-subscription';
 
   static const String subscriptionPlans = '/subscription-plans';
-  //static const homePage = '/home-page';
-  static const homePage = '/';
+  static const dentistHomePage = '/dentist-home-page';
 
   static const createOrderPage = '/createOrderPage';
   static const labDetailsPage = '/labDetailsPage';
@@ -343,8 +340,8 @@ abstract class AppRouter {
       page: () => ComplaintPage(),
     ),
     GetPage(
-      name: homePage,
-      page: () => const ModeScreen(),
+      name: dentistHomePage,
+      page: () => MainPage(),
     ),
     GetPage(
       name: labDetailsPage,

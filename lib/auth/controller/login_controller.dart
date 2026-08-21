@@ -1,55 +1,44 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/auth/notification_service.dart';
-
 
 import 'package:template/auth/repository/login_repo.dart';
 import 'package:template/core/app_router.dart';
 import 'package:template/core/storage_services.dart';
 import 'package:template/lab/features/subscription/view/wedjet_subscription/subscription_required_dialog.dart';
+
 class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final isPasswordVisible = false.obs;
   final LoginRepo _repo = LoginRepo();
   final isLoading = false.obs;
-late final String role;
-bool get isLab => role == 'Lab';
-bool get isDentist => role == 'Dentist';
+  late final String role;
+  bool get isLab => role == 'Lab';
+  bool get isDentist => role == 'Dentist';
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  @override
+  void onInit() {
+    super.onInit();
+    role = Get.arguments ?? 'Dentist';
+  }
 
-@override
-void onInit() {
-  super.onInit();
-  role = Get.arguments ?? 'Dentist';
-}
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
 
-
-
-
-
-
-   Future<void> loginDentist() async {
-
-
+  Future<void> loginDentist() async {
     isLoading.value = true;
 
     final response = await _repo.loginDentist(
-
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
-
     );
 
     isLoading.value = false;
- if (!response.success || response.data == null) {
+    if (!response.success || response.data == null) {
       Get.snackbar(
         'خطأ',
         response.message,
@@ -59,176 +48,153 @@ void onInit() {
     }
 
     final user = response.data!;
-  /// مهم: تأكد أن نوع الحساب المختار يطابق نوع الحساب الحقيقي من السيرفر
-  if (user.role != role) {
-    Get.snackbar(
-      'تنبيه',
-      role == 'Dentist'
-          ? 'هذا الحساب ليس حساب طبيب، الرجاء الدخول من قسم المخابر.'
-          : 'هذا الحساب ليس حساب مخبر، الرجاء الدخول من قسم الأطباء.',
-      snackPosition: SnackPosition.BOTTOM,
-    );
-    return;
-  }
+
+    /// مهم: تأكد أن نوع الحساب المختار يطابق نوع الحساب الحقيقي من السيرفر
+    if (user.role != role) {
+      Get.snackbar(
+        'تنبيه',
+        role == 'Dentist'
+            ? 'هذا الحساب ليس حساب طبيب، الرجاء الدخول من قسم المخابر.'
+            : 'هذا الحساب ليس حساب مخبر، الرجاء الدخول من قسم الأطباء.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
     /// ================= FULL ACCESS =================
     if (user.status == 'Active' &&
         user.accessMode == 'Full' &&
         user.accessToken != null) {
       await _saveFullUser(user);
-  await NotificationService()
-      .startConnection(
-    user.accessToken!,
-  );
+      await NotificationService().startConnection(
+        user.accessToken!,
+      );
       Get.snackbar(
         'تم بنجاح',
         'تم تسجيل الدخول بنجاح',
         snackPosition: SnackPosition.BOTTOM,
       );
-     Get.toNamed(
-            AppRouter.homepage,
-        
-          );
+      Get.toNamed(
+        AppRouter.homepage,
+      );
       _goToHomeByRole(user.role);
 
       return;
     }
 
     /// ================= PENDING VERIFICATION =================
-if (user.status == 'PendingVerification') {
-  if (user.role == 'Lab') {
-    Get.defaultDialog(
-      title: 'البريد غير مؤكد',
-      middleText:
-          'يجب تأكيد البريد الإلكتروني قبل استخدام حساب المخبر.',
+    if (user.status == 'PendingVerification') {
+      if (user.role == 'Lab') {
+        Get.defaultDialog(
+          title: 'البريد غير مؤكد',
+          middleText: 'يجب تأكيد البريد الإلكتروني قبل استخدام حساب المخبر.',
+          textConfirm: 'تأكيد البريد',
+          confirmTextColor: Colors.white,
+          barrierDismissible: false,
+          onConfirm: () {
+            Get.back();
 
-      textConfirm:
-          'تأكيد البريد',
-
-      confirmTextColor:
-          Colors.white,
-
-      barrierDismissible:
-          false,
-
-      onConfirm: () {
-        Get.back();
-
-        Get.toNamed(
-          AppRouter.OTPpage,
-          arguments: {
-            'email':
-                emailController.text.trim(),
-            'role':
-                role,
+            Get.toNamed(
+              AppRouter.OTPpage,
+              arguments: {
+                'email': emailController.text.trim(),
+                'role': role,
+              },
+            );
           },
         );
-      },
-    );
 
-    return;
-  }
+        return;
+      }
 
-  // Dentist فقط
-  Get.defaultDialog(
-    title:
-        'البريد غير مؤكد',
-    middleText:
-        'يمكنك تأكيد البريد الإلكتروني الآن أو المتابعة بوضع الاطلاع فقط.',
+      // Dentist فقط
+      Get.defaultDialog(
+        title: 'البريد غير مؤكد',
+        middleText:
+            'يمكنك تأكيد البريد الإلكتروني الآن أو المتابعة بوضع الاطلاع فقط.',
+        textConfirm: 'تأكيد البريد',
+        textCancel: 'وضع الاطلاع',
+        confirmTextColor: Colors.white,
+        onConfirm: () {
+          Get.back();
 
-    textConfirm:
-        'تأكيد البريد',
-    textCancel:
-        'وضع الاطلاع',
+          Get.toNamed(
+            AppRouter.OTPpage,
+            arguments: {
+              'email': emailController.text.trim(),
+              'role': role,
+            },
+          );
+        },
+        onCancel: () async {
+          await _saveReadOnlyUser(
+            user,
+          );
 
-    confirmTextColor:
-        Colors.white,
-
-    onConfirm: () {
-      Get.back();
-
-      Get.toNamed(
-        AppRouter.OTPpage,
-        arguments: {
-          'email':
-              emailController.text.trim(),
-          'role':
-              role,
+          _goToHomeByRole(
+            user.role,
+          );
         },
       );
-    },
 
-    onCancel: () async {
+      return;
+    }
+
+    /// ================= PENDING ADMIN APPROVAL =================
+    if (user.role == 'Lab' && user.status == 'PendingAdminApproval') {
+      await _saveLimitedUserInfo(user);
+
+      Get.snackbar(
+        'بانتظار الموافقة',
+        'حسابك بانتظار موافقة الإدارة',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+      return;
+    }
+
+    /// ================= PendingPayment=================
+
+    if (user.role == 'Lab' && user.status == 'PendingPayment') {
+      await _saveLimitedUserInfo(
+        user,
+      );
+      SubscriptionRequiredDialog.show(
+        onRenew: () {
+          Get.back();
+
+          Get.toNamed(
+            AppRouter.subscriptionPlans,
+            arguments: {
+              'isPendingPayment': true,
+            },
+          );
+        },
+      );
+
+      return;
+    }
+
+    /// ================= READ ONLY =================
+    if (user.role == 'Dentist' && user.accessMode == 'ReadOnly') {
       await _saveReadOnlyUser(
         user,
+      );
+
+      Get.snackbar(
+        'وضع الاطلاع',
+        _getReadOnlyMessage(
+          user.status,
+        ),
+        snackPosition: SnackPosition.BOTTOM,
       );
 
       _goToHomeByRole(
         user.role,
       );
-    },
-  );
 
-  return;
-}
-/// ================= PENDING ADMIN APPROVAL =================
-if (user.role == 'Lab' &&
-    user.status == 'PendingAdminApproval') {
-  await _saveLimitedUserInfo(user);
-
-  Get.snackbar(
-    'بانتظار الموافقة',
-    'حسابك بانتظار موافقة الإدارة',
-    snackPosition: SnackPosition.BOTTOM,
-  );
-
-  return;
-}
-  /// ================= PendingPayment=================
-
-if (user.role == 'Lab' &&
-    user.status == 'PendingPayment') {
-  await _saveLimitedUserInfo(
-    user,
-  );
-SubscriptionRequiredDialog.show(
-  onRenew: () {
-    Get.back();
-
-  Get.toNamed(
-        AppRouter.subscriptionPlans,
-        arguments: {
-          'isPendingPayment': true,
-        },
-      );
-  },
-);
-
-  return;
-}
-
-
-    /// ================= READ ONLY =================
-  if (user.role == 'Dentist' &&
-    user.accessMode == 'ReadOnly') {
-  await _saveReadOnlyUser(
-    user,
-  );
-
-  Get.snackbar(
-    'وضع الاطلاع',
-    _getReadOnlyMessage(
-      user.status,
-    ),
-    snackPosition:
-        SnackPosition.BOTTOM,
-  );
-
-  _goToHomeByRole(
-    user.role,
-  );
-
-  return;
-}
+      return;
+    }
 
     /// ================= FALLBACK =================
     Get.snackbar(
@@ -263,48 +229,44 @@ SubscriptionRequiredDialog.show(
     );
   }
 
+  /// ================= SAVE LIMITED USER =================
+  Future<void> _saveLimitedUserInfo(
+    dynamic user,
+  ) async {
+    await StorageService.to.write(
+      'userId',
+      user.userId,
+    );
 
-/// ================= SAVE LIMITED USER =================
-Future<void> _saveLimitedUserInfo(
-  dynamic user,
-) async {
-  await StorageService.to.write(
-    'userId',
-    user.userId,
-  );
+    await StorageService.to.write(
+      'labId',
+      user.labId,
+    );
 
-  await StorageService.to.write(
-    'labId',
-    user.labId,
-  );
+    await StorageService.to.write(
+      'role',
+      user.role,
+    );
 
-  await StorageService.to.write(
-    'role',
-    user.role,
-  );
+    await StorageService.to.write(
+      'status',
+      user.status,
+    );
 
-  await StorageService.to.write(
-    'status',
-    user.status,
-  );
+    await StorageService.to.write(
+      'accessMode',
+      user.accessMode,
+    );
 
-  await StorageService.to.write(
-    'accessMode',
-    user.accessMode,
-  );
+    // PendingPayment has no access token.
+    await StorageService.to.remove(
+      'token',
+    );
 
-  // PendingPayment has no access token.
-  await StorageService.to.remove(
-    'token',
-  );
-
-  await StorageService.to.remove(
-    'refreshToken',
-  );
-}
-
-
-
+    await StorageService.to.remove(
+      'refreshToken',
+    );
+  }
 
   /// ================= SAVE READ ONLY =================
   Future<void> _saveReadOnlyUser(dynamic user) async {
@@ -345,7 +307,7 @@ Future<void> _saveLimitedUserInfo(
     if (role == 'Lab') {
       // Get.offAllNamed(AppRouter.labHomePage);
     } else if (role == 'Dentist') {
-      // Get.offAllNamed(AppRouter.dentistHomePage);
+      Get.offAllNamed(AppRouter.dentistHomePage);
     } else {
       // Get.offAllNamed(AppRouter.homePage);
     }

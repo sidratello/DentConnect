@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:template/core/app_helper.dart';
@@ -22,13 +21,13 @@ class StorageService extends GetxService {
     return _box.read<T>(key) ?? defaultValue;
   }
 
-Future<void> remove(String key) async {
-  await _box.remove(key);
+  Future<void> remove(String key) async {
+    await _box.remove(key);
 
-  if (key == 'token') {
-    AppHelper.token = '';
+    if (key == 'token') {
+      AppHelper.token = '';
+    }
   }
-}
 
   Future<void> clearAll() async {
     await _box.erase();
@@ -40,5 +39,11 @@ Future<void> remove(String key) async {
     AppHelper.token = token;
   }
 
+  Future<String?> getToken() async {
+    return read<String>('token');
+  }
 
+  Future<void> clearToken() async {
+    await remove('token');
+  }
 }

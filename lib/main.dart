@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:template/Dentist/CasesPage/controller/case_controller.dart';
-import 'package:template/Dentist/CreateOrderPage/controller/create_order_controller.dart';
-import 'package:template/Dentist/HomePage/controller/home_controller.dart';
-import 'package:template/Dentist/PatientPage/controller/patient_controller.dart';
 import 'package:template/Dentist/TemplatesPage/controller/template_controller.dart';
 import 'package:template/core/storage_services.dart';
 import 'package:template/core_dentist/theme/app_theme.dart';
@@ -38,12 +34,8 @@ void main() async {
     () async => await StorageService().init(),
   );
 
-  Get.put(HomeController());
-  Get.put(CreateOrderController());
   Get.put(ThemeController());
   Get.put(TemplateController());
-  Get.put(CaseController());
-  Get.put(PatientController());
 
   await GetStorage.init();
   await LocalNotificationService().initialize();

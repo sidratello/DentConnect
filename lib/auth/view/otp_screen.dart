@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-
-
 import 'package:template/auth/view/wedjet_otp/otp_action_widget.dart';
 import 'package:template/auth/view/wedjet_otp/otp_body_widget.dart';
 import 'package:template/auth/view/wedjet_otp/otp_header_widget.dart';
-
-
 import 'package:template/core/widgets/auth_layout.dart';
 
 class OtpScreen extends StatelessWidget {
@@ -13,27 +9,17 @@ class OtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
-
     return AuthLayout(
-  padding: EdgeInsets.only(
-    left: 20,
-    right: 20,
-       bottom: MediaQuery.of(context).viewInsets.bottom + 24,
-  ),
-  children: [
-          OtpHeaderWidget(),
+      padding: EdgeInsets.only(
+        left: 20,
+        right: 20,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+      ),
+      children: const [
+        OtpHeaderWidget(),
         OtpBodyWidget(),
         OtpActionWidget(),
-
-   
-                        
-                        ],);
-                      
-                    
-                  
-      
-      
-    
+      ],
+    );
   }
 }

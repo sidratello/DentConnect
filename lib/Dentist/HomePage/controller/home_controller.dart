@@ -4,6 +4,7 @@ import 'package:template/Dentist/DoctorProfile/model/doctor_profile_model.dart';
 import 'package:template/Dentist/HomePage/model/advertisement_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
 import 'package:template/Dentist/SearchLabsPage/model/search_lab_model.dart';
+import 'package:template/core/storage_services.dart';
 import 'package:template/core_dentist/api.dart';
 
 class HomeController extends GetxController {
@@ -25,10 +26,17 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    initPreviewMode();
     fetchAdvertisement();
     fetchLabsLabels();
     fetchDoctorProfile();
     super.onInit();
+  }
+
+  void initPreviewMode() async {
+    String? token = await StorageService.to.getToken();
+    String? accessMode = StorageService.to.read<String>('accessMode');
+    isPreviewMode.value = accessMode == 'ReadOnly' || token == null;
   }
 
   void setPreviewMode(

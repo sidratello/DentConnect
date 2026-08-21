@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:template/Dentist/TemplatesPage/model/template_model.dart';
-import 'package:template/core/theme/app_colors.dart';
-import 'package:template/core/utils/static.dart';
+import 'package:template/core_dentist/utils/static.dart';
+
+import '../../../../../core_dentist/theme/app_colors.dart';
 
 class SelectedTemplateInfoCard extends StatelessWidget {
   final CaseTemplate template;

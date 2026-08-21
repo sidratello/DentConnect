@@ -5,9 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:template/core/storage_services.dart';
 
-import 'package:template/core_dentist/app_helper.dart';
-import 'package:template/core_dentist/utils/static.dart';
-
 class GlobalInterceptor extends dio.Interceptor {
   static const String _divider =
       '----------------------------------------------------------------------';
@@ -18,9 +15,9 @@ class GlobalInterceptor extends dio.Interceptor {
   void onRequest(
     dio.RequestOptions options,
     dio.RequestInterceptorHandler handler,
-  ) {
-    final token = AppHelper.token.isNotEmpty ? AppHelper.token : Static.token;
-
+  ) async {
+    // final token = AppHelper.token.isNotEmpty ? AppHelper.token : Static.token;
+    final String token = await StorageService.to.getToken() ?? '';
     if (token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
@@ -99,8 +96,7 @@ class GlobalInterceptor extends dio.Interceptor {
     }
 
     if (statusCode == 401) {
-      AppHelper.clear();
-
+      StorageService.to.clearToken();
       if (Get.isRegistered<StorageService>()) {
         await StorageService.to.clearAll();
       }

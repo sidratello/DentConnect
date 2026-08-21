@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:template/core/theme/app_colors.dart';
+
+import '../../../../core_dentist/theme/app_colors.dart' show AppColors;
 
 class EmptyInvoices extends StatelessWidget {
   final IconData icon;

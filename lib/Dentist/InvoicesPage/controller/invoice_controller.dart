@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'package:template/core/api.dart';
+import 'package:template/core_dentist/api.dart';
 
 import '../model/invoice_model.dart';
 
