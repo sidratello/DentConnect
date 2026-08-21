@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/core_dentist/app_router.dart';
+import 'package:template/core/app_router.dart';
 
 import '../../../../core_dentist/theme/app_colors.dart';
 import '../../../../core_dentist/utils/static.dart';
