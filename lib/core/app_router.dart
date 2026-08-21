@@ -1,6 +1,4 @@
-
-
-import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get.dart';
 import 'package:template/auth/binding/forpa_binding.dart';
 import 'package:template/auth/binding/login_binding.dart';
 import 'package:template/auth/binding/otp_binding.dart';
@@ -10,6 +8,15 @@ import 'package:template/auth/view/forget_password.dart';
 import 'package:template/auth/view/login_screen.dart';
 import 'package:template/auth/view/otp_screen.dart';
 import 'package:template/auth/view/reset_password_screen.dart';
+import 'package:template/Dentist/CommunityPage/view/community_page.dart';
+import 'package:template/Dentist/ComplaintPage/view/complaint_page.dart';
+import 'package:template/Dentist/CreateOrderPage/view/create_order_page.dart';
+import 'package:template/Dentist/HomePage/view/view_only.dart';
+import 'package:template/Dentist/LabDetailsPage/view/lab_details_page.dart';
+import 'package:template/Dentist/NotificationsPage/view/notifications_page.dart';
+import 'package:template/Dentist/PatientPage/view/create_new_patient_profile.dart';
+import 'package:template/Dentist/PatientPage/view/patient_page.dart';
+import 'package:template/Dentist/TemplatesPage/view/templates_page.dart';
 
 import 'package:template/auth/view/signup_screen.dart';
 
@@ -79,72 +86,65 @@ import 'package:template/lab/features/subscription/view/subscription_plans_scree
 import 'package:template/lab/features/update_order_satatus/binding/update_order_status_binding.dart';
 import 'package:template/lab/features/update_order_satatus/views/update_order_status_screen.dart';
 
-
-
-
 abstract class AppRouter {
-  static const choseuserpage = '/';
+  //  static const choseuserpage = '/';
+  static const choseuserpage = '/blabla';
   static const loginpage = '/loginpage';
   static const signuppage = '/signuppage';
   static const OTPpage = '/OTPpage';
   static const forgetpasswordpage = '/forgetpasswordpage';
   static const resetpasswordpage = '/resetpasswordpage';
-   static const homepage = '/homepage';
-   static const profile = '/profile';
-   static const editProfile = '/editProfile';
-   static const orderconection = '/orderconection';
-   static const orders = '/orders';
-static const orderDetails = '/orderDetails';
-static const caseStatus = '/caseStatus';
-static const caseOrders = '/caseOrders';
-static const caseOrderDetails = '/caseOrderDetails';
-static const updateOrderStatus = '/updateOrderStatus';
-static const doctorOrders = '/doctorOrders';
-static const addScanSlot = '/addScanSlot';
+  static const homepage = '/homepage';
+  static const profile = '/profile';
+  static const editProfile = '/editProfile';
+  static const orderconection = '/orderconection';
+  static const orders = '/orders';
+  static const orderDetails = '/orderDetails';
+  static const caseStatus = '/caseStatus';
+  static const caseOrders = '/caseOrders';
+  static const caseOrderDetails = '/caseOrderDetails';
+  static const updateOrderStatus = '/updateOrderStatus';
+  static const doctorOrders = '/doctorOrders';
+  static const addScanSlot = '/addScanSlot';
   static const scanSlots = '/scan-slots';
-  static const updateScanSlot =
-    '/updateScanSlot';
-    static const bookedScanAppointments =
-    '/booked-scan-appointments';
-static const createBlog = '/create-blog';
-static const penndingPosts = '/pennding-posts';
-static const String blogFeed =
-    '/blog-feed';
-static const String blogPostDetails =
-    '/blog-post-details';
- static const monthlyCalendar =
-      '/monthly-calendar';
-      static const calendarDayDetails =
-    '/calendar-day-details';
-    static const createLabAd =
-    '/create-lab-ad';
-    static const labAds = '/lab-ads';
-static const labAdDetails =
-    '/lab-ad-details';
-    static const labAdPayment =
-    '/lab-ad-payment';
-    static const labAdPaymentSuccess =
-    '/lab-ad-payment-success';
+  static const updateScanSlot = '/updateScanSlot';
+  static const bookedScanAppointments = '/booked-scan-appointments';
+  static const createBlog = '/create-blog';
+  static const penndingPosts = '/pennding-posts';
+  static const String blogFeed = '/blog-feed';
+  static const String blogPostDetails = '/blog-post-details';
+  static const monthlyCalendar = '/monthly-calendar';
+  static const calendarDayDetails = '/calendar-day-details';
+  static const createLabAd = '/create-lab-ad';
+  static const labAds = '/lab-ads';
+  static const labAdDetails = '/lab-ad-details';
+  static const labAdPayment = '/lab-ad-payment';
+  static const labAdPaymentSuccess = '/lab-ad-payment-success';
 
-static const labAdPaymentFailed =
-    '/lab-ad-payment-failed';
-    static const labAdFeed =
-    '/lab-ad-feed';
+  static const labAdPaymentFailed = '/lab-ad-payment-failed';
+  static const labAdFeed = '/lab-ad-feed';
 
-    static const String labInvoices =
-    '/lab-invoices';
-    static const String labComplaints =
-    '/lab-complaints';
+  static const String labInvoices = '/lab-invoices';
+  static const String labComplaints = '/lab-complaints';
 
-static const String
-    labComplaintDetails =
-    '/lab-complaint-details';
+  static const String labComplaintDetails = '/lab-complaint-details';
 
-static const String labSubscription =
-    '/lab-subscription';
+  static const String labSubscription = '/lab-subscription';
 
-static const String subscriptionPlans =
-    '/subscription-plans';
+  static const String subscriptionPlans = '/subscription-plans';
+  //static const homePage = '/home-page';
+  static const homePage = '/';
+
+  static const createOrderPage = '/createOrderPage';
+  static const labDetailsPage = '/labDetailsPage';
+  static const casePage = '/casePage';
+  static const patientsPage = '/patientsPage';
+  static const createPatientPage = '/createPatientPage';
+  static const templatesPage = '/templatesPage';
+  static const templateDetailsPage = '/templateDetailsPage';
+  static const communityPage = '/communityPage';
+  static const complaintPage = '/complaintPage';
+  static const notificationPage = '/notificationPage';
 
   static final List<GetPage<dynamic>> pages = [
     GetPage(
@@ -156,258 +156,223 @@ static const String subscriptionPlans =
       page: () => const SignupScreen(),
       binding: SignupBinding(),
     ),
-       GetPage(
+    GetPage(
       name: loginpage,
       page: () => const LoginScreen(),
-       binding: LoginBinding(),
+      binding: LoginBinding(),
     ),
-
-           GetPage(
+    GetPage(
       name: OTPpage,
       page: () => const OtpScreen(),
-        binding: OtpBinding(),
+      binding: OtpBinding(),
     ),
-
-GetPage(
-  name: forgetpasswordpage,
-  page: () => const fpScreen(),
-  binding: ForgetPasswordBinding(),
-),
-GetPage(
-  name: resetpasswordpage,
-  page: () => const ResetPasswordScreen(),
-  binding: ResetPasswordBinding(),
-),
-
-
-
-GetPage(
-  name: homepage,
-  page: () => const LabHomePage(),
-  binding: LabHomeBinding(),
-),
-GetPage(
-  name: profile,
-  page: () => const LabProfileViewScreen(),
-   binding: LabProfileBinding(),
-),
-GetPage(
-  name: editProfile,
-  page: () => const EditProfileScreen(),
-  binding: EditProfileBinding(),
-),
-GetPage(
-  name: orderconection,
-
-  page: () => const OrderConnectionScreen(),
-
-  binding: OrderConnectionBinding(),
-),
-GetPage(
-  name: orders,
-  page: () => const LabOrderScreen(),
-  binding: LabOrderBinding(),
-),
-
-GetPage(
-  name: orderDetails,
-  page: () => const OrderDetailsScreen(),
-  binding: OrderDetailsBinding(),
-),
-
-
-GetPage(
-  name: caseStatus,
-  page: () => const CaseStatusScreen(),
-  binding: CaseStatusBinding(),
-),
-
-GetPage(
-  name: caseOrders,
-  page: () => const CaseOrdersScreen(),
-  binding: CaseOrdersBinding(),
-),
-
-GetPage(
-  name: caseOrderDetails,
-  page: () => const CaseOrderDetailsScreen(),
-  binding: CaseOrderDetailsBinding(),
-),
-
-GetPage(
-  name: updateOrderStatus,
-  page: () => const UpdateOrderStatusScreen(),
-  binding: UpdateOrderStatusBinding(),
-),
-
-GetPage(
-  name: doctorOrders,
-  page: () => const DoctorOrdersScreen(),
-  binding: DoctorOrdersBinding(),
-),
- GetPage(
-    name: scanSlots,
-    page: () => const ScanSlotsScreen(),
-    binding: ScanSlotsBinding(),
-  ),
-GetPage(
-  name: addScanSlot,
-  page: () => const AddScanSlotScreen(),
-  binding: AddScanSlotBinding(),
-),
-GetPage(
-  name: updateScanSlot,
-  page: () =>
-      const UpdateScanSlotScreen(),
-  binding: UpdateScanSlotBinding(),
-),
-GetPage(
-  name:
-      AppRouter.bookedScanAppointments,
-  page: () =>
-      const BookedScanAppointmentsScreen(),
-  binding:
-      BookedScanAppointmentsBinding(),
-),
-
-GetPage(
-  name: createBlog,
-  page: () => const CreateBlogScreen(),
-  binding: CreateBlogBinding(),
-),
-
-
-GetPage(
-  name: penndingPosts,
-  page: () =>
-      const MyBlogPostsScreen(),
-  binding: MyBlogPostsBinding(),
-),
-
-
-GetPage(
-  name: AppRouter.blogFeed,
-  page: () =>
-      const BlogFeedScreen(),
-  binding: BlogFeedBinding(),
-),
-
-GetPage(
-  name: AppRouter.blogPostDetails,
-  page: () =>
-      const BlogPostDetailsScreen(),
-),
-
-GetPage(
-  name: AppRouter.monthlyCalendar,
-  page: () =>
-      const MonthlyCalendarScreen(),
-  binding:
-      MonthlyCalendarBinding(),
-),
-
-
-GetPage(
-  name: AppRouter.calendarDayDetails,
-  page: () =>
-      const CalendarDayDetailsScreen(),
-  binding:
-      CalendarDayDetailsBinding(),
-),
-
-GetPage(
-  name: createLabAd,
-  page: () =>
-      const CreateLabAdScreen(),
-  binding:
-      CreateLabAdBinding(),
-),
-GetPage(
-  name: labAds,
-  page: () => const LabAdsScreen(),
-  binding: LabAdsBinding(),
-),
-
-
-GetPage(
-  name: labAdDetails,
-  page: () =>
-      const LabAdDetailsScreen(),
-  binding:
-      LabAdDetailsBinding(),
-),
-
-GetPage(
-  name: labAdPayment,
-  page: () =>
-      const LabAdPaymentScreen(),
-  binding:
-      LabAdPaymentBinding(),
-),
-
-GetPage(
-  name: labAdPaymentSuccess,
-  page: () =>
-      const LabAdPaymentSuccessScreen(),
-),
-
-GetPage(
-  name: labAdPaymentFailed,
-  page: () =>
-      const LabAdPaymentFailedScreen(),
-),
-GetPage(
-  name:
-      AppRouter.labAdFeed,
-  page: () =>
-      const LabAdFeedScreen(),
-  binding:
-      LabAdFeedBinding(),
-),
-
-GetPage(
-  name: labInvoices,
-  page: () =>
-      const LabInvoicesScreen(),
-  binding:
-      LabInvoicesBinding(),
-),
-
-
-GetPage(
-  name:
-      labComplaints,
-  page: () =>
-      const LabComplaintsScreen(),
-  binding:
-      LabComplaintsBinding(),
-),
-
-GetPage(
-  name:
-      labComplaintDetails,
-  page: () =>
-      const LabComplaintDetailsScreen(),
-  binding:
-      LabComplaintDetailsBinding(),
-),
-
-
-GetPage(
-  name: labSubscription,
-  page: () =>
-      const LabSubscriptionScreen(),
-  binding:
-      LabSubscriptionBinding(),
-),
-
-GetPage(
-  name: subscriptionPlans,
-  page: () =>
-      const SubscriptionPlansScreen(),
-  binding:
-      SubscriptionPlansBinding(),
-),
+    GetPage(
+      name: forgetpasswordpage,
+      page: () => const fpScreen(),
+      binding: ForgetPasswordBinding(),
+    ),
+    GetPage(
+      name: resetpasswordpage,
+      page: () => const ResetPasswordScreen(),
+      binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: homepage,
+      page: () => const LabHomePage(),
+      binding: LabHomeBinding(),
+    ),
+    GetPage(
+      name: profile,
+      page: () => const LabProfileViewScreen(),
+      binding: LabProfileBinding(),
+    ),
+    GetPage(
+      name: editProfile,
+      page: () => const EditProfileScreen(),
+      binding: EditProfileBinding(),
+    ),
+    GetPage(
+      name: orderconection,
+      page: () => const OrderConnectionScreen(),
+      binding: OrderConnectionBinding(),
+    ),
+    GetPage(
+      name: orders,
+      page: () => const LabOrderScreen(),
+      binding: LabOrderBinding(),
+    ),
+    GetPage(
+      name: orderDetails,
+      page: () => const OrderDetailsScreen(),
+      binding: OrderDetailsBinding(),
+    ),
+    GetPage(
+      name: caseStatus,
+      page: () => const CaseStatusScreen(),
+      binding: CaseStatusBinding(),
+    ),
+    GetPage(
+      name: caseOrders,
+      page: () => const CaseOrdersScreen(),
+      binding: CaseOrdersBinding(),
+    ),
+    GetPage(
+      name: caseOrderDetails,
+      page: () => const CaseOrderDetailsScreen(),
+      binding: CaseOrderDetailsBinding(),
+    ),
+    GetPage(
+      name: updateOrderStatus,
+      page: () => const UpdateOrderStatusScreen(),
+      binding: UpdateOrderStatusBinding(),
+    ),
+    GetPage(
+      name: doctorOrders,
+      page: () => const DoctorOrdersScreen(),
+      binding: DoctorOrdersBinding(),
+    ),
+    GetPage(
+      name: scanSlots,
+      page: () => const ScanSlotsScreen(),
+      binding: ScanSlotsBinding(),
+    ),
+    GetPage(
+      name: addScanSlot,
+      page: () => const AddScanSlotScreen(),
+      binding: AddScanSlotBinding(),
+    ),
+    GetPage(
+      name: updateScanSlot,
+      page: () => const UpdateScanSlotScreen(),
+      binding: UpdateScanSlotBinding(),
+    ),
+    GetPage(
+      name: AppRouter.bookedScanAppointments,
+      page: () => const BookedScanAppointmentsScreen(),
+      binding: BookedScanAppointmentsBinding(),
+    ),
+    GetPage(
+      name: createBlog,
+      page: () => const CreateBlogScreen(),
+      binding: CreateBlogBinding(),
+    ),
+    GetPage(
+      name: penndingPosts,
+      page: () => const MyBlogPostsScreen(),
+      binding: MyBlogPostsBinding(),
+    ),
+    GetPage(
+      name: AppRouter.blogFeed,
+      page: () => const BlogFeedScreen(),
+      binding: BlogFeedBinding(),
+    ),
+    GetPage(
+      name: AppRouter.blogPostDetails,
+      page: () => const BlogPostDetailsScreen(),
+    ),
+    GetPage(
+      name: AppRouter.monthlyCalendar,
+      page: () => const MonthlyCalendarScreen(),
+      binding: MonthlyCalendarBinding(),
+    ),
+    GetPage(
+      name: AppRouter.calendarDayDetails,
+      page: () => const CalendarDayDetailsScreen(),
+      binding: CalendarDayDetailsBinding(),
+    ),
+    GetPage(
+      name: createLabAd,
+      page: () => const CreateLabAdScreen(),
+      binding: CreateLabAdBinding(),
+    ),
+    GetPage(
+      name: labAds,
+      page: () => const LabAdsScreen(),
+      binding: LabAdsBinding(),
+    ),
+    GetPage(
+      name: labAdDetails,
+      page: () => const LabAdDetailsScreen(),
+      binding: LabAdDetailsBinding(),
+    ),
+    GetPage(
+      name: labAdPayment,
+      page: () => const LabAdPaymentScreen(),
+      binding: LabAdPaymentBinding(),
+    ),
+    GetPage(
+      name: labAdPaymentSuccess,
+      page: () => const LabAdPaymentSuccessScreen(),
+    ),
+    GetPage(
+      name: labAdPaymentFailed,
+      page: () => const LabAdPaymentFailedScreen(),
+    ),
+    GetPage(
+      name: AppRouter.labAdFeed,
+      page: () => const LabAdFeedScreen(),
+      binding: LabAdFeedBinding(),
+    ),
+    GetPage(
+      name: labInvoices,
+      page: () => const LabInvoicesScreen(),
+      binding: LabInvoicesBinding(),
+    ),
+    GetPage(
+      name: labComplaints,
+      page: () => const LabComplaintsScreen(),
+      binding: LabComplaintsBinding(),
+    ),
+    GetPage(
+      name: labComplaintDetails,
+      page: () => const LabComplaintDetailsScreen(),
+      binding: LabComplaintDetailsBinding(),
+    ),
+    GetPage(
+      name: labSubscription,
+      page: () => const LabSubscriptionScreen(),
+      binding: LabSubscriptionBinding(),
+    ),
+    GetPage(
+      name: subscriptionPlans,
+      page: () => const SubscriptionPlansScreen(),
+      binding: SubscriptionPlansBinding(),
+    ),
+    GetPage(
+      name: complaintPage,
+      page: () => ComplaintPage(),
+    ),
+    GetPage(
+      name: homePage,
+      page: () => const ModeScreen(),
+    ),
+    GetPage(
+      name: labDetailsPage,
+      page: () => LabDetailsPage(id: Get.arguments),
+    ),
+    GetPage(
+      name: patientsPage,
+      page: () => const PatientsPage(),
+    ),
+    GetPage(
+      name: templatesPage,
+      page: () => const TemplatesPage(),
+    ),
+    GetPage(
+      name: communityPage,
+      page: () => const CommunityPage(),
+    ),
+    GetPage(
+      name: notificationPage,
+      page: () => const NotificationsPage(),
+    ),
+    GetPage(
+      name: createPatientPage,
+      page: () => const CreateNewPatientProfile(),
+    ),
+    GetPage(
+      name: createOrderPage,
+      page: () => const CreateOrderPage(),
+    ),
   ];
-
 }

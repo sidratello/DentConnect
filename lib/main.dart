@@ -9,16 +9,14 @@ import 'package:template/Dentist/CreateOrderPage/controller/create_order_control
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/PatientPage/controller/patient_controller.dart';
 import 'package:template/Dentist/TemplatesPage/controller/template_controller.dart';
-import 'package:template/core_dentist/app_router.dart';
-import 'package:template/core_dentist/storage_services.dart';
+import 'package:template/core/storage_services.dart';
 import 'package:template/core_dentist/theme/app_theme.dart';
 import 'package:template/core_dentist/theme/theme_controller.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:template/auth/local_notification_service.dart';
 
-
 import 'package:template/core/app_router.dart';
-import 'package:template/core/storage_services.dart';
+
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -36,7 +34,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
- await Get.putAsync<StorageService>(
+  await Get.putAsync<StorageService>(
     () async => await StorageService().init(),
   );
 
@@ -48,9 +46,7 @@ void main() async {
   Get.put(PatientController());
 
   await GetStorage.init();
-  await LocalNotificationService()
-      .initialize();
-
+  await LocalNotificationService().initialize();
 
   runApp(const MyApp());
 }
@@ -80,11 +76,12 @@ class MyApp extends StatelessWidget {
             supportedLocales: const [
               Locale('ar'),
               Locale('en'),
-            ],         localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
+            ],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeController.isDarkMode.value

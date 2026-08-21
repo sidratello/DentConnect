@@ -214,7 +214,7 @@ class CreateOrderController extends GetxController {
 
   Future<void> pickFile() async {
     try {
-      final PlatformFile? pickedFile = await FilePicker.pickFile(
+      final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: [
           'stl',
@@ -228,7 +228,8 @@ class CreateOrderController extends GetxController {
         return;
       }
 
-      final String? path = pickedFile.path;
+      final String? path =
+          pickedFile.count > 0 ? pickedFile.files.single.path : null;
 
       if (path == null) {
         Get.snackbar(

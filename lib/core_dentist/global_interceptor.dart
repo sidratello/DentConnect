@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:template/core/storage_services.dart';
 
 import 'package:template/core_dentist/app_helper.dart';
-import 'package:template/core_dentist/storage_services.dart';
 import 'package:template/core_dentist/utils/static.dart';
 
 class GlobalInterceptor extends dio.Interceptor {
