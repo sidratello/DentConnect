@@ -1,7 +1,6 @@
-
-
-
 import 'package:flutter/material.dart';
+import 'package:template/core_dentist/utils/static.dart';
+
 class OrderImage extends StatelessWidget {
   final String imagePath;
   final double width;

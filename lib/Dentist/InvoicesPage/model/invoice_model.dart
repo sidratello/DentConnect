@@ -56,7 +56,7 @@ class InvoiceModel {
       addressPlace: json['addressPlace'],
       cityPlace: json['cityPlace'],
       countryPlace: json['countryPlace'],
-      labName: json['labName'],
+      labName: json['clinicName'],
       items: json['items'] != null ? List<String>.from(json['items']) : [],
     );
   }

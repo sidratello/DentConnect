@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
+
 import 'package:template/Dentist/InvoicesPage/controller/invoice_controller.dart';
 import 'package:template/Dentist/InvoicesPage/view/InvoicePageWidgets/empty_invoices.dart';
 import 'package:template/Dentist/InvoicesPage/view/InvoicePageWidgets/invoice_card.dart';
-import 'package:template/core_dentist/utils/static.dart';
 
+import 'package:template/core_dentist/utils/static.dart';
 import '../../../../core_dentist/theme/app_colors.dart';
 
 class UnpaidInvoicesView extends StatelessWidget {
@@ -39,22 +40,49 @@ class UnpaidInvoicesView extends StatelessWidget {
           onRefresh: controller.fetchUnpaidInvoices,
           child: ListView.separated(
             padding: EdgeInsets.fromLTRB(
-              Static.getwidth(context, 20),
+              Static.getwidth(
+                context,
+                20,
+              ),
               4,
-              Static.getwidth(context, 20),
+              Static.getwidth(
+                context,
+                20,
+              ),
               24,
             ),
             itemCount: controller.unpaidInvoices.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
-            itemBuilder: (context, index) {
+            separatorBuilder: (
+              _,
+              __,
+            ) =>
+                const SizedBox(
+              height: 14,
+            ),
+            itemBuilder: (
+              context,
+              index,
+            ) {
               final invoice = controller.unpaidInvoices[index];
 
               return InvoiceCard(
                 invoice: invoice,
                 onPay: () {
-                  // TODO:
-                  // الانتقال إلى واجهة الدفع
-                  // وتمرير invoice.id
+                  final orderId = invoice.id;
+
+                  if (orderId == null) {
+                    Get.snackbar(
+                      'خطأ',
+                      'معرف الطلبية غير موجود',
+                      snackPosition: SnackPosition.BOTTOM,
+                    );
+
+                    return;
+                  }
+
+                  controller.payInvoice(
+                    orderId,
+                  );
                 },
               );
             },

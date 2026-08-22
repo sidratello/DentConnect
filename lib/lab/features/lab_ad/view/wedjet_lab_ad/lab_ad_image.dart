@@ -19,7 +19,7 @@
 //   });
 
 //   static const String _serverBaseUrl =
-//       'http://192.168.1.3:44334/';
+//       '${Static.imageBaseUrl}/';
 
 //   String get imageUrl {
 //     final path = imagePath.trim();
@@ -136,6 +136,7 @@ import 'package:flutter/material.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/widgets/AppLoadingIndicator.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class AppNetworkContentImage extends StatelessWidget {
   final String? imagePath;
@@ -171,14 +172,11 @@ class AppNetworkContentImage extends StatelessWidget {
       return null;
     }
 
-    if (path.startsWith('http://') ||
-        path.startsWith('https://')) {
+    if (path.startsWith('http://') || path.startsWith('https://')) {
       return path;
     }
 
-    final normalizedPath = path.startsWith('/')
-        ? path.substring(1)
-        : path;
+    final normalizedPath = path.startsWith('/') ? path.substring(1) : path;
 
     return '$_serverBaseUrl$normalizedPath';
   }
@@ -193,7 +191,6 @@ class AppNetworkContentImage extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           _buildImage(),
-
           if (additionalImagesCount > 0)
             Positioned(
               left: 8,
@@ -263,8 +260,7 @@ class AppNetworkContentImage extends StatelessWidget {
   }
 }
 
-class _AdditionalImagesBadge
-    extends StatelessWidget {
+class _AdditionalImagesBadge extends StatelessWidget {
   final int count;
 
   const _AdditionalImagesBadge({
@@ -305,8 +301,7 @@ class _AdditionalImagesBadge
   }
 }
 
-class _ImagePlaceholder
-    extends StatelessWidget {
+class _ImagePlaceholder extends StatelessWidget {
   const _ImagePlaceholder();
 
   @override

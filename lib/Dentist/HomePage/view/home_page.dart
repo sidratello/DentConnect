@@ -13,6 +13,7 @@ import 'package:template/core_dentist/widgets/appBar_profile_image.dart';
 import 'package:template/core_dentist/widgets/top_background.dart';
 
 import '../../../core_dentist/theme/app_colors.dart';
+import 'HomePageWidegts/appbar_home_vector_black.dart';
 
 class HomePageWidget extends GetView<HomeController> {
   const HomePageWidget({super.key});
@@ -37,6 +38,7 @@ class HomePageWidget extends GetView<HomeController> {
               isPreviewMode: controller.isPreviewMode.value,
             ),
             const AppbarNotificationIcon(),
+            if (controller.isPreviewMode.value) const AppbarHomeVectorBlack(),
           ],
         ),
         body: TopBackground(

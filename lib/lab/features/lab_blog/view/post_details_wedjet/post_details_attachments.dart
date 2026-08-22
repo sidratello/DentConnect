@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
 import 'package:template/core/widgets/AppLoadingIndicator.dart';
+import 'package:template/core_dentist/utils/static.dart';
 import 'package:template/lab/features/lab_blog/model/post_model.dart';
 import 'package:template/lab/features/lab_blog/view/post_details_wedjet/post_full_image_dialog.dart';
 
 class PostAttachments extends StatelessWidget {
-final List<BlogPostAttachment> attachments;
+  final List<BlogPostAttachment> attachments;
 
   const PostAttachments({
     super.key,
@@ -40,8 +41,7 @@ final List<BlogPostAttachment> attachments;
               return const SizedBox(width: 10);
             },
             itemBuilder: (context, index) {
-              final imageUrl =
-                  _buildImageUrl(attachments[index].path);
+              final imageUrl = _buildImageUrl(attachments[index].path);
 
               return GestureDetector(
                 onTap: () {

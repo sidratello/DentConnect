@@ -5,6 +5,7 @@ import 'package:template/core/app_router.dart';
 import 'package:template/core/storage_services.dart';
 import 'package:template/auth/repository/logout_repository.dart';
 import 'package:template/auth/notification_service.dart';
+
 class LogoutController extends GetxController {
   final LogoutRepository repository;
 
@@ -22,15 +23,12 @@ class LogoutController extends GetxController {
     try {
       isLoggingOut.value = true;
 
-      final refreshToken =
-          StorageService.to.read<String>(
+      final refreshToken = StorageService.to.read<String>(
         'refreshToken',
       );
 
-      if (refreshToken != null &&
-          refreshToken.trim().isNotEmpty) {
-        final response =
-            await repository.logout(
+      if (refreshToken != null && refreshToken.trim().isNotEmpty) {
+        final response = await repository.logout(
           refreshToken: refreshToken,
         );
 
@@ -38,8 +36,7 @@ class LogoutController extends GetxController {
           Get.snackbar(
             'تنبيه',
             response.message,
-            snackPosition:
-                SnackPosition.BOTTOM,
+            snackPosition: SnackPosition.BOTTOM,
           );
         }
       }
@@ -47,8 +44,7 @@ class LogoutController extends GetxController {
       await _clearUserSession();
 
       Get.offAllNamed(
-        AppRouter.loginpage,
-        arguments: 'Lab',
+        AppRouter.choseuserpage,
       );
     } catch (_) {
       // حتى لو فشل طلب logout من السيرفر
@@ -56,27 +52,24 @@ class LogoutController extends GetxController {
       await _clearUserSession();
 
       Get.offAllNamed(
-        AppRouter.loginpage,
-        arguments: 'Lab',
+        AppRouter.choseuserpage,
       );
     } finally {
       isLoggingOut.value = false;
     }
   }
 
-Future<void> _clearUserSession() async {
-  await NotificationService()
-      .stopConnection();
+  Future<void> _clearUserSession() async {
+    await NotificationService().stopConnection();
 
-  await StorageService.to.clearAll();
-}
+    await StorageService.to.clearAll();
+  }
 
   void confirmLogout() {
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(18),
         ),
         title: const Text(
           'تسجيل الخروج',
@@ -95,19 +88,17 @@ Future<void> _clearUserSession() async {
           ),
           Obx(
             () => TextButton(
-              onPressed:
-                  isLoggingOut.value
-                      ? null
-                      : () {
-                          Get.back();
-                          logout();
-                        },
+              onPressed: isLoggingOut.value
+                  ? null
+                  : () {
+                      Get.back();
+                      logout();
+                    },
               child: isLoggingOut.value
                   ? const SizedBox(
                       width: 18,
                       height: 18,
-                      child:
-                          CircularProgressIndicator(
+                      child: CircularProgressIndicator(
                         strokeWidth: 2,
                       ),
                     )
@@ -115,8 +106,7 @@ Future<void> _clearUserSession() async {
                       'تسجيل الخروج',
                       style: TextStyle(
                         color: Colors.red,
-                        fontWeight:
-                            FontWeight.w700,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
             ),

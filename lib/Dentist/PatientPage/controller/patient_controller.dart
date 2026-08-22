@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:template/Dentist/HomePage/view/home_page.dart';
+import 'package:template/Dentist/MainPage/view/main_page.dart';
 import 'package:template/Dentist/PatientPage/model/cases_patient_model.dart';
 import 'package:template/Dentist/PatientPage/model/patient_model.dart';
+import 'package:template/Dentist/PatientPage/view/patient_page.dart';
 import 'package:template/core_dentist/api.dart';
 
 class PatientController extends GetxController {
@@ -93,6 +96,8 @@ class PatientController extends GetxController {
     List<File>? newPhotos,
     int? newPhotosType,
   }) async {
+    isLoading.value = true;
+
     try {
       final data = {
         'FullName': fullName,
@@ -110,6 +115,18 @@ class PatientController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        // تحديث البيانات من السيرفر أولاً
+        await fetchPatientList();
+        await fetchCasesPatientList(patientId);
+
+        Get.snackbar(
+          'نجاح',
+          'تم تحديث بيانات المريض بنجاح',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+
+        Get.offAll(() => MainPage());
+
         return true;
       }
 
@@ -128,6 +145,8 @@ class PatientController extends GetxController {
       );
 
       return false;
+    } finally {
+      isLoading.value = false;
     }
   }
 }

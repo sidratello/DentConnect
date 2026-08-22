@@ -56,9 +56,9 @@ class ProfileHeader extends GetView<HomeController> {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            "محمد أحمد علي",
-            style: TextStyle(
+          Text(
+            controller.doctorProfileModel.value?.name ?? 'دكتور أسنان',
+            style: const TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
               fontWeight: FontWeight.w700,
               fontSize: 22,

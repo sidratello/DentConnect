@@ -76,14 +76,13 @@ class LabCard extends StatelessWidget {
   ) {
     if (labDetails.profilePictureUrl != null &&
         labDetails.profilePictureUrl!.isNotEmpty) {
-      return labDetails.profilePictureUrl![0].toString();
+      return '${Static.imageBaseUrl}/${labDetails.profilePictureUrl!}';
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    final homeController = Get.find<HomeController>();
     return Container(
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -111,7 +110,12 @@ class LabCard extends StatelessWidget {
                 top: Radius.circular(18),
               ),
               child: getLabDetailsImage(labDetails) != null
-                  ? Image.network(getLabDetailsImage(labDetails)!)
+                  ? Image.network(
+                      getLabDetailsImage(labDetails)!,
+                      width: double.infinity,
+                      height: Static.getheight(context, 110),
+                      fit: BoxFit.cover,
+                    )
                   : Image.asset(
                       'assets/images/lab_card.png',
                       width: double.infinity,

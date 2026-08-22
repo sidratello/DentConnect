@@ -1,5 +1,17 @@
 import 'package:get/get.dart';
+import 'package:template/Dentist/BlogDentists/view/doctor_blog_page.dart';
+import 'package:template/Dentist/InvoicesPage/binding/invoice_payment_binding.dart';
+import 'package:template/Dentist/InvoicesPage/view/InvoicePageWidgets/invoice_payment_failed.dart';
+import 'package:template/Dentist/InvoicesPage/view/InvoicePageWidgets/invoice_payment_screen.dart';
+import 'package:template/Dentist/InvoicesPage/view/InvoicePageWidgets/invoice_payment_success.dart';
 import 'package:template/Dentist/MainPage/view/main_page.dart';
+import 'package:template/Dentist/BlogDentists/binding/blog_feed_binding.dart';
+import 'package:template/Dentist/BlogDentists/binding/create_blog_binding.dart';
+import 'package:template/Dentist/BlogDentists/binding/posts_binding.dart';
+import 'package:template/Dentist/BlogDentists/view/blog_details_screen.dart';
+import 'package:template/Dentist/BlogDentists/view/blog_feed_screen.dart';
+import 'package:template/Dentist/BlogDentists/view/create_blog_screen.dart';
+import 'package:template/Dentist/BlogDentists/view/pennding_posts_screen.dart';
 import 'package:template/auth/binding/forpa_binding.dart';
 import 'package:template/auth/binding/login_binding.dart';
 import 'package:template/auth/binding/otp_binding.dart';
@@ -9,7 +21,6 @@ import 'package:template/auth/view/forget_password.dart';
 import 'package:template/auth/view/login_screen.dart';
 import 'package:template/auth/view/otp_screen.dart';
 import 'package:template/auth/view/reset_password_screen.dart';
-import 'package:template/Dentist/CommunityPage/view/community_page.dart';
 import 'package:template/Dentist/ComplaintPage/view/complaint_page.dart';
 import 'package:template/Dentist/CreateOrderPage/view/create_order_page.dart';
 import 'package:template/Dentist/LabDetailsPage/view/lab_details_page.dart';
@@ -18,7 +29,6 @@ import 'package:template/Dentist/PatientPage/view/create_new_patient_profile.dar
 import 'package:template/Dentist/PatientPage/view/patient_page.dart';
 import 'package:template/Dentist/TemplatesPage/view/templates_page.dart';
 import 'package:template/auth/view/signup_screen.dart';
-
 import 'package:template/choose_user_type/view/choose_user_type.dart';
 import 'package:template/lab/features/add_scan_slot/binding/add_scan_slot_binding.dart';
 import 'package:template/lab/features/add_scan_slot/binding/booked_scan_appointments_binding.dart';
@@ -70,7 +80,6 @@ import 'package:template/lab/features/order/views/order_screen.dart';
 import 'package:template/lab/features/order_invoice/binding/LabInvoicesBinding.dart';
 import 'package:template/lab/features/order_invoice/views/LabInvoicesScreen.dart';
 import 'package:template/lab/features/orderconection/binding/doctor_orders_binding.dart';
-
 import 'package:template/lab/features/orderconection/binding/orderconection_binding.dart';
 import 'package:template/lab/features/orderconection/views/doctor_orders_screen.dart';
 import 'package:template/lab/features/orderconection/views/orderconection.dart';
@@ -89,6 +98,7 @@ abstract class AppRouter {
   static const choseuserpage = '/';
   static const loginpage = '/loginpage';
   static const signuppage = '/signuppage';
+  // ignore: constant_identifier_names
   static const OTPpage = '/OTPpage';
   static const forgetpasswordpage = '/forgetpasswordpage';
   static const resetpasswordpage = '/resetpasswordpage';
@@ -118,20 +128,14 @@ abstract class AppRouter {
   static const labAdDetails = '/lab-ad-details';
   static const labAdPayment = '/lab-ad-payment';
   static const labAdPaymentSuccess = '/lab-ad-payment-success';
-
   static const labAdPaymentFailed = '/lab-ad-payment-failed';
   static const labAdFeed = '/lab-ad-feed';
-
   static const String labInvoices = '/lab-invoices';
   static const String labComplaints = '/lab-complaints';
-
   static const String labComplaintDetails = '/lab-complaint-details';
-
   static const String labSubscription = '/lab-subscription';
-
   static const String subscriptionPlans = '/subscription-plans';
   static const dentistHomePage = '/dentist-home-page';
-
   static const createOrderPage = '/createOrderPage';
   static const labDetailsPage = '/labDetailsPage';
   static const casePage = '/casePage';
@@ -139,9 +143,16 @@ abstract class AppRouter {
   static const createPatientPage = '/createPatientPage';
   static const templatesPage = '/templatesPage';
   static const templateDetailsPage = '/templateDetailsPage';
-  static const communityPage = '/communityPage';
   static const complaintPage = '/complaintPage';
   static const notificationPage = '/notificationPage';
+  static const doctorMainPageBlog = '/doctor-main-page-blog';
+  static const createdoctorBlog = '/create-doctor-blog';
+  static const penndingdoctorPosts = '/pennding-doctor-posts';
+  static const String blogdoctorFeed = '/blog-doctor-feed';
+  static const String blogPostdoctorDetails = '/blog-post-doctor-details';
+  static const String invoicePayment = '/invoice-payment';
+  static const String invoicePaymentSuccess = '/invoice-payment-success';
+  static const String invoicePaymentFailed = '/invoice-payment-failed';
 
   static final List<GetPage<dynamic>> pages = [
     GetPage(
@@ -356,10 +367,6 @@ abstract class AppRouter {
       page: () => const TemplatesPage(),
     ),
     GetPage(
-      name: communityPage,
-      page: () => const CommunityPage(),
-    ),
-    GetPage(
       name: notificationPage,
       page: () => const NotificationsPage(),
     ),
@@ -370,6 +377,42 @@ abstract class AppRouter {
     GetPage(
       name: createOrderPage,
       page: () => const CreateOrderPage(),
+    ),
+    GetPage(
+      name: createdoctorBlog,
+      page: () => const CreateDoctorBlogScreen(),
+      binding: CreateDoctorBlogBinding(),
+    ),
+    GetPage(
+      name: penndingdoctorPosts,
+      page: () => const MyBlogDoctorPostsScreen(),
+      binding: MyBlogDoctorPostsBinding(),
+    ),
+    GetPage(
+      name: AppRouter.blogdoctorFeed,
+      page: () => const BlogDoctorFeedScreen(),
+      binding: BlogDoctorFeedBinding(),
+    ),
+    GetPage(
+      name: AppRouter.blogPostdoctorDetails,
+      page: () => const BlogDoctorPostDetailsScreen(),
+    ),
+    GetPage(
+      name: doctorMainPageBlog,
+      page: () => const DoctorBlogPage(),
+    ),
+    GetPage(
+      name: invoicePayment,
+      page: () => const InvoicePaymentScreen(),
+      binding: InvoicePaymentBinding(),
+    ),
+    GetPage(
+      name: invoicePaymentSuccess,
+      page: () => const InvoicePaymentSuccessScreen(),
+    ),
+    GetPage(
+      name: invoicePaymentFailed,
+      page: () => const InvoicePaymentFailedScreen(),
     ),
   ];
 }

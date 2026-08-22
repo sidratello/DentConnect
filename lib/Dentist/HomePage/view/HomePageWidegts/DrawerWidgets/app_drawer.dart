@@ -56,7 +56,7 @@ class AppDrawer extends StatelessWidget {
                 icon: Icons.article,
                 onTap: () {
                   Get.toNamed(
-                    AppRouter.communityPage,
+                    AppRouter.doctorMainPageBlog,
                   );
                 },
               ),

@@ -24,7 +24,7 @@ class LabImageViewer extends StatelessWidget {
               child: InteractiveViewer(
                 minScale: 1,
                 maxScale: 5,
-                child: Image.asset(
+                child: Image.network(
                   imagePath,
                   fit: BoxFit.contain,
                 ),

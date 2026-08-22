@@ -6,6 +6,7 @@ import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_p
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_submit_button.dart';
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_text_field.dart';
 import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaint_type_selector.dart';
+import 'package:template/Dentist/ComplaintPage/view/ComplaintWidgets/complaints_list_page.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
 import 'package:template/core_dentist/widgets/top_background.dart';
@@ -136,6 +137,10 @@ class ComplaintPage extends StatelessWidget {
                     children: [
                       const ComplaintHeader(),
                       SizedBox(
+                        height: Static.getheight(context, 16),
+                      ),
+                      _buildMyComplaintsButton(context),
+                      SizedBox(
                         height: Static.getheight(context, 24),
                       ),
                       ComplaintTypeSelector(
@@ -189,6 +194,86 @@ class ComplaintPage extends StatelessWidget {
               },
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMyComplaintsButton(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Get.to(
+          () => const ComplaintsListPage(),
+        );
+      },
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: Static.getwidth(context, 16),
+          vertical: Static.getheight(context, 13),
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.primary.withValues(
+            alpha: 0.06,
+          ),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: AppColors.primary.withValues(
+              alpha: 0.12,
+            ),
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: Static.getwidth(context, 40),
+              height: Static.getwidth(context, 40),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(
+                  alpha: 0.10,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.forum_outlined,
+                color: AppColors.primary,
+                size: 21,
+              ),
+            ),
+            SizedBox(
+              width: Static.getwidth(context, 12),
+            ),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'شكاواي والردود',
+                    style: TextStyle(
+                      fontFamily: 'IBM Plex Sans Arabic',
+                      fontSize: 13.5,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: 3),
+                  Text(
+                    'عرض الشكاوى السابقة ومتابعة الردود',
+                    style: TextStyle(
+                      fontFamily: 'IBM Plex Sans Arabic',
+                      fontSize: 11,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: AppColors.primary,
+              size: 15,
+            ),
+          ],
         ),
       ),
     );
