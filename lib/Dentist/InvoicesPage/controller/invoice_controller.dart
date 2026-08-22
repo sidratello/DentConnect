@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
-
+import 'package:template/Dentist/InvoicesPage/repository/invoice_payment_repository.dart';
+import 'package:template/core/app_router.dart';
 import 'package:template/core_dentist/api.dart';
 
 import '../model/invoice_model.dart';
 
 class InvoiceController extends GetxController {
   final ApiService apiService = ApiService();
+  final InvoicePaymentRepository paymentRepository = InvoicePaymentRepository();
 
   final RxBool isLoadingPaid = false.obs;
   final RxBool isLoadingUnpaid = false.obs;
@@ -129,5 +131,46 @@ class InvoiceController extends GetxController {
       fetchPaidInvoices(),
       fetchUnpaidInvoices(),
     ]);
+  }
+
+  Future<void> payInvoice(int orderId) async {
+    try {
+      final response = await paymentRepository.createPaymentLink(
+        orderId: orderId,
+        currency: 'USD',
+      );
+
+      if (!response.success || response.data == null) {
+        Get.snackbar(
+          'خطأ',
+          response.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
+
+      final paymentLink = response.data!.paymentLink;
+
+      final result = await Get.toNamed(
+        AppRouter.invoicePayment,
+        arguments: {
+          'url': paymentLink,
+          'orderId': orderId,
+        },
+      );
+
+      if (result == 'paymentSuccess') {
+        await Future.wait([
+          fetchUnpaidInvoices(),
+          fetchPaidInvoices(),
+        ]);
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }
