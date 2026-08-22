@@ -46,7 +46,7 @@ class NotificationService {
     _hubConnection =
         HubConnectionBuilder()
             .withUrl(
-              'http://192.168.1.3:44334/notificationHub',
+          'https://osnet.shop/dentconnect/notificationHub',
               HttpConnectionOptions(
                 accessTokenFactory:
                     () async => token,

@@ -95,7 +95,7 @@ class SubscriptionStatusCard
                     ? 'السعر الشهري بعد الفترة المجانية'
                     : 'السعر الشهري',
             value:
-                '${_formatPrice(subscription.monthlyPrice)} ل.س',
+              '${_formatPrice(subscription.monthlyPrice)} \$',
             icon:
                 Icons.payments_outlined,
           ),

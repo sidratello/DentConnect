@@ -106,7 +106,13 @@ borderRadius: BorderRadius.only(
     Widget _buildBackgroundImage() {
 final String completeUrl =
     AppHelper.buildImageUrl(profilePictureUrl);
+  debugPrint(
+    '🖼 PROFILE PATH: $profilePictureUrl',
+  );
 
+  debugPrint(
+    '🖼 PROFILE FULL URL: $completeUrl',
+  );
     if (completeUrl.isEmpty) {
       return _buildDefaultImage();
     }

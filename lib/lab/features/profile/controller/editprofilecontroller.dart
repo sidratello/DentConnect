@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
@@ -291,33 +292,81 @@ final priceFormKey = GlobalKey<FormState>();
 
 final compensationTypes = <String>[].obs;
 final selectedCompensationType = RxnString();
-
 Future<void> addPrice() async {
   if (!priceFormKey.currentState!.validate()) {
     return;
   }
 
-  if (selectedCompensationType.value == null) {
-    Get.snackbar('خطأ', 'اختر نوع التعويض');
+  final selectedType =
+      selectedCompensationType.value;
+
+  if (selectedType == null) {
+    Get.snackbar(
+      'خطأ',
+      'اختر نوع التعويض',
+    );
     return;
   }
 
-  final response = await addLabPrice(
-    compensationType: selectedCompensationType.value!,
-    unitPrice: unitPriceController.text.trim(),
-    notes: notesController.text.trim(),
+  final profileController =
+      Get.find<LabProfileController>();
+
+  final prices =
+      profileController
+              .profile
+              .value
+              ?.prices ??
+          [];
+
+  final alreadyExists =
+      prices.any(
+    (price) =>
+        price.compensationType ==
+        selectedType,
+  );
+
+  if (alreadyExists) {
+    Get.snackbar(
+      'تنبيه',
+      'يوجد سعر مضاف مسبقاً لهذا النوع من التعويض.',
+      snackPosition:
+          SnackPosition.BOTTOM,
+    );
+    return;
+  }
+
+  final response =
+      await addLabPrice(
+    compensationType:
+        selectedType,
+    unitPrice:
+        unitPriceController.text
+            .trim(),
+    notes:
+        notesController.text
+            .trim(),
   );
 
   if (response.success) {
     unitPriceController.clear();
     notesController.clear();
 
-    final profileController = Get.find<LabProfileController>();
-    await profileController.getProfile();
+    await profileController
+        .getProfile();
 
-    Get.snackbar('تم', 'تمت إضافة السعر بنجاح');
+    Get.snackbar(
+      'تم',
+      'تمت إضافة السعر بنجاح',
+      snackPosition:
+          SnackPosition.BOTTOM,
+    );
   } else {
-    Get.snackbar('خطأ', response.message);
+    Get.snackbar(
+      'خطأ',
+      response.message,
+      snackPosition:
+          SnackPosition.BOTTOM,
+    );
   }
 }
 

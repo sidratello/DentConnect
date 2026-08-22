@@ -17,7 +17,7 @@ class FilesSection extends StatelessWidget {
     required this.order,
   });
 
-  static const String baseUrl = 'http://192.168.1.3:44334/';
+  static const String baseUrl = 'https://osnet.shop/dentconnect/';
 
   Future<void> openFile(BuildContext context, String path) async {
     try {

@@ -88,7 +88,7 @@ class AdInvoiceCard
                 ),
 
                 Text(
-                  '${_formatPrice(invoice.price)} ل.س',
+                  '${_formatPrice(invoice.price)} \$',
                   style: AppTextStyles
                       .ibmRegular14NeutralStyle
                       .copyWith(

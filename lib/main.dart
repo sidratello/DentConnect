@@ -10,7 +10,8 @@ import 'package:template/core_dentist/theme/app_theme.dart';
 import 'package:template/core_dentist/theme/theme_controller.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:template/auth/local_notification_service.dart';
-
+import 'package:template/auth/notification_service.dart';
+import 'package:template/core/app_helper.dart';
 import 'package:template/core/app_router.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -39,7 +40,20 @@ void main() async {
 
   await GetStorage.init();
   await LocalNotificationService().initialize();
+  final token =
+      StorageService.to.read<String>(
+    'token',
+  );
 
+  if (token != null &&
+      token.trim().isNotEmpty) {
+    AppHelper.token = token;
+
+    await NotificationService()
+        .startConnection(
+      token,
+    );
+  }
   runApp(const MyApp());
 }
 

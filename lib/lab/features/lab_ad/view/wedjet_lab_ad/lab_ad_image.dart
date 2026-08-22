@@ -162,7 +162,7 @@ class AppNetworkContentImage extends StatelessWidget {
   });
 
   static const String _serverBaseUrl =
-      'http://192.168.1.3:44334/';
+     'https://osnet.shop/dentconnect/';
 
   String? get imageUrl {
     final path = imagePath?.trim() ?? '';

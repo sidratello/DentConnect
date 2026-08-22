@@ -97,7 +97,7 @@ final wasOrderUpdated = false.obs;
 
   String formatPrice(double? price) {
     if (price == null) return '-';
-    return '${price.toStringAsFixed(2)} ل.س';
+   return '${price.toStringAsFixed(2)} \$';
   }
 
   bool get hasStlFiles {

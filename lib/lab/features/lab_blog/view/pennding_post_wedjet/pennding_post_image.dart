@@ -13,7 +13,7 @@ class BlogPostImage extends StatelessWidget {
   });
 
   static const String baseUrl =
-      'http://192.168.1.3:44334/';
+      'https://osnet.shop/dentconnect/';
 
   @override
   Widget build(BuildContext context) {

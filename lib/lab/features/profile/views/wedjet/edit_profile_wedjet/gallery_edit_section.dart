@@ -19,7 +19,7 @@ class GalleryEditSection extends StatelessWidget {
   });
 
   String imageUrl(String path) {
-    const baseUrl = 'http://192.168.1.3:44334/';
+    const baseUrl = 'https://osnet.shop/dentconnect/';
 
     if (path.startsWith('/')) {
       return '$baseUrl${path.substring(1)}';
