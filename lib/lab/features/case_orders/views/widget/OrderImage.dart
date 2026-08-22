@@ -1,7 +1,6 @@
-
-
-
 import 'package:flutter/material.dart';
+import 'package:template/core_dentist/utils/static.dart';
+
 class OrderImage extends StatelessWidget {
   final String imagePath;
   final double width;
@@ -46,6 +45,6 @@ class OrderImage extends StatelessWidget {
 
   String _fullImageUrl(String path) {
     if (path.startsWith('http')) return path;
-    return 'http://192.168.1.3:44334/$path';
+    return '${Static.imageBaseUrl}/$path';
   }
 }

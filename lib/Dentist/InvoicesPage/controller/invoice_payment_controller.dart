@@ -89,6 +89,18 @@ class InvoicePaymentController extends GetxController {
     }
   }
 
+  void handlePaymentSuccess(String url) {
+    debugPrint('Payment success: $url');
+
+    Get.toNamed(
+      AppRouter.invoicePaymentSuccess,
+      arguments: {
+        'orderId': orderId,
+        'url': url,
+      },
+    );
+  }
+
   Future<void> handlePaymentFailure(
     String url,
   ) async {

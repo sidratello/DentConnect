@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/widgets/AppLoadingIndicator.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class BlogDoctorPostImage extends StatelessWidget {
   final String? path;
@@ -12,8 +12,7 @@ class BlogDoctorPostImage extends StatelessWidget {
     required this.path,
   });
 
-  static const String baseUrl =
-      'http://192.168.1.3:44334/';
+  static String baseUrl = '${Static.imageBaseUrl}/';
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +23,7 @@ class BlogDoctorPostImage extends StatelessWidget {
     }
 
     final imageUrl =
-        imagePath.startsWith('http')
-            ? imagePath
-            : '$baseUrl$imagePath';
+        imagePath.startsWith('http') ? imagePath : '$baseUrl$imagePath';
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
@@ -55,13 +52,12 @@ class BlogDoctorPostImage extends StatelessWidget {
             width: 95,
             height: 95,
             alignment: Alignment.center,
-            color:
-                AppColors.littleBlue.withOpacity(.2),
-  child: const AppLoadingIndicator(
-  size: 24,
-  strokeWidth: 2,
-  centered: false,
-),
+            color: AppColors.littleBlue.withOpacity(.2),
+            child: const AppLoadingIndicator(
+              size: 24,
+              strokeWidth: 2,
+              centered: false,
+            ),
           );
         },
       ),
@@ -73,8 +69,7 @@ class BlogDoctorPostImage extends StatelessWidget {
       width: 95,
       height: 95,
       decoration: BoxDecoration(
-        color:
-            AppColors.littleBlue.withOpacity(.25),
+        color: AppColors.littleBlue.withOpacity(.25),
         borderRadius: BorderRadius.circular(12),
       ),
       alignment: Alignment.center,

@@ -4,6 +4,7 @@ import 'package:template/Dentist/BlogDentists/view/post_details_wedjet/post_full
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
 import 'package:template/core/widgets/AppLoadingIndicator.dart';
+import 'package:template/core_dentist/utils/static.dart';
 import 'package:template/lab/features/lab_blog/model/post_model.dart';
 
 class PostDoctorAttachments extends StatelessWidget {
@@ -14,7 +15,7 @@ class PostDoctorAttachments extends StatelessWidget {
     required this.attachments,
   });
 
-  static const String baseUrl = 'http://192.168.1.3:44334/';
+  static String baseUrl = '${Static.imageBaseUrl}/';
 
   @override
   Widget build(BuildContext context) {

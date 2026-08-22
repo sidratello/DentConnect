@@ -41,12 +41,28 @@ class SearchResultLabCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(14),
-              child: Image.asset(
-                'assets/images/lab_card.png',
-                width: Static.getwidth(context, 90),
-                height: Static.getheight(context, 90),
-                fit: BoxFit.cover,
-              ),
+              child: lab.profilePictureUrl != null &&
+                      lab.profilePictureUrl!.isNotEmpty
+                  ? Image.network(
+                      Static.imageBaseUrl + lab.profilePictureUrl!,
+                      width: Static.getwidth(context, 90),
+                      height: Static.getheight(context, 90),
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/images/lab_card.png',
+                          width: Static.getwidth(context, 90),
+                          height: Static.getheight(context, 90),
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    )
+                  : Image.asset(
+                      'assets/images/lab_card.png',
+                      width: Static.getwidth(context, 90),
+                      height: Static.getheight(context, 90),
+                      fit: BoxFit.cover,
+                    ),
             ),
             SizedBox(width: Static.getwidth(context, 12)),
             Expanded(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:template/Dentist/InvoicesPage/controller/invoice_payment_controller.dart';
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/widgets/AppLoadingIndicator.dart';
@@ -50,33 +50,37 @@ class _InvoicePaymentBodyState extends State<InvoicePaymentBody> {
               false,
             );
           },
-          onNavigationRequest: (
-            NavigationRequest request,
-          ) {
+          onNavigationRequest: (NavigationRequest request) {
             final url = request.url;
 
-            debugPrint(
-              'Payment navigation: $url',
-            );
+            debugPrint('Payment navigation: $url');
 
             final uri = Uri.tryParse(url);
 
-            if (uri != null &&
-                uri.path.toLowerCase().contains(
-                      '/api/payment/callback',
-                    )) {
-              controller.handlePaymentCallback(
-                url,
-              );
+            if (uri == null) {
+              return NavigationDecision.navigate;
+            }
 
-              if (uri != null &&
-                  uri.path.toLowerCase().contains(
-                        '/api/payment/callback',
-                      )) {
-                controller.handlePaymentCallback(url);
+            final path = uri.path.toLowerCase();
 
-                return NavigationDecision.navigate;
-              }
+            // Backend callback
+            if (path == '/api/payment/callback') {
+              return NavigationDecision.navigate;
+            }
+
+            // Payment success
+            if (path.contains('/payment-success')) {
+              controller.handlePaymentSuccess(url);
+
+              return NavigationDecision.prevent;
+            }
+
+            // Payment failure
+            if (path.contains('/payment-failed') ||
+                path.contains('/api/payment/error')) {
+              controller.handlePaymentFailure(url);
+
+              return NavigationDecision.prevent;
             }
 
             return NavigationDecision.navigate;

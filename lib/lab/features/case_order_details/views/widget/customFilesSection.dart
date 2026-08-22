@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
+import 'package:template/core_dentist/utils/static.dart';
 import 'package:template/lab/features/case_order_details/views/widget/SectionTitle.dart';
 import 'package:template/lab/features/case_order_details/views/widget/details_section_card.dart';
 import 'package:template/lab/shared/models/lab_order_model.dart';
@@ -17,7 +18,7 @@ class FilesSection extends StatelessWidget {
     required this.order,
   });
 
-  static const String baseUrl = 'http://192.168.1.3:44334/';
+  static String baseUrl = '${Static.imageBaseUrl}/';
 
   Future<void> openFile(BuildContext context, String path) async {
     try {
@@ -64,9 +65,7 @@ class FilesSection extends StatelessWidget {
             title: 'ملفات STL',
             icon: Icons.view_in_ar_rounded,
           ),
-
           const SizedBox(height: 16),
-
           ...order.files.map((file) {
             return Container(
               margin: const EdgeInsets.only(bottom: 10),

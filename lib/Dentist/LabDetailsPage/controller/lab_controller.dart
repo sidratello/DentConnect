@@ -4,6 +4,7 @@ import 'package:template/Dentist/LabDetailsPage/model/appointment_slot_model.dar
 import 'package:template/Dentist/LabDetailsPage/model/compensation_item_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_details_model.dart';
 import 'package:template/core_dentist/api.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 enum ScannerStatus {
   available,
@@ -40,7 +41,7 @@ class LabController extends GetxController {
     if (labmodel != null &&
         labmodel!.profilePictureUrl != null &&
         labmodel!.profilePictureUrl!.isNotEmpty) {
-      return labmodel!.profilePictureUrl!;
+      return '${Static.imageBaseUrl}/${labmodel!.profilePictureUrl!}';
     } else {
       return 'assets/images/lab_card.png';
     }

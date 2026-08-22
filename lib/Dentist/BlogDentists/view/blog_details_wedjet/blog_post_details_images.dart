@@ -8,10 +8,8 @@ import 'package:template/lab/features/lab_ad/view/wedjet_lab_ad/lab_ad_image.dar
 import 'package:template/lab/features/lab_ad/view/wedjet_lab_ad_feed/AdImagesGalleryScreen.dart';
 import 'package:template/lab/features/lab_blog/model/post_model.dart';
 
-class BlogDoctorPostDetailsImages
-    extends StatefulWidget {
-  final List<BlogPostAttachment>
-      attachments;
+class BlogDoctorPostDetailsImages extends StatefulWidget {
+  final List<BlogPostAttachment> attachments;
 
   const BlogDoctorPostDetailsImages({
     super.key,
@@ -19,15 +17,13 @@ class BlogDoctorPostDetailsImages
   });
 
   @override
-  State<BlogDoctorPostDetailsImages>
-      createState() =>
-          _BlogDoctorPostDetailsImagesState();
+  State<BlogDoctorPostDetailsImages> createState() =>
+      _BlogDoctorPostDetailsImagesState();
 }
 
 class _BlogDoctorPostDetailsImagesState
     extends State<BlogDoctorPostDetailsImages> {
-  final PageController _pageController =
-      PageController();
+  final PageController _pageController = PageController();
 
   int _selectedIndex = 0;
 
@@ -40,27 +36,22 @@ class _BlogDoctorPostDetailsImagesState
 
   @override
   Widget build(BuildContext context) {
-    final attachments =
-        widget.attachments;
+    final attachments = widget.attachments;
 
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius:
-            BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: AppColors.littleBlue
-              .withOpacity(0.55),
+          color: AppColors.littleBlue.withOpacity(0.55),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black
-                .withOpacity(0.04),
+            color: Colors.black.withOpacity(0.04),
             blurRadius: 12,
-            offset:
-                const Offset(0, 5),
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -69,69 +60,54 @@ class _BlogDoctorPostDetailsImagesState
           AspectRatio(
             aspectRatio: 16 / 9,
             child: PageView.builder(
-              controller:
-                  _pageController,
-              itemCount:
-                  attachments.length,
+              controller: _pageController,
+              itemCount: attachments.length,
               onPageChanged: (
                 index,
               ) {
                 setState(() {
-                  _selectedIndex =
-                      index;
+                  _selectedIndex = index;
                 });
               },
-            itemBuilder: (
-  context,
-  index,
-) {
-  return InkWell(
-    onTap: () {
-      Get.to(
-        () => AdImagesGalleryScreen(
-          images: attachments
-              .map(
-                (attachment) =>
-                    attachment.path,
-              )
-              .toList(),
-          initialIndex: index,
-        ),
-      );
-    },
-    borderRadius:
-        BorderRadius.circular(16),
-    child: AppNetworkContentImage(
-      imagePath:
-          attachments[index].path,
-      aspectRatio: 16 / 9,
-      borderRadius: 16,
-    ),
-  );
-},
+              itemBuilder: (
+                context,
+                index,
+              ) {
+                return InkWell(
+                  onTap: () {
+                    Get.to(
+                      () => AdImagesGalleryScreen(
+                        images: attachments
+                            .map(
+                              (attachment) => attachment.path,
+                            )
+                            .toList(),
+                        initialIndex: index,
+                      ),
+                    );
+                  },
+                  borderRadius: BorderRadius.circular(16),
+                  child: AppNetworkContentImage(
+                    imagePath: attachments[index].path,
+                    aspectRatio: 16 / 9,
+                    borderRadius: 16,
+                  ),
+                );
+              },
             ),
           ),
-
           if (attachments.length > 1) ...[
             const SizedBox(height: 12),
-
             _ImagesIndicator(
-              imagesCount:
-                  attachments.length,
-              selectedIndex:
-                  _selectedIndex,
+              imagesCount: attachments.length,
+              selectedIndex: _selectedIndex,
             ),
-
             const SizedBox(height: 8),
-
             Text(
               '${_selectedIndex + 1} من '
               '${attachments.length}',
-              style: AppTextStyles
-                  .ibmRegular14NeutralStyle
-                  .copyWith(
-                color:
-                    AppColors.normalText,
+              style: AppTextStyles.ibmRegular14NeutralStyle.copyWith(
+                color: AppColors.normalText,
                 fontSize: 12,
               ),
             ),
@@ -141,8 +117,8 @@ class _BlogDoctorPostDetailsImagesState
     );
   }
 }
-class _ImagesIndicator
-    extends StatelessWidget {
+
+class _ImagesIndicator extends StatelessWidget {
   final int imagesCount;
   final int selectedIndex;
 
@@ -154,31 +130,24 @@ class _ImagesIndicator
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment:
-          MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
         imagesCount,
         (index) {
-          final isSelected =
-              index == selectedIndex;
+          final isSelected = index == selectedIndex;
 
           return AnimatedContainer(
             duration: const Duration(
               milliseconds: 220,
             ),
-            width:
-                isSelected ? 22 : 8,
+            width: isSelected ? 22 : 8,
             height: 8,
-            margin:
-                const EdgeInsets.symmetric(
+            margin: const EdgeInsets.symmetric(
               horizontal: 3,
             ),
             decoration: BoxDecoration(
-              color: isSelected
-                  ? AppColors.primaryBlue
-                  : AppColors.littleBlue,
-              borderRadius:
-                  BorderRadius.circular(20),
+              color: isSelected ? AppColors.primaryBlue : AppColors.littleBlue,
+              borderRadius: BorderRadius.circular(20),
             ),
           );
         },

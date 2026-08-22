@@ -38,7 +38,7 @@ class HomePageWidget extends GetView<HomeController> {
               isPreviewMode: controller.isPreviewMode.value,
             ),
             const AppbarNotificationIcon(),
-            const AppbarHomeVectorBlack(),
+            if (controller.isPreviewMode.value) const AppbarHomeVectorBlack(),
           ],
         ),
         body: TopBackground(

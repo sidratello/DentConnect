@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +7,7 @@ import 'package:template/core/app_colors.dart';
 import 'package:template/core/app_text_styles.dart';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class FilesSection extends StatelessWidget {
   final dynamic order;
@@ -17,7 +17,7 @@ class FilesSection extends StatelessWidget {
     required this.order,
   });
 
-  static const String baseUrl = 'http://192.168.1.3:44334/';
+  static String baseUrl = '${Static.imageBaseUrl}/';
 
   Future<void> openFile(BuildContext context, String path) async {
     try {
@@ -27,9 +27,9 @@ class FilesSection extends StatelessWidget {
       final dir = await getTemporaryDirectory();
       print('Cache Folder: ${dir.path}');
       final localPath = '${dir.path}/$fileName';
-print('Saved File: $localPath');
+      print('Saved File: $localPath');
       await Dio().download(fileUrl, localPath);
-print('URL: $fileUrl');
+      print('URL: $fileUrl');
       final result = await OpenFilex.open(
         localPath,
         type: 'model/stl',
@@ -81,13 +81,10 @@ print('URL: $fileUrl');
             },
           );
         }).toList(),
-        
       ),
     );
   }
 }
-
-
 
 class SectionBox extends StatelessWidget {
   final String title;

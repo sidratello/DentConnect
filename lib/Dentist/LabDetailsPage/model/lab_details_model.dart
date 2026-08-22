@@ -78,11 +78,11 @@ class LabDetailsModel {
     }
 
     // Reviews
-    if (json['reviews'] != null && json['reviews'] is List) {
-      reviews = List<String>.from(
-        json['reviews'],
-      );
-    }
+    // if (json['reviews'] != null && json['reviews'] is List) {
+    //   reviews = List<String>.from(
+    //     json['reviews'],
+    //   );
+    // }
 
     // Prices
     if (json['prices'] != null && json['prices'] is List) {

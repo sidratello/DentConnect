@@ -6,8 +6,7 @@ import '../../../../core_dentist/utils/static.dart';
 class LabsBackgroungImage extends StatelessWidget {
   final String imagePath;
 
-  const LabsBackgroungImage(
-      {super.key, this.imagePath = 'assets/images/lab_card.png'});
+  const LabsBackgroungImage({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class LabsBackgroungImage extends StatelessWidget {
       height: Static.getheight(context, 260),
       child: Stack(
         children: [
-          Image.asset(
+          Image.network(
             imagePath,
             width: double.infinity,
             height: Static.getheight(context, 260),
@@ -38,12 +37,7 @@ class LabsBackgroungImage extends StatelessWidget {
                     AppColors.white.withValues(alpha: 0.5),
                     AppColors.white,
                   ],
-                  stops: const [
-                    0,
-                    0.3,
-                    0.7,
-                    1,
-                  ],
+                  stops: const [0, 0.3, 0.7, 1],
                 ),
               ),
             ),

@@ -2,14 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:signalr_core/signalr_core.dart';
 
 import 'package:template/auth/local_notification_service.dart';
+import 'package:template/core_dentist/utils/static.dart';
 
 class NotificationService {
-  static final NotificationService
-      _instance =
-      NotificationService._internal();
+  static final NotificationService _instance = NotificationService._internal();
 
-  factory NotificationService() =>
-      _instance;
+  factory NotificationService() => _instance;
 
   NotificationService._internal();
 
@@ -17,8 +15,7 @@ class NotificationService {
 
   bool _started = false;
 
-  bool get isConnected =>
-      _started;
+  bool get isConnected => _started;
 
   Future<void> startConnection(
     String token,
@@ -43,17 +40,15 @@ class NotificationService {
     // Create SignalR connection
     // =====================================================
 
-    _hubConnection =
-        HubConnectionBuilder()
-            .withUrl(
-              'http://192.168.1.3:44334/notificationHub',
-              HttpConnectionOptions(
-                accessTokenFactory:
-                    () async => token,
-              ),
-            )
-            .withAutomaticReconnect()
-            .build();
+    _hubConnection = HubConnectionBuilder()
+        .withUrl(
+          '${Static.imageBaseUrl}/notificationHub',
+          HttpConnectionOptions(
+            accessTokenFactory: () async => token,
+          ),
+        )
+        .withAutomaticReconnect()
+        .build();
 
     // =====================================================
     // Connection lifecycle
@@ -109,8 +104,7 @@ class NotificationService {
       'ReceiveOrderNotification',
       (arguments) {
         _handleNotification(
-          eventName:
-              'ReceiveOrderNotification',
+          eventName: 'ReceiveOrderNotification',
           arguments: arguments,
         );
       },
@@ -128,10 +122,7 @@ class NotificationService {
       debugPrint(
         '✅ SignalR Connected',
       );
-    } catch (
-      error,
-      stackTrace
-    ) {
+    } catch (error, stackTrace) {
       _started = false;
 
       debugPrint(
@@ -154,11 +145,9 @@ class NotificationService {
 
   void _handleNotification({
     required String eventName,
-    required List<Object?>?
-        arguments,
+    required List<Object?>? arguments,
   }) {
-    if (arguments == null ||
-        arguments.isEmpty) {
+    if (arguments == null || arguments.isEmpty) {
       debugPrint(
         '⚠️ $eventName received without data',
       );
@@ -167,8 +156,7 @@ class NotificationService {
     }
 
     try {
-      final rawData =
-          arguments.first;
+      final rawData = arguments.first;
 
       debugPrint(
         '================ SIGNALR NOTIFICATION =================',
@@ -192,8 +180,7 @@ class NotificationService {
       // ===================================================
 
       if (rawData is String) {
-        final message =
-            rawData.trim();
+        final message = rawData.trim();
 
         if (message.isEmpty) {
           debugPrint(
@@ -230,40 +217,27 @@ class NotificationService {
       // ===================================================
 
       if (rawData is Map) {
-        final data =
-            Map<String, dynamic>.from(
+        final data = Map<String, dynamic>.from(
           rawData,
         );
 
-        final id =
-            data['id'] ??
-            data['Id'];
+        final id = data['id'] ?? data['Id'];
 
-        final type =
-            data['type'] ??
-            data['Type'];
+        final type = data['type'] ?? data['Type'];
 
-        final createdAt =
-            data['createdAt'] ??
-            data['CreatedAt'];
+        final createdAt = data['createdAt'] ?? data['CreatedAt'];
 
-        final message =
-            data['message'] ??
-            data['Message'];
+        final message = data['message'] ?? data['Message'];
 
-      final rawNotificationData =
-    data['data'] ??
-    data['Data'] ??
-    data['requestDetails'] ??
-    data['RequestDetails'];
+        final rawNotificationData = data['data'] ??
+            data['Data'] ??
+            data['requestDetails'] ??
+            data['RequestDetails'];
 
-        Map<String, dynamic>?
-            notificationData;
+        Map<String, dynamic>? notificationData;
 
-        if (rawNotificationData
-            is Map) {
-          notificationData =
-              Map<String, dynamic>.from(
+        if (rawNotificationData is Map) {
+          notificationData = Map<String, dynamic>.from(
             rawNotificationData,
           );
         }
@@ -300,38 +274,27 @@ class NotificationService {
         // Prepare final message
         // ===================================================
 
-        String finalMessage =
-            message
-                    ?.toString()
-                    .trim() ??
-                '';
+        String finalMessage = message?.toString().trim() ?? '';
 
         // إذا الـ backend لم يرسل message
-      if (finalMessage.isEmpty) {
-  final notificationTitle =
-      notificationData?['title'] ??
-      notificationData?['Title'];
+        if (finalMessage.isEmpty) {
+          final notificationTitle =
+              notificationData?['title'] ?? notificationData?['Title'];
 
-  final notificationContent =
-      notificationData?['content'] ??
-      notificationData?['Content'];
+          final notificationContent =
+              notificationData?['content'] ?? notificationData?['Content'];
 
-  if (notificationTitle != null &&
-      notificationContent != null) {
-    finalMessage =
-        '${notificationTitle.toString()}\n'
-        '${notificationContent.toString()}';
-  } else if (notificationTitle != null) {
-    finalMessage =
-        notificationTitle.toString();
-  } else if (notificationContent != null) {
-    finalMessage =
-        notificationContent.toString();
-  } else {
-    finalMessage =
-        'لديك إشعار جديد';
-  }
-}
+          if (notificationTitle != null && notificationContent != null) {
+            finalMessage = '${notificationTitle.toString()}\n'
+                '${notificationContent.toString()}';
+          } else if (notificationTitle != null) {
+            finalMessage = notificationTitle.toString();
+          } else if (notificationContent != null) {
+            finalMessage = notificationContent.toString();
+          } else {
+            finalMessage = 'لديك إشعار جديد';
+          }
+        }
         debugPrint(
           'Final Message: $finalMessage',
         );
@@ -357,10 +320,7 @@ class NotificationService {
         '❌ Unsupported notification format: '
         '${rawData.runtimeType}',
       );
-    } catch (
-      error,
-      stackTrace
-    ) {
+    } catch (error, stackTrace) {
       debugPrint(
         '❌ Notification handling error: $error',
       );
@@ -375,8 +335,7 @@ class NotificationService {
   // Show Local Notification
   // =====================================================
 
-  Future<void>
-      _showLocalNotification({
+  Future<void> _showLocalNotification({
     required String title,
     required String body,
     Map<String, dynamic>? data,
@@ -386,8 +345,7 @@ class NotificationService {
     }
 
     try {
-      await LocalNotificationService()
-          .showNotification(
+      await LocalNotificationService().showNotification(
         title: title,
         body: body,
         data: data,
@@ -396,10 +354,7 @@ class NotificationService {
       debugPrint(
         '✅ Local notification shown',
       );
-    } catch (
-      error,
-      stackTrace
-    ) {
+    } catch (error, stackTrace) {
       debugPrint(
         '❌ Local notification error: $error',
       );
@@ -414,8 +369,7 @@ class NotificationService {
   // Stop connection
   // =====================================================
 
-  Future<void>
-      stopConnection() async {
+  Future<void> stopConnection() async {
     if (_hubConnection == null) {
       _started = false;
 
@@ -423,8 +377,7 @@ class NotificationService {
     }
 
     try {
-      await _hubConnection!
-          .stop();
+      await _hubConnection!.stop();
 
       debugPrint(
         '✅ SignalR disconnected',

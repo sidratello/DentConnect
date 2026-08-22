@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:template/core_dentist/utils/static.dart';
 import 'package:template/lab/features/case_order_details/views/widget/SectionTitle.dart';
 import 'package:template/lab/features/case_order_details/views/widget/details_section_card.dart';
-
 
 class RequiredImagesSection extends StatelessWidget {
   final List<String> images;
@@ -24,9 +24,7 @@ class RequiredImagesSection extends StatelessWidget {
             title: 'الصور المرفقة',
             icon: Icons.image_outlined,
           ),
-
           const SizedBox(height: 14),
-
           SizedBox(
             height: 95,
             child: ListView.separated(
@@ -38,26 +36,26 @@ class RequiredImagesSection extends StatelessWidget {
                 final image = images[index];
 
                 return GestureDetector(
-  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => ImagePreviewScreen(
-          imageUrl: _fullImageUrl(image),
-        ),
-      ),
-    );
-  },
-  child: ClipRRect(
-    borderRadius: BorderRadius.circular(14),
-    child: Image.network(
-      _fullImageUrl(image),
-      width: 110,
-      height: 95,
-      fit: BoxFit.cover,
-    ),
-  ),
-);
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ImagePreviewScreen(
+                          imageUrl: _fullImageUrl(image),
+                        ),
+                      ),
+                    );
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(14),
+                    child: Image.network(
+                      _fullImageUrl(image),
+                      width: 110,
+                      height: 95,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
               },
             ),
           ),
@@ -68,10 +66,9 @@ class RequiredImagesSection extends StatelessWidget {
 
   String _fullImageUrl(String path) {
     if (path.startsWith('http')) return path;
-    return 'http://192.168.1.3:44334/$path';
+    return '${Static.imageBaseUrl}/$path';
   }
 }
-
 
 class ImagePreviewScreen extends StatelessWidget {
   final String imageUrl;
