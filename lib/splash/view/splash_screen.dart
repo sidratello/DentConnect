@@ -10,6 +10,7 @@ class SplashScreen extends StatelessWidget {
     final controller = Get.put(SplashController());
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Obx(
           () => controller.isLoading.value

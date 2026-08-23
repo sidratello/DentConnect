@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:template/Dentist/BlogDentists/view/doctor_blog_page.dart';
+import 'package:template/Dentist/CasesPage/view/case_page.dart';
+import 'package:template/Dentist/MainPage/view/main_page.dart';
 import 'package:template/core_dentist/theme/app_colors.dart';
 
 import '../../../../core_dentist/utils/static.dart';
@@ -17,96 +21,119 @@ class NotificationCard extends StatelessWidget {
     final Color color =
         notification.isRead ? AppColors.textSecondary : AppColors.primary;
 
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(
-        Static.getwidth(context, 16),
-      ),
-      decoration: BoxDecoration(
-        color: notification.isRead
-            ? AppColors.border
-            : AppColors.primary.withValues(
-                alpha: 0.06,
-              ),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
+    return GestureDetector(
+      onTap: () {
+        if (notification.type == 'StatusChanged' &&
+            notification.labId != null &&
+            notification.orderId != null) {
+          Get.to(() => const CasePage());
+        }
+        if (notification.type == 'OrderAccepted' &&
+            notification.labId != null &&
+            notification.orderId != null) {
+          Get.to(() => const CasePage());
+        }
+        if (notification.type == 'ConnectionAccepted' &&
+            notification.labId != null) {
+          Get.to(() => MainPage());
+        }
+        if (notification.type == 'ComplaintReply' &&
+            notification.blogPostId != null) {
+          Get.to(() => const DoctorBlogPage());
+        }
+      },
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(
+          Static.getwidth(context, 16),
+        ),
+        decoration: BoxDecoration(
           color: notification.isRead
               ? AppColors.border
               : AppColors.primary.withValues(
-                  alpha: 0.25,
+                  alpha: 0.06,
                 ),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: notification.isRead
+                ? AppColors.border
+                : AppColors.primary.withValues(
+                    alpha: 0.25,
+                  ),
+          ),
         ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-              color: color.withValues(
-                alpha: 0.10,
-              ),
-              borderRadius: BorderRadius.circular(13),
-            ),
-            child: Icon(
-              _getNotificationIcon(
-                notification.type,
-              ),
-              color: color,
-              size: 21,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  notification.message,
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontFamily: 'IBM Plex Sans Arabic',
-                    fontWeight:
-                        notification.isRead ? FontWeight.w400 : FontWeight.w600,
-                    fontSize: Static.getwidth(
-                      context,
-                      13,
-                    ),
-                    height: 1.7,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                ),
-                const SizedBox(height: 7),
-                Text(
-                  _formatNotificationDate(
-                    notification.createdAt,
-                  ),
-                  style: TextStyle(
-                    fontFamily: 'IBM Plex Sans Arabic',
-                    fontWeight: FontWeight.w400,
-                    fontSize: Static.getwidth(
-                      context,
-                      10.5,
-                    ),
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (!notification.isRead) ...[
-            const SizedBox(width: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Container(
-              width: 8,
-              height: 8,
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: color.withValues(
+                  alpha: 0.10,
+                ),
+                borderRadius: BorderRadius.circular(13),
+              ),
+              child: Icon(
+                _getNotificationIcon(
+                  notification.type,
+                ),
+                color: color,
+                size: 21,
               ),
             ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    notification.message,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontFamily: 'IBM Plex Sans Arabic',
+                      fontWeight: notification.isRead
+                          ? FontWeight.w400
+                          : FontWeight.w600,
+                      fontSize: Static.getwidth(
+                        context,
+                        13,
+                      ),
+                      height: 1.7,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 7),
+                  Text(
+                    _formatNotificationDate(
+                      notification.createdAt,
+                    ),
+                    style: TextStyle(
+                      fontFamily: 'IBM Plex Sans Arabic',
+                      fontWeight: FontWeight.w400,
+                      fontSize: Static.getwidth(
+                        context,
+                        10.5,
+                      ),
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (!notification.isRead) ...[
+              const SizedBox(width: 8),
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: AppColors.primary,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
