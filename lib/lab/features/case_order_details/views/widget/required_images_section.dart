@@ -66,7 +66,7 @@ class RequiredImagesSection extends StatelessWidget {
 
   String _fullImageUrl(String path) {
     if (path.startsWith('http')) return path;
-    return '${Static.imageBaseUrl}/$path';
+    return 'https://osnet.shop/dentconnect/$path';
   }
 }
 

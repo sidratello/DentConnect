@@ -40,15 +40,17 @@ class NotificationService {
     // Create SignalR connection
     // =====================================================
 
-    _hubConnection = HubConnectionBuilder()
-        .withUrl(
-          '${Static.imageBaseUrl}/notificationHub',
-          HttpConnectionOptions(
-            accessTokenFactory: () async => token,
-          ),
-        )
-        .withAutomaticReconnect()
-        .build();
+    _hubConnection =
+        HubConnectionBuilder()
+            .withUrl(
+          'https://osnet.shop/dentconnect/notificationHub',
+              HttpConnectionOptions(
+                accessTokenFactory:
+                    () async => token,
+              ),
+            )
+            .withAutomaticReconnect()
+            .build();
 
     // =====================================================
     // Connection lifecycle

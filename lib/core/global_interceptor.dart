@@ -111,9 +111,20 @@ class GlobalInterceptor extends dio.Interceptor {
       debugPrint(_divider);
     }
 
-  if (statusCode == 401) {
-      await _handle401();
-    }
+ if (statusCode == 401) {
+  final path =
+      err.requestOptions.path
+          .toLowerCase();
+
+  final isLoginRequest =
+      path.contains(
+    'auth/login',
+  );
+
+  if (!isLoginRequest) {
+    await _handle401();
+  }
+}
 
     handler.next(err);
   }

@@ -102,7 +102,7 @@ if (showPrice) ...[
     child: CaseOrderIconText(
       icon:
           Icons.payments_outlined,
-      text: '$price ل.س',
+      text: '$price \$',
       iconColor:
           AppColors.primaryBlue,
       textColor:

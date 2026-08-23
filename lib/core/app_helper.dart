@@ -201,24 +201,30 @@ class AppHelper {
         return value;
     }
   }
+static String buildImageUrl(String? path) {
+  final trimmedPath = path?.trim() ?? '';
 
-  static String buildImageUrl(String? path) {
-    final trimmedPath = path?.trim() ?? '';
-
-    if (trimmedPath.isEmpty) {
-      return '';
-    }
-
-    if (trimmedPath.startsWith('http://') ||
-        trimmedPath.startsWith('https://')) {
-      return trimmedPath;
-    }
-
-    final normalizedPath =
-        trimmedPath.startsWith('/') ? trimmedPath.substring(1) : trimmedPath;
-
-    return '$serverBaseUrl$normalizedPath';
+  if (trimmedPath.isEmpty) {
+    return '';
   }
+
+  if (trimmedPath.startsWith('http://') ||
+      trimmedPath.startsWith('https://')) {
+    return trimmedPath;
+  }
+
+  final normalizedPath =
+      trimmedPath.startsWith('/')
+          ? trimmedPath.substring(1)
+          : trimmedPath;
+
+  final normalizedBaseUrl =
+      serverBaseUrl.endsWith('/')
+          ? serverBaseUrl
+          : '$serverBaseUrl/';
+
+  return '$normalizedBaseUrl$normalizedPath';
+}
 
   static BoxDecoration glassBoxDecoration({double opacity = .12}) {
     return BoxDecoration(

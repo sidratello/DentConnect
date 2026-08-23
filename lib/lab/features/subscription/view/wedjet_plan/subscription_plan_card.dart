@@ -135,7 +135,7 @@ class SubscriptionPlanCard
                     CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '${_formatPrice(plan.totalAmount)} ل.س',
+               '${_formatPrice(plan.totalAmount)} \$',
                     style: AppTextStyles
                         .ibmRegular14NeutralStyle
                         .copyWith(

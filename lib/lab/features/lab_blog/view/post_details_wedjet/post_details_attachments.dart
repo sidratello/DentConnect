@@ -15,7 +15,8 @@ class PostAttachments extends StatelessWidget {
     required this.attachments,
   });
 
-  static String baseUrl = '${Static.imageBaseUrl}/';
+  static const String baseUrl =
+     'https://osnet.shop/dentconnect/';
 
   @override
   Widget build(BuildContext context) {

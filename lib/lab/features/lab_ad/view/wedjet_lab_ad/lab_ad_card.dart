@@ -100,7 +100,7 @@ final LabAdModel advertisement;
                         icon: Icons
                             .payments_outlined,
                         text:
-                            '${_formatPrice(advertisement.price)} ل.س',
+                            '${_formatPrice(advertisement.price)} \$',
                         iconColor:
                             AppColors.primaryBlue,
                         textColor:

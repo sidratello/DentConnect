@@ -43,7 +43,7 @@ class InvoiceFinalPriceBox extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    suffixText: 'ل.س',
+                  suffixText: '\$',
                     prefixIcon: const Icon(
                       Icons.edit_outlined,
                       size: 18,

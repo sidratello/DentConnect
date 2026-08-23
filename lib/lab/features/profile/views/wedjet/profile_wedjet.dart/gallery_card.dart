@@ -15,7 +15,7 @@ class GalleryCard extends StatelessWidget {
   });
 
   String imageUrl(String path) {
-    String baseUrl = '${Static.imageBaseUrl}/';
+    const baseUrl = 'https://osnet.shop/dentconnect/';
 
     return '$baseUrl$path';
   }

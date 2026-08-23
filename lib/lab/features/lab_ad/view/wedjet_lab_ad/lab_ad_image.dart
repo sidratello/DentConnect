@@ -162,7 +162,8 @@ class AppNetworkContentImage extends StatelessWidget {
     this.fit = BoxFit.cover,
   });
 
-  static final String _serverBaseUrl = " ${Static.imageBaseUrl}/";
+  static const String _serverBaseUrl =
+     'https://osnet.shop/dentconnect/';
 
   String? get imageUrl {
     final path = imagePath?.trim() ?? '';
