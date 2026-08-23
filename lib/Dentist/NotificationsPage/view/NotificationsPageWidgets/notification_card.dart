@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/BlogDentists/view/doctor_blog_page.dart';
-import 'package:template/Dentist/CasesPage/view/case_page.dart';
-import 'package:template/Dentist/MainPage/view/main_page.dart';
+import 'package:template/Dentist/ComplaintPage/view/complaint_page.dart';
+import 'package:template/Dentist/LabDetailsPage/view/lab_details_page.dart';
+import 'package:template/Dentist/MainPage/controller/navigation_controller.dart';
 import 'package:template/core_dentist/theme/app_colors.dart';
 
 import '../../../../core_dentist/utils/static.dart';
@@ -21,23 +22,39 @@ class NotificationCard extends StatelessWidget {
     final Color color =
         notification.isRead ? AppColors.textSecondary : AppColors.primary;
 
+    void openCases() {
+      Get.find<NavigationController>().changePage(3);
+      Get.back();
+    }
+
     return GestureDetector(
       onTap: () {
         if (notification.type == 'StatusChanged' &&
             notification.labId != null &&
             notification.orderId != null) {
-          Get.to(() => const CasePage());
+          openCases();
         }
         if (notification.type == 'OrderAccepted' &&
             notification.labId != null &&
             notification.orderId != null) {
-          Get.to(() => const CasePage());
+          openCases();
+        }
+        if (notification.type == 'PriceSet' &&
+            notification.labId != null &&
+            notification.orderId != null) {
+          openCases();
         }
         if (notification.type == 'ConnectionAccepted' &&
             notification.labId != null) {
-          Get.to(() => MainPage());
+          Get.to(() => LabDetailsPage(
+                id: notification.labId!,
+              ));
         }
         if (notification.type == 'ComplaintReply' &&
+            notification.labId != null) {
+          Get.to(() => ComplaintPage());
+        }
+        if (notification.type == 'StatusChanged' &&
             notification.blogPostId != null) {
           Get.to(() => const DoctorBlogPage());
         }
