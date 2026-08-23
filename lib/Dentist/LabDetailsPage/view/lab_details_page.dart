@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/LabDetailsPage/controller/lab_controller.dart';
-import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/appbar_lab_details_vector.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_case_list.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_case_with_doctor_list.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_create_request_button.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_container.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_works_header.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_details_works_with_doctor_header.dart';
+import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/lab_rating_card.dart';
 import 'package:template/Dentist/LabDetailsPage/view/LabDetailsPageWidgets/labs_backgroung_image.dart';
+import 'package:template/core_dentist/widgets/appbar_vector_black.dart';
 import '../../../core_dentist/theme/app_colors.dart';
 import '../../../core_dentist/widgets/app_spacing.dart';
 
@@ -33,7 +34,7 @@ class LabDetailsPage extends GetView<LabController> {
           elevation: 0,
           surfaceTintColor: AppColors.surfaceTintColor,
           automaticallyImplyLeading: false,
-          actions: const [AppbarLabDetailsVector()],
+          actions: const [AppbarVectorBlack()],
         ),
         body: Obx(() {
           return labController.isLoading.value || labController.labModel == null
@@ -46,6 +47,26 @@ class LabDetailsPage extends GetView<LabController> {
                       LabsBackgroungImage(
                           imagePath: labController.getLabImage()),
                       LabDetailsContainer(labModel: labController.labModel!),
+                      Obx(
+                        () {
+                          final homeController = Get.find<HomeController>();
+
+                          final hasPreviousOrders = labController
+                                  .caseDetails.value?.orders?.isNotEmpty ??
+                              false;
+
+                          final canRate = !homeController.isPreviewMode.value &&
+                              hasPreviousOrders;
+
+                          if (!canRate) {
+                            return const SizedBox.shrink();
+                          }
+
+                          return LabRatingCard(
+                            labId: id,
+                          );
+                        },
+                      ),
                       const LabCreateRequestButton(),
                       const LabDetailsWorksHeader(),
                       LabCaseList(

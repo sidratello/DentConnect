@@ -557,7 +557,6 @@ class TeethSelector extends GetView<CreateOrderController> {
 
                 if (isEditMode) {
                   controller.clearCompensationSelection();
-
                   Get.offAll(
                     () => MainPage(),
                   );

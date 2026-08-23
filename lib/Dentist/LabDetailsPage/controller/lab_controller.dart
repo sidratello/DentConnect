@@ -1,9 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/Dentist/CaseDetailsPage/model/case_details_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/appointment_slot_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/compensation_item_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_details_model.dart';
+import 'package:template/Dentist/ScannerAppointmentsPage/controller/scanner_appointments_controller.dart';
 import 'package:template/core_dentist/api.dart';
+import 'package:template/core_dentist/theme/app_colors.dart';
 import 'package:template/core_dentist/utils/static.dart';
 
 enum ScannerStatus {
@@ -20,6 +23,10 @@ enum FollowStatus {
 
 class LabController extends GetxController {
   final Rx<ScannerStatus> scannerStatus = ScannerStatus.available.obs;
+  final RxInt qualityRating = 0.obs;
+  final RxInt timeRating = 0.obs;
+
+  final RxBool isSubmittingRating = false.obs;
   final RxBool isLabAvailable = true.obs;
   final RxBool isLoading = false.obs;
   LabDetailsModel? labmodel;
@@ -34,6 +41,7 @@ class LabController extends GetxController {
   @override
   void onInit() {
     fetchLabDetails(id);
+    fetchCaseDetails(id);
     super.onInit();
   }
 
@@ -67,55 +75,151 @@ class LabController extends GetxController {
 
   bool get hasSelectedDate => selectedDate.isNotEmpty;
 
-  Future<void> selectDate(AppointmentSlotModel slot) async {
-    selectedDate.value = slot.readableDate;
-    await bookAvailableSlots(id, slot.slotId);
+  Future<void> selectDate(
+    AppointmentSlotModel slot,
+  ) async {
+    final confirmed = await Get.dialog<bool>(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: const Text(
+          'تأكيد الحجز',
+          style: TextStyle(
+            fontFamily: 'IBM Plex Sans Arabic',
+            fontWeight: FontWeight.w700,
+            fontSize: 18,
+          ),
+        ),
+        content: Text(
+          'هل أنت متأكد من حجز موعد الماسح؟\n\n'
+          '${slot.fullDisplay}',
+          textAlign: TextAlign.right,
+          style: const TextStyle(
+            fontFamily: 'IBM Plex Sans Arabic',
+            fontSize: 14,
+            height: 1.6,
+          ),
+        ),
+        actionsPadding: const EdgeInsets.fromLTRB(
+          16,
+          0,
+          16,
+          16,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back(result: false);
+            },
+            child: const Text(
+              'إلغاء',
+              style: TextStyle(
+                fontFamily: 'IBM Plex Sans Arabic',
+                color: AppColors.textSecondary,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.back(result: true);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text(
+              'تأكيد الحجز',
+              style: TextStyle(
+                fontFamily: 'IBM Plex Sans Arabic',
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
 
-    availableDates.remove(slot.readableDate);
-
-    scannerStatus.value = ScannerStatus.booked;
-
-    if (availableDates.isEmpty) {
-      scannerStatus.value = ScannerStatus.unavailable;
+    if (confirmed != true) {
+      return;
     }
+
+    selectedDate.value = slot.fullDisplay;
+
+    await bookAvailableSlots(
+      id,
+      slot.slotId,
+    );
   }
 
   Future<void> fetchAvailableSlots(int id) async {
-    var response = await apiService.get(
-      'scan-visits/available-slots/$id',
-    );
     try {
+      final response = await apiService.get(
+        'scan-visits/available-slots/$id',
+      );
+
       if (response.statusCode == 200) {
-        print(response.data.toString());
         availableSlots = (response.data as List)
-            .map((slot) => AppointmentSlotModel.fromJson(slot))
+            .map(
+              (slot) => AppointmentSlotModel.fromJson(
+                slot,
+              ),
+            )
             .toList();
 
-        availableDates.value =
-            availableSlots.map((slot) => slot.readableDate).toList();
+        availableDates.value = availableSlots
+            .map(
+              (slot) => slot.fullDisplay,
+            )
+            .toList();
       } else {
-        print('Failed to fetch available slots: ${response.message}');
+        print(
+          'Failed to fetch available slots: '
+          '${response.message}',
+        );
       }
     } catch (e) {
-      print('Error fetching available slots for ID $id: $e');
+      print(
+        'Error fetching available slots for ID $id: $e',
+      );
     }
   }
 
-  Future<void> bookAvailableSlots(int idLab, int idSlot) async {
-    var response = await apiService.post(
-      'scan-visits/book/$idLab/$idSlot',
-    );
+  Future<void> bookAvailableSlots(
+    int idLab,
+    int idSlot,
+  ) async {
     try {
-      if (response.statusCode == 200) {
-        availableSlots.removeWhere((e) => e.slotId == idSlot);
+      final response = await apiService.post(
+        'scan-visits/book/$idLab/$idSlot',
+      );
 
-        availableDates.value =
-            availableSlots.map((e) => e.readableDate).toList();
+      if (response.statusCode == 200) {
+        availableSlots.removeWhere(
+          (slot) => slot.slotId == idSlot,
+        );
+
+        availableDates.value = availableSlots
+            .map(
+              (slot) => slot.fullDisplay,
+            )
+            .toList();
 
         scannerStatus.value = availableSlots.isEmpty
             ? ScannerStatus.unavailable
             : ScannerStatus.booked;
+
+        final scannerAppointmentsController =
+            Get.find<ScannerAppointmentsController>();
+
+        await scannerAppointmentsController.fetchAppointments();
+
         Get.back();
+
         Get.snackbar(
           'تم الحجز',
           'تم حجز موعد الماسح بنجاح',
@@ -125,12 +229,14 @@ class LabController extends GetxController {
         Get.snackbar(
           'خطأ',
           response.message,
+          snackPosition: SnackPosition.BOTTOM,
         );
       }
     } catch (e) {
       Get.snackbar(
         'خطأ',
         e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
       );
     }
   }
@@ -170,7 +276,7 @@ class LabController extends GetxController {
             ),
           );
         }
-        fetchCaseDetails(id);
+        await fetchCaseDetails(id);
       } else {
         print('Failed to fetch labs: ${response.message}');
       }
@@ -247,6 +353,69 @@ class LabController extends GetxController {
         e.toString(),
         snackPosition: SnackPosition.BOTTOM,
       );
+    }
+  }
+
+  Future<void> submitRating({
+    required int labId,
+  }) async {
+    if (qualityRating.value == 0 || timeRating.value == 0) {
+      Get.snackbar(
+        'تنبيه',
+        'يجب تقييم جودة العمل والالتزام بالوقت',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+      return;
+    }
+
+    isSubmittingRating.value = true;
+
+    try {
+      final qualityResponse = await apiService.post(
+        'Ratings/$labId/quality/${qualityRating.value}',
+      );
+
+      if (qualityResponse.statusCode != 200) {
+        Get.snackbar(
+          'خطأ',
+          qualityResponse.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+
+        return;
+      }
+
+      final timeResponse = await apiService.post(
+        'Ratings/$labId/time/${timeRating.value}',
+      );
+
+      if (timeResponse.statusCode != 200) {
+        Get.snackbar(
+          'خطأ',
+          timeResponse.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+
+        return;
+      }
+
+      Get.snackbar(
+        'تم التقييم',
+        'تم إرسال تقييم الجودة والوقت بنجاح',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+      qualityRating.value = 0;
+      timeRating.value = 0;
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isSubmittingRating.value = false;
     }
   }
 }

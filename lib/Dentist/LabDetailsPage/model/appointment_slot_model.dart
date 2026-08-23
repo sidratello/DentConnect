@@ -4,28 +4,32 @@ class AppointmentSlotModel {
   final String time;
   final String period;
 
-  AppointmentSlotModel({
+  const AppointmentSlotModel({
     required this.slotId,
     required this.date,
     required this.time,
     required this.period,
   });
 
-  factory AppointmentSlotModel.fromJson(Map<String, dynamic> json) {
+  factory AppointmentSlotModel.fromJson(
+    Map<String, dynamic> json,
+  ) {
     return AppointmentSlotModel(
-      slotId: json['id'],
-      date: DateTime.parse(json['appointmentDate']),
-      time: json['appointmentTime'],
-      period: json['timeFormatted'],
+      slotId: json['id'] as int,
+      date: DateTime.parse(
+        json['appointmentDate'].toString(),
+      ),
+      time: json['appointmentTime'].toString(),
+      period: json['timeFormatted'].toString(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'slotId': slotId,
-      'date': date.toIso8601String(),
-      'time': time,
-      'period': period,
+      'id': slotId,
+      'appointmentDate': date.toIso8601String(),
+      'appointmentTime': time,
+      'timeFormatted': period,
     };
   }
 
@@ -44,34 +48,32 @@ class AppointmentSlotModel {
   }
 
   /// اسم اليوم بالعربي
-  String get dayName => arabicDays[date.weekday - 1];
+  String get dayName {
+    return arabicDays[date.weekday - 1];
+  }
 
-  /// 9 أكتوبر 2026
-  String get formattedDate =>
-      '${date.day} ${arabicMonths[date.month - 1]} ${date.year}';
+  /// مثال: 6 أكتوبر 2026
+  String get formattedDate {
+    return '${date.day} '
+        '${arabicMonths[date.month - 1]} '
+        '${date.year}';
+  }
 
-  /// 09:30 AM
-  String get formattedTime => period;
+  /// الوقت القادم من الـ API بصيغة 12 ساعة
+  /// مثال: 12:15 PM
+  String get formattedTime {
+    return period;
+  }
 
-  /// الجمعة، 9 أكتوبر 2026
-  String get readableDate => '$dayName، $formattedDate';
+  /// مثال: الثلاثاء، 6 أكتوبر 2026
+  String get readableDate {
+    return '$dayName، $formattedDate';
+  }
 
-  /// الجمعة، 9 أكتوبر 2026 • 09:30 AM
-  String get fullDisplay => '$readableDate • $formattedTime';
-
-  // String get dayName => DateFormat('EEEE', 'ar').format(date);
-  // String get formattedDate => DateFormat('dd MMMM yyyy', 'ar').format(date);
-  // /// Wednesday
-  // // String get dayName => DateFormat('EEEE').format(date);
-  // // /// 20 May 2026
-  // // String get formattedDate => DateFormat('dd MMM yyyy').format(date);
-  // /// 10:30 AM
-  // String get formattedTime => '$time $period';
-  // /// Wednesday, 20 May 2026
-  // String get readableDate =>
-  //     '$dayName, ${DateFormat('dd MMM yyyy').format(date)}';
-  // /// Wednesday, 20 May 2026 • 10:30 AM
-  // String get fullDisplay => '$readableDate • $formattedTime';
+  /// مثال: الثلاثاء، 6 أكتوبر 2026 • 12:15 PM
+  String get fullDisplay {
+    return '$readableDate • $formattedTime';
+  }
 }
 
 const List<String> arabicDays = [

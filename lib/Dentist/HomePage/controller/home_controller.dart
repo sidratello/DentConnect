@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:template/Dentist/DoctorProfile/model/doctor_profile_model.dart';
 import 'package:template/Dentist/HomePage/model/advertisement_model.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
+import 'package:template/Dentist/NotificationsPage/model/app_notification_model.dart';
 import 'package:template/Dentist/SearchLabsPage/model/search_lab_model.dart';
 import 'package:template/core/storage_services.dart';
 import 'package:template/core_dentist/api.dart';
 
 class HomeController extends GetxController {
   ApiService apiService = ApiService();
-
+  static HomeController get to => Get.find<HomeController>();
   RxList labsIds = [].obs;
   RxList labsDetails = [].obs;
   var quickFilters = [];
@@ -23,6 +24,10 @@ class HomeController extends GetxController {
   final RxInt currentAdIndex = 0.obs;
   final RxnInt selectedLabId = RxnInt();
   final RxInt selectedType = 0.obs;
+  final RxList<AppNotificationModel> notifications =
+      <AppNotificationModel>[].obs;
+
+  final RxBool isLoadingNotifications = false.obs;
 
   @override
   void onInit() {
@@ -30,6 +35,7 @@ class HomeController extends GetxController {
     fetchAdvertisement();
     fetchLabsLabels();
     fetchDoctorProfile();
+    fetchNotifications();
     super.onInit();
   }
 
@@ -297,6 +303,48 @@ class HomeController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> fetchNotifications() async {
+    isLoadingNotifications.value = true;
+
+    try {
+      final response = await apiService.get(
+        'Notifications/doctor',
+      );
+
+      if (response.statusCode == 200) {
+        final data = response.data as List;
+
+        notifications.value = data
+            .map(
+              (item) => AppNotificationModel.fromJson(
+                Map<String, dynamic>.from(item),
+              ),
+            )
+            .toList();
+      } else {
+        notifications.clear();
+
+        Get.snackbar(
+          'خطأ',
+          response.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'خطأ',
+        'تعذر تحميل الإشعارات',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoadingNotifications.value = false;
+    }
+  }
+
+  int get unreadNotificationsCount {
+    return notifications.where((notification) => !notification.isRead).length;
   }
 
   Future<void> updateDoctorProfile({

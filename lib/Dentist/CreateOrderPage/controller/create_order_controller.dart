@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:template/Dentist/CaseDetailsPage/model/case_details_model.dart';
 import 'package:template/Dentist/CasesPage/controller/case_controller.dart';
 import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Pages/select_patient_page.dart';
 import 'package:template/Dentist/CreateOrderPage/view/CreateOrderWidgets/Teeth/teeth_selector.dart';
+import 'package:template/Dentist/LabDetailsPage/controller/lab_controller.dart';
 import 'package:template/Dentist/LabDetailsPage/model/lab_model.dart';
 import 'package:template/Dentist/MainPage/view/main_page.dart';
 import 'package:template/Dentist/PatientPage/model/patient_model.dart';
@@ -679,15 +681,17 @@ class CreateOrderController extends GetxController {
           'تم إرسال الملف بنجاح',
           snackPosition: SnackPosition.BOTTOM,
         );
-        sendNotification();
+
+        await sendNotification();
         resetOrder();
+
+        final caseController = Get.find<CaseController>();
+
+        await caseController.fetchCases();
 
         Get.offAll(
           () => MainPage(),
         );
-
-        final caseController = Get.find<CaseController>();
-        await caseController.fetchCases();
       } else {
         Get.snackbar(
           'خطأ',

@@ -323,4 +323,32 @@ class ApiService {
       );
     }
   }
+
+  Future<ApiResponse<T>> delete<T>(
+    String path, {
+    Map<String, dynamic>? data,
+  }) async {
+    FormData? formData;
+
+    if (data != null && data.isNotEmpty) {
+      formData = FormData();
+
+      data.forEach((key, value) {
+        if (value != null) {
+          formData!.fields.add(
+            MapEntry(
+              key,
+              value.toString(),
+            ),
+          );
+        }
+      });
+    }
+
+    return request<T>(
+      path,
+      method: 'DELETE',
+      data: formData,
+    );
+  }
 }

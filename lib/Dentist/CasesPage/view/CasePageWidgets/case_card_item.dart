@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/Dentist/CasesPage/controller/case_controller.dart';
 
 import 'package:template/Dentist/CasesPage/view/CasePageWidgets/case_footer_builder.dart';
 import 'package:template/Dentist/CasesPage/view/CasePageWidgets/case_details_page.dart';
@@ -27,9 +28,15 @@ class CaseCardItem extends StatelessWidget {
       item.status,
     );
 
+    final bool canCancel = status == CaseStatus.waitingApproval ||
+        status == CaseStatus.accepted ||
+        status == CaseStatus.needInfo;
+
     final bool canEdit = status == CaseStatus.waitingApproval ||
         status == CaseStatus.needInfo ||
         status == CaseStatus.waitingForClarification;
+
+    final caseController = Get.find<CaseController>();
     return Column(
       children: [
         InkWell(
@@ -116,6 +123,61 @@ class CaseCardItem extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+              ),
+            ),
+          ),
+        ],
+        if (canCancel) ...[
+          const SizedBox(height: 4),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton.icon(
+              onPressed: () {
+                if (item.id == null) {
+                  Get.snackbar(
+                    'خطأ',
+                    'معرف الطلب غير موجود',
+                    snackPosition: SnackPosition.BOTTOM,
+                  );
+                  return;
+                }
+
+                if (item.assignedLab!.id == null) {
+                  Get.snackbar(
+                    'خطأ',
+                    'معرف المخبر غير موجود',
+                    snackPosition: SnackPosition.BOTTOM,
+                  );
+                  return;
+                }
+
+                caseController.cancelOrder(
+                  orderId: item.id!,
+                  labId: item.assignedLab!.id!,
+                );
+              },
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 4,
+                ),
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                foregroundColor: Colors.redAccent.withValues(
+                  alpha: 0.8,
+                ),
+              ),
+              icon: const Icon(
+                Icons.close_rounded,
+                size: 16,
+              ),
+              label: const Text(
+                'إلغاء الطلبية',
+                style: TextStyle(
+                  fontFamily: 'IBM Plex Sans Arabic',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

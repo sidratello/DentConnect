@@ -7,6 +7,7 @@ import 'package:template/Dentist/DoctorProfile/view/doctor_profile.dart';
 import 'package:template/Dentist/HomePage/controller/home_controller.dart';
 import 'package:template/Dentist/MainPage/controller/navigation_controller.dart';
 import 'package:template/Dentist/PatientPage/controller/patient_controller.dart';
+import 'package:template/Dentist/ScannerAppointmentsPage/controller/scanner_appointments_controller.dart';
 import 'package:template/Dentist/SearchLabsPage/view/search_labs_page.dart';
 
 import '../../CasesPage/view/case_page.dart';
@@ -25,6 +26,8 @@ class MainPage extends StatelessWidget {
       Get.put(CreateOrderController());
   final CaseController caseController = Get.put(CaseController());
   final PatientController patientController = Get.put(PatientController());
+  final ScannerAppointmentsController scannerAppointmentsController =
+      Get.put(ScannerAppointmentsController());
 
   @override
   Widget build(BuildContext context) {

@@ -12,6 +12,7 @@ import 'package:template/Dentist/BlogDentists/view/blog_details_screen.dart';
 import 'package:template/Dentist/BlogDentists/view/blog_feed_screen.dart';
 import 'package:template/Dentist/BlogDentists/view/create_blog_screen.dart';
 import 'package:template/Dentist/BlogDentists/view/pennding_posts_screen.dart';
+import 'package:template/Dentist/ScannerAppointmentsPage/view/scanner_appointments_page.dart';
 import 'package:template/auth/binding/forpa_binding.dart';
 import 'package:template/auth/binding/login_binding.dart';
 import 'package:template/auth/binding/otp_binding.dart';
@@ -153,6 +154,7 @@ abstract class AppRouter {
   static const String invoicePayment = '/invoice-payment';
   static const String invoicePaymentSuccess = '/invoice-payment-success';
   static const String invoicePaymentFailed = '/invoice-payment-failed';
+  static const String scannerAppointments = '/scanner-appointments';
 
   static final List<GetPage<dynamic>> pages = [
     GetPage(
@@ -413,6 +415,10 @@ abstract class AppRouter {
     GetPage(
       name: invoicePaymentFailed,
       page: () => const InvoicePaymentFailedScreen(),
+    ),
+    GetPage(
+      name: scannerAppointments,
+      page: () => const ScannerAppointmentsPage(),
     ),
   ];
 }

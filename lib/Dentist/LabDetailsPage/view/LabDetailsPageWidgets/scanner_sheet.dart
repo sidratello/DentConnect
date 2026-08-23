@@ -69,7 +69,7 @@ void scannerSheet(
               final slot = controller.availableSlots[index];
 
               return ScannerDateItem(
-                date: slot.readableDate,
+                date: slot.fullDisplay,
                 onTap: () {
                   controller.selectDate(slot);
                 },

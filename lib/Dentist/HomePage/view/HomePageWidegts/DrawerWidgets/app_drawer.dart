@@ -43,6 +43,15 @@ class AppDrawer extends StatelessWidget {
                 },
               ),
               DrawerItem(
+                title: 'مواعيد الماسح',
+                icon: Icons.date_range,
+                onTap: () {
+                  Get.toNamed(
+                    AppRouter.scannerAppointments,
+                  );
+                },
+              ),
+              DrawerItem(
                 title: 'القوالب',
                 icon: Icons.description,
                 onTap: () {

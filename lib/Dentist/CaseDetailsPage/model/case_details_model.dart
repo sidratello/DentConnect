@@ -13,7 +13,7 @@ class CaseDetailsModel {
 
   CaseDetailsModel.fromJson(Map<String, dynamic> json) {
     dentistId = json['dentistId'] ?? 0;
-    myRating = (json['myRating'] ?? 0).toDouble();
+    myRating = (json['labAverageRating'] ?? 0).toDouble();
 
     if (json['orders'] != null) {
       orders = (json['orders'] as List).map((e) => Orders.fromJson(e)).toList();
@@ -26,7 +26,7 @@ class CaseDetailsModel {
     final Map<String, dynamic> data = {};
 
     data['dentistId'] = dentistId;
-    data['myRating'] = myRating;
+    data['labAverageRating'] = myRating;
 
     if (orders != null) {
       data['orders'] = orders!.map((e) => e.toJson()).toList();

@@ -115,7 +115,7 @@ class BottomNavBar extends StatelessWidget {
   }
 
   Widget _buildProfileItem(BuildContext context) {
-    final appModeController = Get.find<HomeController>();
+    final homeController = Get.find<HomeController>();
 
     final bool isSelected = currentIndex == 4;
 
@@ -135,16 +135,39 @@ class BottomNavBar extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ClipOval(
-              child: Image.asset(
-                appModeController.isPreviewMode.value
-                    ? 'assets/images/profile.png'
-                    : 'assets/images/doctor_profile.png',
-                width: Static.getwidth(context, 33),
-                height: Static.getwidth(context, 33),
-                fit: BoxFit.cover,
-              ),
-            ),
+            Obx(() {
+              if (homeController.isPreviewMode.value) {
+                return _buildProfileImage(
+                  context,
+                  'assets/images/profile.png',
+                );
+              }
+
+              final profileImage =
+                  homeController.doctorProfileModel.value?.profilePictureUrl;
+
+              if (profileImage == null || profileImage.isEmpty) {
+                return _buildProfileImage(
+                  context,
+                  'assets/images/doctor_profile.png',
+                );
+              }
+
+              return ClipOval(
+                child: Image.network(
+                  '${Static.imageBaseUrl}/$profileImage',
+                  width: Static.getwidth(context, 33),
+                  height: Static.getwidth(context, 33),
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) {
+                    return _buildProfileImage(
+                      context,
+                      'assets/images/doctor_profile.png',
+                    );
+                  },
+                ),
+              );
+            }),
             SizedBox(
               height: Static.getheight(context, 6),
             ),
@@ -160,6 +183,30 @@ class BottomNavBar extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfileImage(
+    BuildContext context,
+    String imagePath,
+  ) {
+    final imageSize = Static.getwidth(context, 33);
+    final borderWidth = Static.getwidth(context, 1.5);
+
+    return Container(
+      width: imageSize + (borderWidth * 2),
+      height: imageSize + (borderWidth * 2),
+      padding: EdgeInsets.all(borderWidth),
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: Color.fromRGBO(101, 153, 255, 1),
+      ),
+      child: ClipOval(
+        child: Image.asset(
+          imagePath,
+          fit: BoxFit.cover,
         ),
       ),
     );
