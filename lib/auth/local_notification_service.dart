@@ -28,10 +28,10 @@ class LocalNotificationService {
       return;
     }
 
-    const androidSettings =
-        AndroidInitializationSettings(
-      '@mipmap/ic_launcher',
-    );
+const androidSettings =
+    AndroidInitializationSettings(
+  'notification_icon',
+);
 
     const settings =
         InitializationSettings(
@@ -92,6 +92,7 @@ class LocalNotificationService {
           'إشعارات التطبيق',
       importance: Importance.max,
       priority: Priority.high,
+       icon: 'notification_icon',
     );
 
     const details =
