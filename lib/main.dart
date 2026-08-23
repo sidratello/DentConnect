@@ -40,17 +40,14 @@ void main() async {
 
   await GetStorage.init();
   await LocalNotificationService().initialize();
-  final token =
-      StorageService.to.read<String>(
+  final token = StorageService.to.read<String>(
     'token',
   );
 
-  if (token != null &&
-      token.trim().isNotEmpty) {
+  if (token != null && token.trim().isNotEmpty) {
     AppHelper.token = token;
 
-    await NotificationService()
-        .startConnection(
+    await NotificationService().startConnection(
       token,
     );
   }
@@ -100,6 +97,7 @@ class MyApp extends StatelessWidget {
               );
             },
             getPages: AppRouter.pages,
+            initialRoute: AppRouter.splash,
             debugShowCheckedModeBanner: false,
           ),
         );

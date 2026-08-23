@@ -5,6 +5,7 @@ import 'package:template/Dentist/InvoicesPage/view/InvoicePageWidgets/invoice_pa
 import 'package:template/Dentist/InvoicesPage/view/InvoicePageWidgets/invoice_payment_screen.dart';
 import 'package:template/Dentist/InvoicesPage/view/InvoicePageWidgets/invoice_payment_success.dart';
 import 'package:template/Dentist/MainPage/view/main_page.dart';
+import 'package:template/splash/view/splash_screen.dart';
 import 'package:template/Dentist/BlogDentists/binding/blog_feed_binding.dart';
 import 'package:template/Dentist/BlogDentists/binding/create_blog_binding.dart';
 import 'package:template/Dentist/BlogDentists/binding/posts_binding.dart';
@@ -97,6 +98,7 @@ import 'package:template/lab/features/update_order_satatus/views/update_order_st
 
 abstract class AppRouter {
   static const choseuserpage = '/';
+  static const splash = '/splash';
   static const loginpage = '/loginpage';
   static const signuppage = '/signuppage';
   // ignore: constant_identifier_names
@@ -157,6 +159,10 @@ abstract class AppRouter {
   static const String scannerAppointments = '/scanner-appointments';
 
   static final List<GetPage<dynamic>> pages = [
+    GetPage(
+      name: splash,
+      page: () => const SplashScreen(),
+    ),
     GetPage(
       name: choseuserpage,
       page: () => const ChooseUserTypeScreen(),
